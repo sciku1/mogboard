@@ -153,9 +153,9 @@
                                                 showInNavigator: true,
                                                 negativeColor: true,
                                                 navigatorOptions: {
-                                                type: 'line',
-                                                color: 'rgba(202,200,68,0.35)'
-                                            },
+                                                    type: 'line',
+                                                    color: 'rgba(202,200,68,0.35)'
+                                                },
                                             },
                                             {
                                                 id:   'HC_History_NQ_'~ serverName,
@@ -165,9 +165,9 @@
                                                 showInNavigator: true,
                                                 negativeColor: true,
                                                 navigatorOptions: {
-                                                type: 'line',
-                                                color: 'rgba(120,120,120,0.35)'
-                                            },
+                                                    type: 'line',
+                                                    color: 'rgba(120,120,120,0.35)'
+                                                },
                                             },
 
                                             {
@@ -191,6 +191,20 @@
                                         ]
                                     }
                                 } %}
+                            {% endif %}
+
+                            {% if false %}
+                            <div>
+                                {% include 'Product/histogram_hc.html.twig' with {
+                                    chart: {
+                                        id: 'histogram_' ~ serverName,
+                                    },
+                                    serverName: serverName,
+                                    stackSizeHistogram: marketData.stackSizeHistogram,
+                                    stackSizeHistogramNQ: marketData.stackSizeHistogramNQ,
+                                    stackSizeHistogramHQ: marketData.stackSizeHistogramHQ,
+                                } %}
+                            </div>
                             {% endif %}
 
                             <div class="tab-market-tables">
