@@ -53,6 +53,9 @@ var chart{{ chart.id }} = Highcharts.chart('{{ chart.id }}', {
     title: {
         text: undefined, // We use the parent flexbox as a container for the title
     },
+    credits: {
+        text: "",
+    },
     tooltip: {
         pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b><br>Count: <b>{point.y}</b>',
     },
