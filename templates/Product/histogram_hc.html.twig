@@ -1,13 +1,33 @@
-<div class="highchart" style="width:100%;">
+<div class="highchart" style="height:200px;width:100%;">
     <div id="{{ chart.id }}"></div>
 </div>
 <script>
+// Convert a number-key number-value object into an array of data elements that Highcharts can consume
+function convert(obj) {
+    var output = [];
+    for (var i in obj) {
+        output.push({
+            y: obj[i],
+            name: i,
+        });
+    }
+    return output;
+}
+
 // Create chart
 var chart{{ chart.id }} = Highcharts.chart('{{ chart.id }}', {
+    chart: {
+        height: 200,
+    },
+
     plotOptions: {
         series: {
             type: 'histogram',
         }
+    },
+
+    credits: {
+        text: "",
     },
 
     title: {
@@ -16,31 +36,33 @@ var chart{{ chart.id }} = Highcharts.chart('{{ chart.id }}', {
 
     xAxis: [{
         allowDecimals: false,
+        type: 'category',
     }],
 
     yAxis: [{
         allowDecimals: false,
+        title: {
+            text: 'Quantity',
+        },
     }],
 
     series: [
         {
             id: 'histogram_all_{{ serverName }}',
-            name: 'Stack Size Histogram',
-            data: {{ stackSizeHistogram|json_encode|raw }},
+            name: 'Total',
+            data: convert({{ stackSizeHistogram|json_encode|raw }}),
             zIndex: -2,
         },
         {
             id: 'histogram_all_NQ_{{ serverName }}',
             name: '(Normal Quality) Stack Size Histogram',
-            data: {{ stackSizeHistogramNQ|json_encode|raw }},
-            linkedTo: 0,
+            data: convert({{ stackSizeHistogramNQ|json_encode|raw }}),
             zIndex: -1,
         },
         {
             id: 'histogram_all_HQ_{{ serverName }}',
             name: '(High Quality) Stack Size Histogram',
-            data: {{ stackSizeHistogramHQ|json_encode|raw }},
-            linkedTo: 0,
+            data: convert({{ stackSizeHistogramHQ|json_encode|raw }}),
             zIndex: 0,
         },
     ],
