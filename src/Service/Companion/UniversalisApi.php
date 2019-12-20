@@ -35,6 +35,15 @@ class UniversalisApi
         ]);
     }
 
+    public function getItemStrLocale(String $worldIdOrDCName, int $itemId)
+    {
+        return $this->query("GET", "api/{$worldIdOrDCName}/{$itemId}", [
+            RequestOptions::QUERY => [
+                'src'   => 'universalis_front'
+            ]
+        ]);
+    }
+
     public function getExtendedHistory(int $worldId, int $itemId, int $numEntries = 200)
     {
         return $this->query("GET", "api/{$worldId}/{$itemId}", [
