@@ -67,7 +67,7 @@
                             <i class="xiv-CrossWorld cw-summary"></i> Cross-World
                         </button>
 
-{#
+                        {#
                         { Shops }
                         {% if shops %}
                             <button type="button" data-tab="shops" class="btn-shops">
@@ -113,7 +113,15 @@
             <div class="tab">
                 {# Summary #}
                 <div class="tab-page tab-summary {{ (cookie('mogboard_homeworld', 'no') == 'yes' or reqServer) ? '' : 'open' }}">
-                    {% include 'Product/item_market_summary.html.twig' %}
+                    {% include 'Product/item_market_summary.html.twig' with {
+                        chart: {
+                            id: 'histogram_global',
+                        },
+                        serverName: 'global',
+                        stackSizeHistogram: globalMarketData.stackSizeHistogram,
+                        stackSizeHistogramNQ: globalMarketData.stackSizeHistogramNQ,
+                        stackSizeHistogramHQ: globalMarketData.stackSizeHistogramHQ,
+                    } %}
                 </div>
 
                 {#
@@ -193,8 +201,9 @@
                                 } %}
                             {% endif %}
 
-                            {% if false %}
+                            {% if marketData.stackSizeHistogram %}
                             <div>
+                                <h4>STACK SIZE HISTOGRAM <small>Last 20 Sales</small></h4>
                                 {% include 'Product/histogram_hc.html.twig' with {
                                     chart: {
                                         id: 'histogram_' ~ serverName,
