@@ -266,7 +266,6 @@ class UserLists
              * Find the cheapest server and prices
              */
             foreach ($itemMarket as $server => $serverMarket) {
-                echo(var_dump($serverMarket));
                 foreach ($serverMarket['listings'] as $price) {
                     $price['_Server'] = $server;
                     $serverMarketStats[$itemId]['Top5CheapestServers'][] = (array)$price;
