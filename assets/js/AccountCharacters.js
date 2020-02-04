@@ -99,14 +99,26 @@ class AccountCharacters
             this.uiAddCharacterResponse.html('Character found, verifying auth code.');
 
             // try verify the profile
-            xivapi.characterVerification(lodestoneId, verify_code, response => {
-                if (response.Pass === false) {
+            //xivapi.characterVerification(lodestoneId, verify_code, response => {
+            fetch(`https://xivapi.com/character/${lodestoneId}`)
+            .then(response => response.json())
+            .then(profile => {
+                console.log(profile.Character.Bio.search(verify_code));
+                if (JSON.stringify(profile.Character.Bio).search(verify_code) === -1) {
+                    Popup.error('Auth Code Not Found',  `Could not find your auth code (${verify_code}) on your characters profile, try again!`);
+                    this.uiAddCharacterResponse.html('');
+                       ButtonLoading.finish($button);
+                    return;
+                }
+                
+            /*const verifystring = JSON.parse(res);
+                if (bio !== verify_code) {
                     Popup.error('Auth Code Not Found', `Could not find your auth code (${verify_code}) on your characters profile, try again!`);
                     this.uiAddCharacterResponse.html('');
                     ButtonLoading.finish($button);
                     return;
                 }
-
+            */
                 this.uiAddCharacterResponse.html('Auth code found, adding character...');
 
                 $.ajax({
@@ -123,6 +135,7 @@ class AccountCharacters
                         }
 
                         Popup.error('Character failed to add', `Error: ${response.Message}`);
+                        /*document.getElementById(character_string).reset(); */
                     },
                     error: (a, b, c) => {
                         Popup.error('Something Broke (code 145)', 'Could not add your character, please hop on discord and complain to Miu');
@@ -136,7 +149,7 @@ class AccountCharacters
             });
 
             return;
-        })
+            })
 
     }
 }

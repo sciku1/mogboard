@@ -58,14 +58,14 @@ class UserCharacters
         $user = $this->users->getUser(true);
 
         // run character verification
-        $verification = $this->xivapi->character->verify($lodestoneId);
+        $verification = $this->xivapi->character->get($lodestoneId);
         
         if (isset($verification->Error)) {
             throw new JsonException($verification->Message);
         }
 
         // test if our Users pass phrase was found
-        if (stripos($verification->Bio, $user->getCharacterPassPhrase()) === false) {
+        if (stripos($verification->Character->Bio, $user->getCharacterPassPhrase()) === false) {
             throw new JsonException('Character auth code could not be found on the characters profile bio.', 200);
         }
         
