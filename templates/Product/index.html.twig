@@ -112,19 +112,18 @@
 
             <div class="tab">
                 {# Summary #}
-                {% if item.StackSize != 1 %}
-                    <div class="tab-page tab-summary {{ (cookie('mogboard_homeworld', 'no') == 'yes' or reqServer) ? '' : 'open' }}">
-                        {% include 'Product/item_market_summary.html.twig' with {
-                            chart: {
-                                id: 'histogram_global',
-                            },
-                            serverName: 'global',
-                            stackSizeHistogram: globalMarketData.stackSizeHistogram,
-                            stackSizeHistogramNQ: globalMarketData.stackSizeHistogramNQ,
-                            stackSizeHistogramHQ: globalMarketData.stackSizeHistogramHQ,
-                        } %}
-                    </div>
-                {% endif %}
+                <div class="tab-page tab-summary {{ (cookie('mogboard_homeworld', 'no') == 'yes' or reqServer) ? '' : 'open' }}">
+                    {% include 'Product/item_market_summary.html.twig' with {
+                        chart: {
+                            id: 'histogram_global',
+                        },
+                        serverName: 'global',
+                        stackSize: item.stackSize,
+                        stackSizeHistogram: globalMarketData.stackSizeHistogram,
+                        stackSizeHistogramNQ: globalMarketData.stackSizeHistogramNQ,
+                        stackSizeHistogramHQ: globalMarketData.stackSizeHistogramHQ,
+                    } %}
+                </div>
 
                 {#
                 { Shops }
