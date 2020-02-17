@@ -287,7 +287,7 @@ class UserLists
             array_splice($serverMarketStats[$itemId]['Top5HistorySales'], 5);
             
             // Now gets the most recent update time, returning an average results in accurate but weird-looking values
-            $serverMarketStats[$itemId]['RoughUpdateTime'] = min($lastUpdatedTimes[$itemId]);
+            $serverMarketStats[$itemId]['RoughUpdateTime'] = max($lastUpdatedTimes[$itemId]);
         }
     
         Redis::cache()->set($key, $serverMarketStats, 60);
