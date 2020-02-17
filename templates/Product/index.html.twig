@@ -195,7 +195,7 @@
 
                             <div class="tab-market-tables">
                                 <div class="cw-table cw-prices">
-                                    <h4>PRICES <small>Updated: {{ marketData.lastUploadTime|dateSimple }}</small></h4>
+                                    <h4>PRICES <small>Updated: {{ marketData.lastUploadTime|dateSimple }} (Includes 5% GST)</small></h4>
                                     {% include 'Product/prices.html.twig' with {
                                         'prices': marketData.listings,
                                         'cheapestPrice': cheapestPrice,
