@@ -203,7 +203,7 @@
                                 } %}
                             {% endif %}
 
-                            {% if marketData.stackSizeHistogram && item.StackSize != 1 %}
+                            {% if marketData.stackSizeHistogram and item.StackSize != 1 %}
                             <div>
                                 <h4>STACK SIZE HISTOGRAM <small>Last 20 Sales</small></h4>
                                 {% include 'Product/histogram_hc.html.twig' with {
