@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="/font/xivicons.css?v={{ siteVersion().hash }}">
     <link rel="stylesheet" href="/font/styles.css?v={{ siteVersion().hash }}">
     <link rel="stylesheet" href="/ui/ui.css?v={{ siteVersion().hash }}">
-    <link rel="manifest" href="manifest.json">
+    <link rel="manifest" href="/manifest.json">
     {% block stylesheets %}{% endblock %}
 
     {# High Charts #}
@@ -49,13 +49,14 @@
 
         gtag('config', 'UA-147847104-1');
     </script>
-
+{#
     <script>
         // Register the service worker that will provide the "offline page"
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('serviceworker-offline.js');
         }
     </script>
+#}
 </head>
 <body>
     <div class="site-container">

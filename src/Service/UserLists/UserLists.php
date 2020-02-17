@@ -266,22 +266,22 @@ class UserLists
              * Find the cheapest server and prices
              */
             foreach ($itemMarket as $server => $serverMarket) {
-                foreach ($serverMarket['Prices'] as $price) {
+                foreach ($serverMarket['listings'] as $price) {
                     $price['_Server'] = $server;
                     $serverMarketStats[$itemId]['Top5CheapestServers'][] = (array)$price;
                     $serverMarketStats[$itemId]['TotalForSale']++;
                 }
     
-                foreach ($serverMarket['History'] as $history) {
+                foreach ($serverMarket['recentHistory'] as $history) {
                     $history['_Server'] = $server;
                     $serverMarketStats[$itemId]['Top5HistorySales'][] = (array)$history;
                 }
     
-                $lastUpdatedTimes[$itemId][] = $serverMarket['Updated'];
+                $lastUpdatedTimes[$itemId][] = $serverMarket['lastUploadTime'];
             }
             
-            Arrays::sortBySubKey($serverMarketStats[$itemId]['Top5CheapestServers'], 'PricePerUnit', true);
-            Arrays::sortBySubKey($serverMarketStats[$itemId]['Top5HistorySales'], 'PurchaseDate');
+            Arrays::sortBySubKey($serverMarketStats[$itemId]['Top5CheapestServers'], 'pricePerUnit', true);
+            Arrays::sortBySubKey($serverMarketStats[$itemId]['Top5HistorySales'], 'timestamp');
     
             array_splice($serverMarketStats[$itemId]['Top5CheapestServers'], 5);
             array_splice($serverMarketStats[$itemId]['Top5HistorySales'], 5);

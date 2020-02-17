@@ -9,10 +9,11 @@ use App\Common\Game\GameServers;
 use App\Common\Service\Redis\RedisTracking;
 use App\Common\User\Users;
 use App\Common\Utils\Language;
+use App\Service\Companion\CompanionCensus;
 use App\Service\Companion\CompanionMarket;
 use App\Service\Companion\CompanionStatistics;
+use App\Service\Companion\UniversalisApi;
 use App\Service\GameData\GameDataSource;
-use App\Service\Companion\CompanionCensus;
 use App\Service\Items\Popularity;
 use App\Service\Items\Views;
 use App\Common\Service\Redis\Redis;
@@ -36,6 +37,8 @@ class ItemController extends AbstractController
     private $companionStatistics;
     /** @var CompanionMarket */
     private $companionMarket;
+    /** @var UniversalisApi */
+    private $universalisApi;
     /** @var Users */
     private $users;
     /** @var UserAlerts */
@@ -48,7 +51,7 @@ class ItemController extends AbstractController
     private $itemViews;
     /** @var XIVAPI */
     private $xivapi;
-    
+
     public function __construct(
         EntityManagerInterface $em,
         GameDataSource $gameDataSource,
@@ -66,6 +69,7 @@ class ItemController extends AbstractController
         $this->companionCensus     = $companionCensus;
         $this->companionStatistics = $companionStatistics;
         $this->companionMarket     = $companionMarket;
+        $this->universalisApi      = new UniversalisApi();
         $this->users               = $users;
         $this->userAlerts          = $userAlerts;
         $this->userLists           = $userLists;
@@ -73,22 +77,22 @@ class ItemController extends AbstractController
         $this->itemViews           = $itemViews;
         $this->xivapi              = new XIVAPI();
     }
-    
+
     /**
      * @Route("/market/{itemId}", name="item_page")
      */
     public function index(Request $request, $itemId)
     {
         $time = microtime(true);
-        
+
         if ($itemId === '-id-') {
             throw new JsonException("Something went wrong during the request... Contact a staff admin.");
         }
-        
+
         if (filter_var($itemId, FILTER_VALIDATE_INT) === false) {
             return $this->redirectToRoute('404');
         }
-    
+
         //
         // Grab item
         //
@@ -97,13 +101,13 @@ class ItemController extends AbstractController
         if ($item == null || !isset($item->ItemSearchCategory->ID)) {
             return $this->redirectToRoute('404');
         }
-    
+
         // tracking
         RedisTracking::increment('PAGE_VIEW');
-    
+
         // handle item
         //$item = Language::handle($item); done in gameDataSource
-        
+
         // grab user if they're online
         $user = $this->users->getUser(false);
 
@@ -111,7 +115,7 @@ class ItemController extends AbstractController
         $server     = GameServers::getServer($request->get('server'));
         $dcServers  = GameServers::getDataCenterServers($server);
         $dc         = GameServers::getDataCenter($server);
-        
+
         /*
         // grab item queue info from db
         $itemQueue = "SELECT * FROM companion_market_items WHERE item = ? AND server = ? LIMIT 1";
@@ -125,13 +129,13 @@ class ItemController extends AbstractController
         $this->itemPopularity->hit($request, $itemId);
         //$this->itemViews->hit($request, $itemId);
         $this->users->setLastUrl($request);
-        
+
         // grab market for this dc
         $market        = $this->companionMarket->get($dcServers, $itemId);
         $times         = [];
         $updated       = 0;
         $activityCount = 0;
-        
+
         foreach ($market as $marketServer => $md) {
             if ($md == null) {
                 continue;
@@ -142,7 +146,7 @@ class ItemController extends AbstractController
                 $updated = $md['Updated'];
             }
             */
-    
+
             $activityCount += count($md['listings']);
             $activityCount += count($md['recentHistory']);
 
@@ -154,27 +158,29 @@ class ItemController extends AbstractController
 
         // grab market census
         $census = $this->companionCensus->generate($dc, $itemId, $market);
+        $globalMarketData = $this->universalisApi->getItemStrLocale($dc, $itemId);
 
         $loadSpeed = microtime(true) - $time;
 
         // response
         $data = [
-            'item'           => $item,
-            'market'         => $market,
-            'census'         => $census,
-            'faved'          => $user ? $user->hasFavouriteItem($itemId) : false,
-            'lists'          => $user ? $user->getCustomLists() : [],
-            'cheapest'       => $this->companionStatistics->cheapest($market),
-            'update_times'   => $times,
-            'activity_count' => $activityCount,
-            'chart_max'      => 100,
-            'load_speed'     => round($loadSpeed, 3),
-            'server'         => [
-                'name'       => $server,
-                'dc'         => $dc,
-                'dc_servers' => $dcServers
+            'item'             => $item,
+            'market'           => $market,
+            'census'           => $census,
+            'globalMarketData' => $globalMarketData,
+            'faved'            => $user ? $user->hasFavouriteItem($itemId) : false,
+            'lists'            => $user ? $user->getCustomLists() : [],
+            'cheapest'         => $this->companionStatistics->cheapest($market),
+            'update_times'     => $times,
+            'activity_count'   => $activityCount,
+            'chart_max'        => 100,
+            'load_speed'       => round($loadSpeed, 3),
+            'server'           => [
+                'name'         => $server,
+                'dc'           => $dc,
+                'dc_servers'   => $dcServers
             ],
-            'alerts'    => [
+            'alerts'           => [
                 'users'             => $user ? $this->userAlerts->getAllForItemForCurrentUser($itemId) : [],
                 'trigger_fields'    => UserAlert::TRIGGER_FIELDS,
                 'trigger_operators' => UserAlert::TRIGGER_OPERATORS,
@@ -185,7 +191,7 @@ class ItemController extends AbstractController
                 ],
             ],
         ];
-        
+
         return $this->render('Product/index.html.twig', $data);
     }
 }

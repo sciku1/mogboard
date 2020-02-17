@@ -1,0 +1,63 @@
+<div class="highchart-noborder" style="width:100%;">
+    <div id="{{ chart.id }}"></div>
+</div>
+<script>
+var seriesData = {{ chart.series|json_encode|raw }};
+seriesData[0].data = seriesData[0].data.sort(function(a, b) {
+    return a.y - b.y;
+}){% if server is defined %}.map(function(el) {
+    if (el.name === '{{ server }}') {
+        el.selected = true;
+        el.sliced = true;
+    }
+    return el;
+}){% endif %};
+
+var pieColors = (function() {
+    var pieColorsReturn = [];
+    var baseColor = '#7c6939';
+
+    var gradience = 1.3;
+    var shift = 1.2;
+    var tweak = 17;
+
+    for (var i = 0; i < seriesData[0].data.length; i++) {
+        pieColorsReturn.push(Highcharts.Color(baseColor).brighten(
+            Math.pow(gradience, (i - shift * seriesData[0].data.length) / (seriesData[0].data.length / tweak))
+        ).get());
+    }
+    return pieColorsReturn;
+})();
+
+// Create the chart
+var chart{{ chart.id }} = Highcharts.chart('{{ chart.id }}', {
+    chart: {
+        backgroundColor: null,
+        borderWidth: null,
+        height: 300,
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        shadow: false,
+        type: 'pie',
+    },
+    plotOptions: {
+        pie: {
+            colors: pieColors,
+            dataLabels: {
+                enabled: false,
+            },
+        },
+    },
+    series: seriesData,
+    title: {
+        text: undefined, // We use the parent flexbox as a container for the title
+    },
+    credits: {
+        text: "",
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b><br>Count: <b>{point.y}</b>',
+    },
+});
+</script>
