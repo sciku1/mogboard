@@ -104,6 +104,16 @@
     }
 } %}
 
+<div>
+    <h6>STACK SIZE HISTOGRAM</h6>
+    {% include 'Product/histogram_hc.html.twig' with {
+        chart: chart,
+        serverName: serverName,
+        stackSizeHistogram: stackSizeHistogram,
+        stackSizeHistogramNQ: stackSizeHistogramNQ,
+        stackSizeHistogramHQ: stackSizeHistogramHQ,
+    } %}
+</div>
 
 {% set averagePricesNQ   = census.Global.Prices_Average_pricePerUnit_NQ %}
 {% set averagePricesHQ   = census.Global.Prices_Average_pricePerUnit_HQ %}

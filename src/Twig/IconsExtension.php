@@ -29,7 +29,7 @@ class IconsExtension extends AbstractExtension
      */
     public function getIcon2x($icon)
     {
-        return "https://xivapi.com/i2/ls/{$icon}.png";
+        return "/i/icon2x/{$icon}.png";
     }
     
     /**
