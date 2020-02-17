@@ -285,8 +285,9 @@ class UserLists
     
             array_splice($serverMarketStats[$itemId]['Top5CheapestServers'], 5);
             array_splice($serverMarketStats[$itemId]['Top5HistorySales'], 5);
-    
-            $serverMarketStats[$itemId]['RoughUpdateTime'] = round(Average::mean($lastUpdatedTimes[$itemId]));
+            
+            // Now gets the most recent update time, returning an average results in accurate but weird-looking values
+            $serverMarketStats[$itemId]['RoughUpdateTime'] = min($lastUpdatedTimes[$itemId]);
         }
     
         Redis::cache()->set($key, $serverMarketStats, 60);
