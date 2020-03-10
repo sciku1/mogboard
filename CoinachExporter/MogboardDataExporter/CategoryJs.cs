@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using MogboardDataExporter.Data;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SaintCoinach;
 using SaintCoinach.Xiv;
@@ -35,14 +36,12 @@ namespace MogboardDataExporter
                         var outputItem = new string[6];
 
                         string classJobAbbr = item.ItemSearchCategory.ClassJob.Abbreviation;
-                        if (item.ItemSearchCategory.ClassJob.ParentClassJob.Abbreviation.ToString() != classJobAbbr)
-                        {
-                            classJobAbbr += " " + item.ItemSearchCategory.ClassJob.ParentClassJob.Abbreviation;
-                        }
+                        if (item.ItemSearchCategory.ClassJob.ParentClassJob.Abbreviation != classJobAbbr)
+                            classJobAbbr = item.ItemSearchCategory.ClassJob.ParentClassJob.Abbreviation + " " + classJobAbbr;
+                        else if (Resources.ClassJobMap.TryGetValue(classJobAbbr, out string jobAbbr))
+                            classJobAbbr += " " + jobAbbr;
                         else if (classJobAbbr == "ADV")
-                        {
                             classJobAbbr = "";
-                        }
 
                         outputItem[0] = item.Key.ToString();
                         outputItem[1] = item.Name.ToString();
