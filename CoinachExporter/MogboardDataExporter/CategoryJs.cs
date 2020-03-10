@@ -27,8 +27,10 @@ namespace MogboardDataExporter
                         continue;
 
                     var categoryItems = new List<string[]>();
+                    List<Item> sortedItems = itemSheets[i].Where(item => item.ItemSearchCategory.Key == category.Key).ToList();
+                    sortedItems.Sort((item1, item2) => item2.ItemLevel.Key - item1.ItemLevel.Key);
 
-                    foreach (var item in itemSheets[i].Where(item => item.ItemSearchCategory.Key == category.Key))
+                    foreach (var item in sortedItems)
                     {
                         var outputItem = new string[6];
 
