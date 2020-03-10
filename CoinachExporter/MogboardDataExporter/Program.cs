@@ -39,7 +39,7 @@ namespace MogboardDataExporter
             categoryjs:
             CategoryJs.Generate(realm, realmDe, realmFr, realmJp, categoryJsOutputPath);
             #endregion
-
+            goto end;
             #region Item Export
             items:
             var items = realm.GameData.GetSheet<Item>();
