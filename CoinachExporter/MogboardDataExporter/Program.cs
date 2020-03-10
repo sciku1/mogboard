@@ -21,6 +21,7 @@ namespace MogboardDataExporter
         static void Main(string[] args)
         {
             var outputPath = Path.Combine("..", "..", "..", "..", "DataExports");
+            var categoryJsOutputPath = Path.Combine("..", "..", "..", "..", "public", "data");
             
             if (Directory.Exists(outputPath))
                 Directory.Delete(outputPath, true);
@@ -34,9 +35,13 @@ namespace MogboardDataExporter
 
             Console.WriteLine("Starting game data export...");
 
-            //goto world_export;
+            #region Category JS Export
+            categoryjs:
+            CategoryJs.Generate(realm, realmDe, realmFr, realmJp, categoryJsOutputPath);
+            #endregion
 
             #region Item Export
+            items:
             var items = realm.GameData.GetSheet<Item>();
             var itemsDe = realmDe.GameData.GetSheet<Item>();
             var itemsFr = realmFr.GameData.GetSheet<Item>();
@@ -113,7 +118,7 @@ namespace MogboardDataExporter
             #endregion
 
             #region World Export
-            //world_export:
+            world_export:
             var worlds = realm.GameData.GetSheet("World");
 
             var outputWorlds = new List<JObject>();
@@ -134,6 +139,7 @@ namespace MogboardDataExporter
             System.IO.File.WriteAllText(Path.Combine(outputPath, "World.json"), JsonConvert.SerializeObject(outputWorlds));
             #endregion
 
+            end:
             Console.WriteLine("Done!");
             Console.ReadKey();
         }
