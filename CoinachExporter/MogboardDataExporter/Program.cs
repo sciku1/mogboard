@@ -33,20 +33,20 @@ namespace MogboardDataExporter
             var realmFr = new ARealmReversed(args[0], Language.French);
             var realmJp = new ARealmReversed(args[0], Language.Japanese);
 
-            Console.WriteLine("Starting game data export...");
-
-            #region Category JS Export
-            categoryjs:
-            CategoryJs.Generate(realm, realmDe, realmFr, realmJp, categoryJsOutputPath);
-            #endregion
-            goto end;
-            #region Item Export
-            items:
             var items = realm.GameData.GetSheet<Item>();
             var itemsDe = realmDe.GameData.GetSheet<Item>();
             var itemsFr = realmFr.GameData.GetSheet<Item>();
             var itemsJp = realmJp.GameData.GetSheet<Item>();
 
+            Console.WriteLine("Starting game data export...");
+            
+            #region Category JS Export
+            categoryjs:
+            CategoryJs.Generate(realm, realmDe, realmFr, realmJp, categoryJsOutputPath);
+            #endregion
+            
+            #region Item Export
+            items:
             foreach (var category in realm.GameData.GetSheet<ItemSearchCategory>())
             {
                 // We don't need those, not for sale
@@ -84,6 +84,27 @@ namespace MogboardDataExporter
             }
             #endregion
 
+            #region Marketable Item JSON Export
+            marketableitems:
+            dynamic itemJSONOutput = new JObject();
+            var itemID = new List<int>();
+            foreach (var category in realm.GameData.GetSheet<ItemSearchCategory>())
+            {
+                if (category.Key < 9)
+                    continue;
+                var itemSet = items
+                    .Where(item => item.ItemSearchCategory.Key == category.Key)
+                    .Select(item => item.Key);
+                if (itemSet.Count() == 0)
+                    continue;
+                itemID = itemID.Concat(itemSet).ToList();
+
+                Console.WriteLine($"Cat {category.Key}: {itemSet.Count()}");
+            }
+            itemJSONOutput.itemID = JToken.FromObject(itemID);
+            System.IO.File.WriteAllText(Path.Combine(outputPath, $"item.json"), JsonConvert.SerializeObject(itemJSONOutput));
+            #endregion
+            
             #region ItemSearchCategory Export
             System.IO.File.WriteAllText(Path.Combine(outputPath, "ItemSearchCategory_Keys.json"), JsonConvert.SerializeObject(realm.GameData.GetSheet("ItemSearchCategory").Keys.ToList()));
             #endregion
