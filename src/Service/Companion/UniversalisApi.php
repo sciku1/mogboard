@@ -62,6 +62,27 @@ class UniversalisApi
         ]);
     }
 
+    public function getLeastRecentlyUpdated(int $worldId)
+    {
+        return $this->query("GET", "api/extra/stats/least-recently-updated", [
+            RequestOptions::QUERY => [
+                'world' => $worldId,
+                'src'   => 'universalis_front'
+            ]
+        ]);
+    }
+
+    public function getDCLeastRecentlyUpdated(string $dcName)
+    {
+        return $this->query("GET", "api/extra/stats/least-recently-updated", [
+            RequestOptions::QUERY => [
+                'dcName' => $dcName,
+                'src'   => 'universalis_front'
+            ]
+        ]);
+    }
+
+
     public function getUploadHistory()
     {
         return $this->query("GET", "api/extra/stats/upload-history", [
