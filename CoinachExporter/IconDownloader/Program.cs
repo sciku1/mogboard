@@ -132,7 +132,7 @@ namespace IconDownloader
                         100);
                     var imageUrl = itemPage.DocumentNode
                         .SelectSingleNode(
-                            "/html/body/div[4]/div[2]/div[1]/div/div[2]/div[2]/div[1]/div[1]/div[1]/img[2]")
+                            "/html/body/div[3]/div[2]/div[1]/div/div[2]/div[2]/div[1]/div[1]/div[1]/img[2]")
                         .GetAttributeValue("src", string.Empty);
 
                     try
