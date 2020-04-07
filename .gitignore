@@ -380,3 +380,7 @@ MigrationBackup/
 
 # item icons
 public/i/icon2x/
+
+# Environment variable files
+.env
+.env.local

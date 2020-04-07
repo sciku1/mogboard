@@ -70,7 +70,7 @@ namespace IconDownloader
 
                 var tableNode =
                     searchPage.DocumentNode.SelectSingleNode(
-                        "/html/body/div[4]/div[2]/div[1]/div/div[2]/div[2]/div[5]/div/table/tbody");
+                        "/html/body/div[3]/div[2]/div[1]/div/div[2]/div[2]/div[5]/div/table/tbody");
 
                 var tableEntries = tableNode.SelectNodes("tr");
 
@@ -159,13 +159,13 @@ namespace IconDownloader
             return $"https://jp.finalfantasyxiv.com/lodestone/playguide/db/item/?page={page}";
         }
 
-        private static int GetPageCount()
+        private static int GetPageCount()   
         {
             var url = GetSearchUrl(1);
 
             var doc = Get(url);
             
-            var node = doc.DocumentNode.SelectSingleNode("/html/body/div[4]/div[2]/div[1]/div/div[2]/div[2]/div[6]/div/div/ul/li[9]/a");
+            var node = doc.DocumentNode.SelectSingleNode("/html/body/div[3]/div[2]/div[1]/div/div[2]/div[2]/div[6]/div/div/ul/li[9]/a");
             var sendTo = node.GetAttributeValue("href", "1");
 
             var pageNum = sendTo.Substring(sendTo.IndexOf('=') + 1).Substring(0, 3);
