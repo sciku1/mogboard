@@ -59,12 +59,14 @@ var chart{{ chart.id }} = Highcharts.chart('{{ chart.id }}', {
             data: convert({{ stackSizeHistogramNQ|json_encode|raw }}),
             zIndex: -1,
         },
+        {% if item.CanBeHq == 1 %}
         {
             id: 'histogram_all_HQ_{{ serverName }}',
             name: '(High Quality) Stack Size Histogram',
             data: convert({{ stackSizeHistogramHQ|json_encode|raw }}),
             zIndex: 0,
         },
+        {% endif %}
     ],
 });
 </script>
