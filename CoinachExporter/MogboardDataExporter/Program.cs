@@ -39,7 +39,7 @@ namespace MogboardDataExporter
             var itemsJp = realmJp.GameData.GetSheet<Item>();
 
             Console.WriteLine("Starting game data export...");
-            
+            goto marketableitems;
             #region Category JS Export
             categoryjs:
             CategoryJs.Generate(realm, realmDe, realmFr, realmJp, categoryJsOutputPath);
@@ -101,10 +101,11 @@ namespace MogboardDataExporter
 
                 Console.WriteLine($"Cat {category.Key}: {itemSet.Count()}");
             }
+            itemID.Sort();
             itemJSONOutput.itemID = JToken.FromObject(itemID);
             System.IO.File.WriteAllText(Path.Combine(outputPath, $"item.json"), JsonConvert.SerializeObject(itemJSONOutput));
             #endregion
-            
+            goto end;
             #region ItemSearchCategory Export
             System.IO.File.WriteAllText(Path.Combine(outputPath, "ItemSearchCategory_Keys.json"), JsonConvert.SerializeObject(realm.GameData.GetSheet("ItemSearchCategory").Keys.ToList()));
             #endregion
