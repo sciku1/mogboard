@@ -1,0 +1,185 @@
+{% extends 'base.html.twig' %}
+{% set title = 'About' %}
+
+{% block body %}
+
+<div class="page">
+    <div class="mogboard-header">
+        <img src="/i/brand/universalis/universalis_bodge.png">
+    </div>
+
+    <div class="page-block">
+
+        <br><br>
+
+        <div class="page-short">
+            <h3>What is <strong>Universalis</strong>?</h3>
+            <p>
+                The site allows you to view in-game market for multiple servers at
+                anytime, anywhere. It uses crowd-sourced data from multiple sources to provide
+                the most up-to-date prices possible.
+            </p>
+        </div>
+
+        <br><br>
+
+        <div class="page-short">
+            <h3>What information can I get?</h3>
+            <p>
+                All market information is available: Prices, Materia, Retainer, Crafters and even Buyers.
+                Everything that you see in-game is available. Additional data-views have been added
+                such as graphs, extended history and cross-world summary is also included.
+            </p>
+        </div>
+
+        <br><br>
+
+        <div class="page-short">
+            <h3>Can I have access to the data?</h3>
+            <p>
+                <strong>Definitely!</strong>
+                <br><br>
+                Everything you see on Universalis is open for anyone to use, to learn more
+                about how to access the data using a REST API Service, check out the
+                <a href="https://universalis.app/docs">Universalis</a> documentation.
+            </p>
+        </div>
+
+        <br><br>
+
+        <div class="page-short">
+            <h3>Special thanks</h3>
+            <p>
+                We would like to thank Vekien and Miu from <a href="https://xivapi.com">XIVAPI</a> for their initial work on mogboard,
+                which made this site, in its current state, possible.
+            </p>
+        </div>
+
+        <br><br>
+{#
+        <div class="page-short">
+            <h3>Supporting <strong>mogboard.com</strong></h3>
+            <p>
+                If you would like to support mogboard as well as XIVAPI you can do
+                so via the Patreon: <a href="https://www.patreon.com/vekien">patreon.com/vekien</a>
+            </p>
+            <p>
+                Money can be tight, just by using the site and sharing it with your friends
+                will indirectly support the site in more ways than you know. If you like the
+                site, be sure to spread the word :)
+            </p>
+        </div>
+#}
+
+        <br><br>
+
+    </div>
+
+    <div class="page-banner">
+        <img src="/i/bg/about.png">
+    </div>
+
+    <div class="page-block">
+
+        <br><br>
+
+        <div class="page-short">
+            <h3 id="technical">So, how does it actually work? Get Technical.</h3>
+
+            <p>
+                <strong>Universalis</strong> runs a REST API that applications can post market board data to,
+                after they collect the data from a running game instance by multiple users, anonymously.
+            <p>
+                It stores this data, and reports it back to anyone that requests its endpoints - including this frontend,
+                which visualizes the stored data and notifies you about changes.
+            </p>
+
+{#
+            <div class="table-dark">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Queue Name</th>
+                            <th>Queue Number</th>
+                            <th>Items</th>
+                            <th>Cycle Time</th>
+                            <th>Cycle Time Real</th>
+                            <th>Diff</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for report in market_stats.Report %}
+                        <tr>
+                            <td>{{ report.Name }}</td>
+                            <td>{{ report.Priority }}</td>
+                            <td>{{ report.Items }}</td>
+                            <td>{{ report.CycleTime }}</td>
+                            <td>{{ report.CycleTimeReal }}</td>
+                            <td class="{{ report.CycleDiffSec|replace({ ',': '' }) < 300 ? 'text-green' : 'text-red' }}">{{ report.CycleDiff }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            #}
+
+            <br><br>
+        </div>
+    </div>
+
+    <div class="page-block">
+        <br><br>
+
+        <div class="page-short">
+            <h3>Credits</h3>
+            <p>
+                <div class="flex">
+                    <div class="flex_10">
+                        <img src="/i/brand/universalis/kara.png" class="mog-avatar">
+                    </div>
+                    <div class="flex_90 mog-credits">
+                        <h2>karashiiro</h2>
+                        Database API, server maintenance
+                    </div>
+                </div>
+            </p>
+            <br>
+            <p>
+                <div class="flex">
+                    <div class="flex_10">
+                        <img src="/i/brand/universalis/goat.png" class="mog-avatar">
+                    </div>
+                    <div class="flex_90 mog-credits">
+                        <h2>goat</h2>
+                        Game stuff, stealing mogboard
+                    </div>
+                </div>
+            </p>
+            <p class="mog-honorable">
+                Also thanks to: Vekien, Miu, Mino and all XIVLauncher users!
+            </p>
+        </div>
+
+        <br><br>
+    </div>
+
+    <div class="page-block">
+        <br><br>
+
+        <div class="page-short">
+            <h3>I have more questions!</h3>
+            <p>
+                Hop onto <a href="https://discord.gg/JcMvMxD">our discord</a> and you can
+                ask all your questions.
+            </p>
+            <p>
+                You can also pm me: <span class="text-yellow">meeboo</span> if you prefer :)
+            </p>
+        </div>
+
+        <br><br>
+    </div>
+
+</div>
+
+{% endblock %}
