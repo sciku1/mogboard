@@ -2,14 +2,11 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Net.Http;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SaintCoinach;
 using SaintCoinach.Ex;
-using SaintCoinach.IO;
-using SaintCoinach.Libra;
 using SaintCoinach.Xiv;
 using Directory = System.IO.Directory;
 using Item = SaintCoinach.Xiv.Item;
@@ -22,6 +19,8 @@ namespace MogboardDataExporter
         {
             var outputPath = Path.Combine("..", "..", "..", "..", "DataExports");
             var categoryJsOutputPath = Path.Combine("..", "..", "..", "..", "public", "data");
+
+            var http = new HttpClient();
             
             if (Directory.Exists(outputPath))
                 Directory.Delete(outputPath, true);
@@ -39,7 +38,8 @@ namespace MogboardDataExporter
             var itemsJp = realmJp.GameData.GetSheet<Item>();
 
             Console.WriteLine("Starting game data export...");
-            goto marketableitems;
+            goto town_export;
+
             #region Category JS Export
             categoryjs:
             CategoryJs.Generate(realm, realmDe, realmFr, realmJp, categoryJsOutputPath);
@@ -105,7 +105,7 @@ namespace MogboardDataExporter
             itemJSONOutput.itemID = JToken.FromObject(itemID);
             System.IO.File.WriteAllText(Path.Combine(outputPath, $"item.json"), JsonConvert.SerializeObject(itemJSONOutput));
             #endregion
-            goto end;
+            
             #region ItemSearchCategory Export
             System.IO.File.WriteAllText(Path.Combine(outputPath, "ItemSearchCategory_Keys.json"), JsonConvert.SerializeObject(realm.GameData.GetSheet("ItemSearchCategory").Keys.ToList()));
             #endregion
@@ -116,6 +116,17 @@ namespace MogboardDataExporter
             var townsDe = realmDe.GameData.GetSheet("Town");
             var townsFr = realmFr.GameData.GetSheet("Town");
             var townsJp = realmJp.GameData.GetSheet("Town");
+
+            var townsChs = JObject.Parse(http.GetStringAsync(new Uri("https://cafemaker.wakingsands.com/Town"))
+                    .GetAwaiter().GetResult())["Results"]
+                .Children()
+                .Select(town => town.ToObject<XIVAPITown>())
+                .ToList();
+            townsChs.Add(new XIVAPITown
+            {
+                ID = 0,
+                Name = "不知何处",
+            });
 
             var outputTowns = new List<JObject>();
 
@@ -132,6 +143,7 @@ namespace MogboardDataExporter
                 outputTown.Name_de = townsDe.First(localItem => localItem.Key == town.Key).AsString("Name").ToString();
                 outputTown.Name_fr = townsFr.First(localItem => localItem.Key == town.Key).AsString("Name").ToString();
                 outputTown.Name_jp = townsJp.First(localItem => localItem.Key == town.Key).AsString("Name").ToString();
+                outputTown.Name_chs = townsChs.First(localItem => localItem.ID == town.Key).Name;
 
                 outputTowns.Add(outputTown);
             }
@@ -167,5 +179,16 @@ namespace MogboardDataExporter
         }
 
         private static string GetIconFolder(int iconId) => (Math.Floor(iconId / 1000d) * 1000).ToString("000000");
+
+        private class XIVAPITown
+        {
+            public int ID { get; set; }
+
+            public string Icon { get; set; }
+
+            public string Name { get; set; }
+
+            public string Url { get; set; }
+        }
     }
 }
