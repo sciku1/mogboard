@@ -11,13 +11,21 @@ class GameDataSource
     /** @var XIVAPI */
     private $xivapi;
 
+    /** @var CafeMaker */
+    private $cafeMaker;
+
     public function __construct()
     {
         $this->xivapi = new XIVAPI();
+        $this->$cafeMaker = new CafeMaker();
     }
 
-    public function getItem(int $itemId)
+    public function getItem(int $itemId, bool $cn = false)
     {
+        if ($cn) {
+            return $this->$cafeMaker->getItem($itemId);
+        }
+
         $cachedItem = $this->handle("xiv_Item_{$itemId}");
         if ($cachedItem == null) {
             $cachedItem = $this->xivapi->content->Item()->one($itemId);
@@ -30,8 +38,12 @@ class GameDataSource
         return json_decode(json_encode($cachedItem, FALSE));
     }
     
-    public function getRecipe(int $recipeId)
+    public function getRecipe(int $recipeId, bool $cn = false)
     {
+        if ($cn) {
+            return $this->$cafeMaker->getRecipe($recipeId);
+        }
+
         $cachedRecipe = $this->handle("xiv_Recipe_{$recipeId}");
         if ($cachedRecipe == null) {
             $cachedRecipe = $this->xivapi->content->Recipe()->one($recipeId);
@@ -44,8 +56,12 @@ class GameDataSource
         return json_decode(json_encode($cachedRecipe, FALSE));
     }
 
-    public function getMateria(int $materiaId)
+    public function getMateria(int $materiaId, bool $cn = false)
     {
+        if ($cn) {
+            return $this->$cafeMaker->getMateria($materiaId);
+        }
+
         $cachedMateria = $this->handle("xiv_Materia_{$materiaId}");
         if ($cachedMateria == null) {
             $cachedMateria = $this->xivapi->content->Materia()->one($materiaId);
@@ -58,9 +74,9 @@ class GameDataSource
         return json_decode(json_encode($cachedMateria, FALSE));
     }
 
-    public function getMateriaItem(int $materiaId, int $materiaClass)
+    public function getMateriaItem(int $materiaId, int $materiaClass, bool $cn = false)
     {
-        $materia = $this->getMateria($materiaId);
+        $materia = $this->getMateria($materiaId, $cn);
 
         return $this->getItem(((Array) $materia)["Item{$materiaClass}TargetID"]);
     }
