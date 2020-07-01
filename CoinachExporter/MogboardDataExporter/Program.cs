@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SaintCoinach;
@@ -38,8 +40,7 @@ namespace MogboardDataExporter
             var itemsJp = realmJp.GameData.GetSheet<Item>();
 
             Console.WriteLine("Starting game data export...");
-            goto town_export;
-
+            goto items;
             #region Category JS Export
             categoryjs:
             CategoryJs.Generate(realm, realmDe, realmFr, realmJp, categoryJsOutputPath);
@@ -47,6 +48,8 @@ namespace MogboardDataExporter
             
             #region Item Export
             items:
+            var itemsChs = GetChineseItems(http).GetAwaiter().GetResult();
+
             foreach (var category in realm.GameData.GetSheet<ItemSearchCategory>())
             {
                 // We don't need those, not for sale
@@ -61,13 +64,16 @@ namespace MogboardDataExporter
 
                     outputItem.ID = item.Key;
 
-                    var iconId = (UInt16) item.GetRaw("Icon");
+                    var iconId = (ushort) item.GetRaw("Icon");
                     outputItem.Icon = $"/i/{GetIconFolder(iconId)}/{iconId}.png";
 
                     outputItem.Name_en = item.Name.ToString();
                     outputItem.Name_de = itemsDe.First(localItem => localItem.Key == item.Key).Name.ToString();
                     outputItem.Name_fr = itemsFr.First(localItem => localItem.Key == item.Key).Name.ToString();
                     outputItem.Name_jp = itemsJp.First(localItem => localItem.Key == item.Key).Name.ToString();
+                    
+                    var nameChs = itemsChs.FirstOrDefault(localItem => localItem.Key == item.Key)?.Name.ToString();
+                    outputItem.Name_chs = string.IsNullOrEmpty(nameChs) ? item.Name.ToString() : nameChs;
 
                     outputItem.LevelItem = item.ItemLevel.Key;
                     outputItem.Rarity = item.Rarity;
@@ -95,7 +101,7 @@ namespace MogboardDataExporter
                 var itemSet = items
                     .Where(item => item.ItemSearchCategory.Key == category.Key)
                     .Select(item => item.Key);
-                if (itemSet.Count() == 0)
+                if (!itemSet.Any())
                     continue;
                 itemID = itemID.Concat(itemSet).ToList();
 
@@ -103,7 +109,7 @@ namespace MogboardDataExporter
             }
             itemID.Sort();
             itemJSONOutput.itemID = JToken.FromObject(itemID);
-            System.IO.File.WriteAllText(Path.Combine(outputPath, $"item.json"), JsonConvert.SerializeObject(itemJSONOutput));
+            System.IO.File.WriteAllText(Path.Combine(outputPath, "item.json"), JsonConvert.SerializeObject(itemJSONOutput));
             #endregion
             
             #region ItemSearchCategory Export
@@ -178,17 +184,49 @@ namespace MogboardDataExporter
             Console.ReadKey();
         }
 
+        private static async Task<IEnumerable<KeyAndName>> GetChineseItems(HttpClient http)
+        {
+            var items = new List<KeyAndName>();
+
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            var counter = 1;
+            var pageTotal = JObject.Parse(
+                await http.GetStringAsync(new Uri($"https://cafemaker.wakingsands.com/Item")))["Pagination"]["PageTotal"].ToObject<int>();
+            Console.Write($"Downloading Chinese game data from FFCAFE (1/{pageTotal})...");
+            Parallel.For(1, pageTotal, i =>
+            {
+                var res = JObject.Parse(http.GetStringAsync(new Uri($"https://cafemaker.wakingsands.com/Item?Page={i}")).GetAwaiter().GetResult());
+                Console.CursorLeft = "Downloading Chinese game data from FFCAFE ".Length;
+                Console.Write($"({++counter}/{pageTotal})...");
+                items.AddRange(res["Results"].Children().Select(item => new KeyAndName
+                {
+                    Key = item["ID"].ToObject<int>(),
+                    Name = item["Name"].ToObject<string>(),
+                }));
+            });
+
+            stopwatch.Stop();
+            Console.WriteLine($" Done ({stopwatch.ElapsedMilliseconds / 1000.0f}s)!");
+
+            return items;
+        }
+
         private static string GetIconFolder(int iconId) => (Math.Floor(iconId / 1000d) * 1000).ToString("000000");
 
         private class XIVAPITown
         {
             public int ID { get; set; }
-
             public string Icon { get; set; }
-
             public string Name { get; set; }
-
             public string Url { get; set; }
+        }
+
+        private class KeyAndName
+        {
+            public int Key { get; set; }
+            public string Name { get; set; }
         }
     }
 }
