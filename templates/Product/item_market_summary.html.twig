@@ -136,7 +136,7 @@
             <br>
         {% endif %}
 
-        <h6>NQ Prices (Includes 5% GST)</h6>
+        <h6>NQ Prices{{ (dcName in ['LuXingNiao','MoGuLi','MaoXiaoPang']) ? '' : ' (Includes 5% GST)' }}</h6>
         {% include 'Product/prices.html.twig' with {
             'prices': census.Global.PricesNQ|slice(0, 10),
             'crossWorld': true,
