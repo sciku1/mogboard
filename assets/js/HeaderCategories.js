@@ -64,7 +64,7 @@ class HeaderCategories
         });
 
         $('aside .nav-box button').on('click', event => {
-            const chinese = Settings.language === 'chs';
+            const chinese = Settings.getLanguage() === 'chs';
 
             const id = $(event.currentTarget).attr('id');
             const items = this.categories[id];
@@ -124,7 +124,7 @@ class HeaderCategories
 
     openCategory(id)
     {
-        const chinese = Settings.language === 'chs';
+        const chinese = Settings.getLanguage() === 'chs';
 
         this.uiView.removeClass('open');
         this.uiCategory.addClass('open');

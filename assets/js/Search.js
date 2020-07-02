@@ -23,7 +23,7 @@ class Search
             this.uiView.removeClass('open');
             this.uiInput.removeClass('complete');
 
-            const chinese = Settings.language === 'chs';
+            const chinese = Settings.getLanguage() === 'chs';
 
             /**
              * Check search term
