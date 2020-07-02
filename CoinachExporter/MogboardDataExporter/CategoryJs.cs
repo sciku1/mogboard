@@ -94,7 +94,7 @@ namespace MogboardDataExporter
                         classJobAbbr += " " + jobAbbr;
 
                     var iconId = (ushort) localItems.First(itm => itm.Key == item.ID).GetRaw("Icon");
-                    var icon = $"/i/{Util.GetIconFolder(iconId)}/{iconId}.png";
+                    var icon = $"/i/{Util.GetIconFolder(iconId)}/{iconId:000000}.png";
 
                     outputItem[0] = item.ID.ToString();
                     outputItem[1] = item.Name;
