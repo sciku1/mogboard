@@ -191,6 +191,8 @@ class GameDataCache
     
         Redis::Cache()->set("mog_ItemSearchCategories", $categories, (60 * 60 * 24 * 365));
         Redis::Cache()->set("mog_ItemSearchCategoriesFull", $categoriesFull, (60 * 60 * 24 * 365));
+
+        $this->console->writeln("Done!");
     }
 
     private function cacheGameCategories()
