@@ -17,13 +17,13 @@ class GameDataSource
     public function __construct()
     {
         $this->xivapi = new XIVAPI();
-        $this->$cafeMaker = new CafeMaker();
+        $this->cafeMaker = new CafeMaker();
     }
 
     public function getItem(int $itemId, bool $cn = false)
     {
         if ($cn) {
-            return $this->$cafeMaker->getItem($itemId);
+            return $this->cafeMaker->getItem($itemId);
         }
 
         $cachedItem = $this->handle("xiv_Item_{$itemId}");
@@ -41,7 +41,7 @@ class GameDataSource
     public function getRecipe(int $recipeId, bool $cn = false)
     {
         if ($cn) {
-            return $this->$cafeMaker->getRecipe($recipeId);
+            return $this->cafeMaker->getRecipe($recipeId);
         }
 
         $cachedRecipe = $this->handle("xiv_Recipe_{$recipeId}");
@@ -59,7 +59,7 @@ class GameDataSource
     public function getMateria(int $materiaId, bool $cn = false)
     {
         if ($cn) {
-            return $this->$cafeMaker->getMateria($materiaId);
+            return $this->cafeMaker->getMateria($materiaId);
         }
 
         $cachedMateria = $this->handle("xiv_Materia_{$materiaId}");

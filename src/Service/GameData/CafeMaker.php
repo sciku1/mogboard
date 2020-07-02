@@ -13,7 +13,7 @@ class CafeMaker {
 
     public function __construct()
     {
-        $this->$curl = curl_init();
+        $this->curl = curl_init();
     }
 
     public function getItem(int $itemId)
@@ -62,10 +62,10 @@ class CafeMaker {
     }
 
     private function getResource(string $url) {
-        curl_setopt_array($this->$curl, [
+        curl_setopt_array($this->curl, [
             CURLOPT_URL => $url
         ]);
-        return curl_exec($this->$curl);
+        return curl_exec($this->curl);
     }
 
     private function handle(string $key)
