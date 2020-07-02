@@ -48,10 +48,14 @@
   <ItemGroup>
     <Compile Include="CategoryJs.cs" />
     <Compile Include="Data\ClassJobMap.cs" />
+    <Compile Include="XIVAPIItem.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\.editorconfig">
+      <Link>.editorconfig</Link>
+    </None>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>

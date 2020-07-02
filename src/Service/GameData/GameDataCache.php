@@ -278,10 +278,10 @@ class GameDataCache
         $root = __DIR__.'/../../../public/data';
 
         // save category data
-        file_put_contents("{$root}/categories_50_en.js", json_encode($itemsEn));
-        file_put_contents("{$root}/categories_50_de.js", json_encode($itemsDe));
-        file_put_contents("{$root}/categories_50_fr.js", json_encode($itemsFr));
-        file_put_contents("{$root}/categories_50_ja.js", json_encode($itemsJa));
-        file_put_contents("{$root}/categories_50_chs.js", json_encode($itemsChs));
+        file_put_contents("{$root}/categories_en.js", json_encode($itemsEn));
+        file_put_contents("{$root}/categories_de.js", json_encode($itemsDe));
+        file_put_contents("{$root}/categories_fr.js", json_encode($itemsFr));
+        file_put_contents("{$root}/categories_ja.js", json_encode($itemsJa));
+        file_put_contents("{$root}/categories_chs.js", json_encode($itemsChs));
     }
 }
