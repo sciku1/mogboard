@@ -65,7 +65,7 @@ namespace MogboardDataExporter
                     outputItem.ID = item.Key;
 
                     var iconId = (ushort) item.GetRaw("Icon");
-                    outputItem.Icon = $"/i/{GetIconFolder(iconId)}/{iconId}.png";
+                    outputItem.Icon = $"/i/{Util.GetIconFolder(iconId)}/{iconId}.png";
 
                     outputItem.Name_en = item.Name.ToString();
                     outputItem.Name_de = itemsDe.First(localItem => localItem.Key == item.Key).Name.ToString();
@@ -150,7 +150,7 @@ namespace MogboardDataExporter
                 outputTown.ID = town.Key;
 
                 var iconObj = town.GetRaw("Icon");
-                outputTown.Icon = (int) iconObj != 0 ? $"/i/{GetIconFolder((int) iconObj)}/{(int) iconObj}.png" : $"/i/{GetIconFolder(060880)}/060880.png";
+                outputTown.Icon = (int) iconObj != 0 ? $"/i/{Util.GetIconFolder((int) iconObj)}/{(int) iconObj}.png" : $"/i/{Util.GetIconFolder(060880)}/060880.png";
 
                 outputTown.Name_en = town.AsString("Name").ToString();
                 outputTown.Name_de = townsDe.First(localItem => localItem.Key == town.Key).AsString("Name").ToString();
@@ -229,8 +229,6 @@ namespace MogboardDataExporter
 
             return items;
         }
-
-        private static string GetIconFolder(int iconId) => (Math.Floor(iconId / 1000d) * 1000).ToString("000000");
 
         private class XIVAPITown
         {

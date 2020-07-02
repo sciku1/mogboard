@@ -93,9 +93,12 @@ namespace MogboardDataExporter
                     if (Resources.ClassJobMap.TryGetValue(classJobAbbr, out var jobAbbr))
                         classJobAbbr += " " + jobAbbr;
 
+                    var iconId = (ushort) localItems.First(itm => itm.Key == item.ID).GetRaw("Icon");
+                    var icon = $"/i/{Util.GetIconFolder(iconId)}/{iconId}.png";
+
                     outputItem[0] = item.ID.ToString();
                     outputItem[1] = item.Name;
-                    outputItem[2] =  $"/i/{localItems.First(itm => itm.Key == item.ID).Icon.Path.Substring(8, 13)}.png";
+                    outputItem[2] = icon;
                     outputItem[3] = item.LevelItem.ToString();
                     outputItem[4] = item.Rarity.ToString();
                     outputItem[5] = classJobAbbr;

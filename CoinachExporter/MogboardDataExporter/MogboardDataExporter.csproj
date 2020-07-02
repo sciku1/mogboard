@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="CategoryJs.cs" />
     <Compile Include="Data\ClassJobMap.cs" />
+    <Compile Include="Util.cs" />
     <Compile Include="XIVAPIItem.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
