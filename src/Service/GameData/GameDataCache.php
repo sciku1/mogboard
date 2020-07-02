@@ -143,7 +143,7 @@ class GameDataCache
         $categories = [];
         $categoriesFull = [];
 
-        $chsIscMappings = \json_decode(\file_get_contents('DataExports/ItemSearchCategory_Mappings_Chs.json'));
+        $chsIscMappings = \json_decode(\file_get_contents('DataExports/ItemSearchCategory_Mappings_Chs.json'), true);
     
         foreach ($objects as $category) {
             // ignore empty ones
