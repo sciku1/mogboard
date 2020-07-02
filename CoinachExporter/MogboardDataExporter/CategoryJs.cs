@@ -66,13 +66,15 @@ namespace MogboardDataExporter
             }
         }
 
-        public static void GenerateChinese(IEnumerable<XIVAPIItem> itemsChs, string outputPath, HttpClient http)
+        public static void GenerateChinese(ARealmReversed realm, IEnumerable<XIVAPIItem> itemsChs, string outputPath, HttpClient http)
         {
             dynamic output = new JObject();
 
             var categoryIndex = JObject.Parse(http.GetStringAsync(new Uri("https://cafemaker.wakingsands.com/ItemSearchCategory"))
                 .GetAwaiter().GetResult());
             var categories = categoryIndex["Results"].Children().Select(cat => cat.ToObject<XIVAPIShortItemSearchCategory>());
+
+            var localItems = realm.GameData.GetSheet<Item>();
 
             foreach (var category in categories)
             {
@@ -93,7 +95,7 @@ namespace MogboardDataExporter
 
                     outputItem[0] = item.ID.ToString();
                     outputItem[1] = item.Name;
-                    outputItem[2] = item.Icon;
+                    outputItem[2] =  $"/i/{localItems.First(itm => itm.Key == item.ID).Icon.Path.Substring(8, 13)}.png";
                     outputItem[3] = item.LevelItem.ToString();
                     outputItem[4] = item.Rarity.ToString();
                     outputItem[5] = classJobAbbr;

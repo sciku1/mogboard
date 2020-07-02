@@ -45,7 +45,7 @@ namespace MogboardDataExporter
             #region Category JS Export
             categoryjs:
             CategoryJs.Generate(realm, realmDe, realmFr, realmJp, categoryJsOutputPath);
-            CategoryJs.GenerateChinese(itemsChs, categoryJsOutputPath, http);
+            CategoryJs.GenerateChinese(realm, itemsChs, categoryJsOutputPath, http);
             #endregion
             
             #region Item Export
@@ -210,7 +210,6 @@ namespace MogboardDataExporter
                 items.AddRange(res["Results"].Children().Select(item => new XIVAPIItem
                 {
                     ID = item["ID"].ToObject<int>(),
-                    Icon = item["Icon"].ToObject<string>(),
                     ItemSearchCategory = new XIVAPIMicroItemSearchCategory
                     {
                         Category = item["ItemSearchCategory"]["ID"].ToObject<int?>() ?? 0,

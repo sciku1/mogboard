@@ -3,7 +3,6 @@
     public class XIVAPIItem
     {
         public int ID { get; set; }
-        public string Icon { get; set; }
         public XIVAPIMicroItemSearchCategory ItemSearchCategory { get; set; }
         public int LevelItem { get; set; }
         public string Name { get; set; }
