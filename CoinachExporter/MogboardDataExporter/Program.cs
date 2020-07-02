@@ -115,6 +115,13 @@ namespace MogboardDataExporter
             #region ItemSearchCategory Export
             File.WriteAllText(Path.Combine(outputPath, "ItemSearchCategory_Keys.json"), JsonConvert.SerializeObject(realm.GameData.GetSheet("ItemSearchCategory").Keys.ToList()));
             #endregion
+
+            #region Chinese ItemSearchCategory Mappings
+            var categories = JObject.Parse(http.GetStringAsync(new Uri($"https://cafemaker.wakingsands.com/Item")).GetAwaiter()
+                .GetResult())["Results"];
+            var chsIscOutput = categories.ToDictionary(category => category["ID"].ToObject<int>(), category => category["Name"].ToObject<string>());
+            File.WriteAllText(Path.Combine(outputPath, "ItemSearchCategory_Mappings_Chs.json"), JsonConvert.SerializeObject(chsIscOutput));
+            #endregion
             
             #region Town Export
             town_export:
