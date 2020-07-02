@@ -1,6 +1,5 @@
 .idea
 node_modules/
-DataExports/
 
 ###> symfony/framework-bundle ###
 /.env.local

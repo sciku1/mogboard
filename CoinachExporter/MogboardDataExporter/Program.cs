@@ -47,7 +47,7 @@ namespace MogboardDataExporter
             CategoryJs.Generate(realm, realmDe, realmFr, realmJp, categoryJsOutputPath);
             CategoryJs.GenerateChinese(itemsChs, categoryJsOutputPath, http);
             #endregion
-            goto end;
+            
             #region Item Export
             items:
             foreach (var category in realm.GameData.GetSheet<ItemSearchCategory>())
