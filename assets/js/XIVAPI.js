@@ -13,7 +13,7 @@ class XIVAPI
 
         endpoint = endpoint +'?'+ query;
 
-        fetch (`https://xivapi.com${endpoint}`, { mode: 'cors' })
+        fetch(`https://xivapi.com${endpoint}`, { mode: 'cors' })
             .then(response => response.json())
             .then(callback)
     }
@@ -87,7 +87,9 @@ class XIVAPI
      * Get a list of servers grouped by their data center
      */
     getServerList(callback) {
-        this.get('/servers/dc', {}, callback);
+        fetch(`https://universalis.app/json/dc.json`, { mode: 'cors' })
+            .then(response => response.json())
+            .then(callback)
     }
 
     /**
