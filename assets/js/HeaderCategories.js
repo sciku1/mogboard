@@ -64,8 +64,6 @@ class HeaderCategories
         });
 
         $('aside .nav-box button').on('click', event => {
-            const chinese = Settings.getLanguage() === 'chs';
-
             const id = $(event.currentTarget).attr('id');
             const items = this.categories[id];
 
