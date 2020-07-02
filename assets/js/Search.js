@@ -23,6 +23,8 @@ class Search
             this.uiView.removeClass('open');
             this.uiInput.removeClass('complete');
 
+            const chinese = Settings.language === 'chs';
+
             /**
              * Check search term
              */
@@ -37,7 +39,7 @@ class Search
                 return;
             }
 
-            if (searchTerm.length < 2) {
+            if (searchTerm.length < (chinese ? 1 : 2)) {
                 return;
             }
 
@@ -59,7 +61,7 @@ class Search
              * Search
              */
             this.loading.addClass('on');
-            (Settings.language !== 'chs' ? XIVAPI : CafeMaker).search(searchTerm, response => {
+            (chinese ? CafeMaker : XIVAPI).search(searchTerm, response => {
                 this.loading.removeClass('on');
                 this.render(response);
             });
