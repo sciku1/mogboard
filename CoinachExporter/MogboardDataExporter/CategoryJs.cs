@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 
 namespace MogboardDataExporter
 {
@@ -20,7 +21,7 @@ namespace MogboardDataExporter
 
             dynamic output = new JObject();
 
-            for (int i = 0; i < 4; i++)
+            for (var i = 0; i < 4; i++)
             {
                 foreach (var category in realms[i].GameData.GetSheet<ItemSearchCategory>())
                 {
@@ -28,7 +29,7 @@ namespace MogboardDataExporter
                         continue;
 
                     var categoryItems = new List<string[]>();
-                    List<Item> sortedItems = itemSheets[i].Where(item => item.ItemSearchCategory.Key == category.Key).ToList();
+                    var sortedItems = itemSheets[i].Where(item => item.ItemSearchCategory.Key == category.Key).ToList();
                     sortedItems.Sort((item1, item2) => item2.ItemLevel.Key - item1.ItemLevel.Key);
 
                     foreach (var item in sortedItems)
@@ -38,7 +39,7 @@ namespace MogboardDataExporter
                         string classJobAbbr = item.ItemSearchCategory.ClassJob.Abbreviation;
                         if (item.ItemSearchCategory.ClassJob.ParentClassJob.Abbreviation != classJobAbbr)
                             classJobAbbr = item.ItemSearchCategory.ClassJob.ParentClassJob.Abbreviation + " " + classJobAbbr;
-                        else if (Resources.ClassJobMap.TryGetValue(classJobAbbr, out string jobAbbr))
+                        else if (Resources.ClassJobMap.TryGetValue(classJobAbbr, out var jobAbbr))
                             classJobAbbr += " " + jobAbbr;
                         else if (classJobAbbr == "ADV")
                             classJobAbbr = "";
@@ -61,8 +62,62 @@ namespace MogboardDataExporter
                     Console.WriteLine($"Cat {category.Key}: {categoryItems.Count}");
                 }
 
-                File.WriteAllText(Path.Combine(outputPath, $"categories_50_{langs[i]}.js"), JsonConvert.SerializeObject(output));
+                File.WriteAllText(Path.Combine(outputPath, $"categories_{langs[i]}.js"), JsonConvert.SerializeObject(output));
             }
+        }
+
+        public static void GenerateChinese(IEnumerable<XIVAPIItem> itemsChs, string outputPath, HttpClient http)
+        {
+            dynamic output = new JObject();
+
+            var categoryIndex = JObject.Parse(http.GetStringAsync(new Uri("https://cafemaker.wakingsands.com/ItemSearchCategory"))
+                .GetAwaiter().GetResult());
+            var categories = categoryIndex["Results"].Children().Select(cat => cat.ToObject<XIVAPIShortItemSearchCategory>());
+
+            foreach (var category in categories)
+            {
+                if (category.ID < 9)
+                    continue;
+
+                var categoryItems = new List<string[]>();
+                var sortedItems = itemsChs.Where(item => item?.ItemSearchCategory.Category == category.ID).ToList();
+                sortedItems.Sort((item1, item2) => item2.LevelItem - item1.LevelItem);
+
+                foreach (var item in sortedItems)
+                {
+                    var outputItem = new string[6];
+
+                    var classJobAbbr = item.ItemSearchCategory.ClassJob.Abbreviation ?? "";
+                    if (Resources.ClassJobMap.TryGetValue(classJobAbbr, out var jobAbbr))
+                        classJobAbbr += " " + jobAbbr;
+
+                    outputItem[0] = item.ID.ToString();
+                    outputItem[1] = item.Name;
+                    outputItem[2] = item.Icon;
+                    outputItem[3] = item.LevelItem.ToString();
+                    outputItem[4] = item.Rarity.ToString();
+                    outputItem[5] = classJobAbbr;
+
+                    categoryItems.Add(outputItem);
+                }
+
+                if (categoryItems.Count == 0)
+                    continue;
+
+                output[category.ID.ToString()] = JToken.FromObject(categoryItems);
+
+                Console.WriteLine($"Cat {category.ID}: {categoryItems.Count}");
+            }
+
+            File.WriteAllText(Path.Combine(outputPath, "categories_chs.js"), JsonConvert.SerializeObject(output));
+        }
+
+        private class XIVAPIShortItemSearchCategory
+        {
+            public int ID { get; set; }
+            public string Icon { get; set; }
+            public string Name { get; set; }
+            public string Url { get; set; }
         }
     }
 }

@@ -15,9 +15,9 @@ using Item = SaintCoinach.Xiv.Item;
 
 namespace MogboardDataExporter
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             var outputPath = Path.Combine("..", "..", "..", "..", "DataExports");
             var categoryJsOutputPath = Path.Combine("..", "..", "..", "..", "public", "data");
@@ -38,18 +38,18 @@ namespace MogboardDataExporter
             var itemsDe = realmDe.GameData.GetSheet<Item>();
             var itemsFr = realmFr.GameData.GetSheet<Item>();
             var itemsJp = realmJp.GameData.GetSheet<Item>();
+            var itemsChs = GetChineseItems(http).GetAwaiter().GetResult();
 
             Console.WriteLine("Starting game data export...");
-            goto items;
+            
             #region Category JS Export
             categoryjs:
             CategoryJs.Generate(realm, realmDe, realmFr, realmJp, categoryJsOutputPath);
+            CategoryJs.GenerateChinese(itemsChs, categoryJsOutputPath, http);
             #endregion
-            
+            goto end;
             #region Item Export
             items:
-            var itemsChs = GetChineseItems(http).GetAwaiter().GetResult();
-
             foreach (var category in realm.GameData.GetSheet<ItemSearchCategory>())
             {
                 // We don't need those, not for sale
@@ -72,7 +72,7 @@ namespace MogboardDataExporter
                     outputItem.Name_fr = itemsFr.First(localItem => localItem.Key == item.Key).Name.ToString();
                     outputItem.Name_jp = itemsJp.First(localItem => localItem.Key == item.Key).Name.ToString();
                     
-                    var nameChs = itemsChs.FirstOrDefault(localItem => localItem.Key == item.Key)?.Name.ToString();
+                    var nameChs = itemsChs.FirstOrDefault(localItem => localItem.ID == item.Key)?.Name.ToString();
                     outputItem.Name_chs = string.IsNullOrEmpty(nameChs) ? item.Name.ToString() : nameChs;
 
                     outputItem.LevelItem = item.ItemLevel.Key;
@@ -109,11 +109,11 @@ namespace MogboardDataExporter
             }
             itemID.Sort();
             itemJSONOutput.itemID = JToken.FromObject(itemID);
-            System.IO.File.WriteAllText(Path.Combine(outputPath, "item.json"), JsonConvert.SerializeObject(itemJSONOutput));
+            File.WriteAllText(Path.Combine(outputPath, "item.json"), JsonConvert.SerializeObject(itemJSONOutput));
             #endregion
             
             #region ItemSearchCategory Export
-            System.IO.File.WriteAllText(Path.Combine(outputPath, "ItemSearchCategory_Keys.json"), JsonConvert.SerializeObject(realm.GameData.GetSheet("ItemSearchCategory").Keys.ToList()));
+            File.WriteAllText(Path.Combine(outputPath, "ItemSearchCategory_Keys.json"), JsonConvert.SerializeObject(realm.GameData.GetSheet("ItemSearchCategory").Keys.ToList()));
             #endregion
             
             #region Town Export
@@ -184,9 +184,9 @@ namespace MogboardDataExporter
             Console.ReadKey();
         }
 
-        private static async Task<IEnumerable<KeyAndName>> GetChineseItems(HttpClient http)
+        private static async Task<IEnumerable<XIVAPIItem>> GetChineseItems(HttpClient http)
         {
-            var items = new List<KeyAndName>();
+            var items = new List<XIVAPIItem>();
 
             var stopwatch = new Stopwatch();
             stopwatch.Start();
@@ -197,13 +197,24 @@ namespace MogboardDataExporter
             Console.Write($"Downloading Chinese game data from FFCAFE (1/{pageTotal})...");
             Parallel.For(1, pageTotal, i =>
             {
-                var res = JObject.Parse(http.GetStringAsync(new Uri($"https://cafemaker.wakingsands.com/Item?Page={i}")).GetAwaiter().GetResult());
+                var res = JObject.Parse(http.GetStringAsync(new Uri($"https://cafemaker.wakingsands.com/Item?Columns=ID,Icon,Name,LevelItem,Rarity,ItemSearchCategory.ID,ItemSearchCategory.ClassJob.Abbreviation&Page={i}")).GetAwaiter().GetResult());
                 Console.CursorLeft = "Downloading Chinese game data from FFCAFE ".Length;
                 Console.Write($"({++counter}/{pageTotal})...");
-                items.AddRange(res["Results"].Children().Select(item => new KeyAndName
+                items.AddRange(res["Results"].Children().Select(item => new XIVAPIItem
                 {
-                    Key = item["ID"].ToObject<int>(),
+                    ID = item["ID"].ToObject<int>(),
+                    Icon = item["Icon"].ToObject<string>(),
+                    ItemSearchCategory = new XIVAPIMicroItemSearchCategory
+                    {
+                        Category = item["ItemSearchCategory"]["ID"].ToObject<int?>() ?? 0,
+                        ClassJob = new XIVAPIMicroClassJob
+                        {
+                            Abbreviation = item["ItemSearchCategory"]["ClassJob"]["Abbreviation"].ToObject<string>()
+                        },
+                    },
+                    LevelItem = item["LevelItem"].ToObject<int>(),
                     Name = item["Name"].ToObject<string>(),
+                    Rarity = item["Rarity"].ToObject<int>(),
                 }));
             });
 
@@ -221,12 +232,6 @@ namespace MogboardDataExporter
             public string Icon { get; set; }
             public string Name { get; set; }
             public string Url { get; set; }
-        }
-
-        private class KeyAndName
-        {
-            public int Key { get; set; }
-            public string Name { get; set; }
         }
     }
 }
