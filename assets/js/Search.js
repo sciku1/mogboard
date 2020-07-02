@@ -1,5 +1,7 @@
-import XIVAPI from './XIVAPI';
+import CafeMaker from './CafeMaker';
 import ClickEvent from './ClickEvent';
+import Settings from './Settings';
+import XIVAPI from './XIVAPI';
 
 /**
  * todo - this needs some cleaning up
@@ -57,7 +59,7 @@ class Search
              * Search
              */
             this.loading.addClass('on');
-            XIVAPI.search(searchTerm, response => {
+            (Settings.language !== 'chs' ? XIVAPI : CafeMaker).search(searchTerm, response => {
                 this.loading.removeClass('on');
                 this.render(response);
             });
