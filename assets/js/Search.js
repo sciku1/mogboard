@@ -74,9 +74,6 @@ class Search
 
     render(response)
     {
-        const chinese = Settings.getLanguage() === 'chs';
-        const gameDataSource = chinese ? 'https://cafemaker.wakingsands.com' : 'https://xivapi.com'; // TODO pull this out into a function, I do this everywhere
-
         window.scrollTo(0,0);
         this.uiInput.removeClass('typing');
         this.uiInput.addClass('complete');
@@ -89,7 +86,7 @@ class Search
 
             results.push(
                 `<a href="${url}" class="rarity-${item.Rarity}">
-                    <span class="item-icon"><img src="http://xivapi.com/mb/loading.svg" class="lazy" data-src="${gameDataSource}${item.Icon}"></span>
+                    <span class="item-icon"><img src="http://xivapi.com/mb/loading.svg" class="lazy" data-src="${Settings.getGameDataSource()}${item.Icon}"></span>
                     <span class="item-level">${item.LevelItem}</span>
                     ${item.Name}
                     <span class="item-category">${item.ItemSearchCategory.Name}</span>
