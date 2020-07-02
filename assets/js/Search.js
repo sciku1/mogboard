@@ -24,6 +24,7 @@ class Search
             this.uiInput.removeClass('complete');
 
             const chinese = Settings.language === 'chs';
+            const japanese = Settings.language === 'ja';
 
             /**
              * Check search term
@@ -39,7 +40,7 @@ class Search
                 return;
             }
 
-            if (searchTerm.length < (chinese ? 1 : 2)) {
+            if (searchTerm.length < (chinese || japanese ? 1 : 2)) { // Should really be based on n-grams but lazy
                 return;
             }
 
