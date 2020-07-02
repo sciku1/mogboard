@@ -124,6 +124,8 @@ class HeaderCategories
 
     openCategory(id)
     {
+        const chinese = Settings.language === 'chs';
+
         this.uiView.removeClass('open');
         this.uiCategory.addClass('open');
 
