@@ -142,6 +142,8 @@ class GameDataCache
 
         $categories = [];
         $categoriesFull = [];
+
+        $chsIscMappings = \json_decode(\file_get_contents('DataExports/ItemSearchCategory_Mappings_Chs.json'));
     
         foreach ($objects as $category) {
             // ignore empty ones
@@ -160,7 +162,7 @@ class GameDataCache
                 'Name_de' => $category->Name_de,
                 'Name_fr' => $category->Name_fr,
                 'Name_ja' => $category->Name_ja,
-                'Name_chs' => $category->Name_chs,
+                'Name_chs' => $chsIscMappings[$category->ID],
             ];
         
             // copy category over
@@ -173,7 +175,7 @@ class GameDataCache
                 'Name_de' => $category->Name_de,
                 'Name_fr' => $category->Name_fr,
                 'Name_ja' => $category->Name_ja,
-                'Name_chs' => $category->Name_chs,
+                'Name_chs' => $chsIscMappings[$category->ID],
             ];
         }
     
