@@ -8,38 +8,34 @@ use App\Common\Utils\Language;
 class CafeMaker {
     private const URLBASE = 'https://cafemaker.wakingsands.com';
 
-    /** @var cURL */
-    private $curl;
-
     public function __construct()
     {
-        $this->curl = curl_init();
     }
 
     public function getItem(int $itemId)
     {
-        $cachedItem = $this->handle("xiv_Item_{$itemId}");
-        if ($cachedItem == null) {
+        $cachedItem = Redis::Cache()->get("xiv_Item_Chs_{$itemId}");
+        //if ($cachedItem == null) {
             $query = self::URLBASE . "/Item/{$itemId}";
             $cachedItem = $this->getResource($query);
             
             if ($cachedItem != null) {
-                Redis::Cache()->set("xiv_Item_{$itemId}", $cachedItem, GameDataCache::CACHE_TIME);
+                Redis::Cache()->set("xiv_Item_Chs_{$itemId}", $cachedItem, GameDataCache::CACHE_TIME);
             }
-        }
+        //}
 
         return json_decode($cachedItem);
     }
     
     public function getRecipe(int $recipeId)
     {
-        $cachedRecipe = $this->handle("xiv_Item_{$recipeId}");
+        $cachedRecipe = Redis::Cache()->get("xiv_Item_Chs_{$recipeId}");
         if ($cachedRecipe == null) {
             $query = self::URLBASE . "/Recipe/{$recipeId}";
             $cachedRecipe = $this->getResource($query);
             
             if ($cachedRecipe != null) {
-                Redis::Cache()->set("xiv_Recipe_{$recipeId}", $cachedRecipe, GameDataCache::CACHE_TIME);
+                Redis::Cache()->set("xiv_Recipe_Chs_{$recipeId}", $cachedRecipe, GameDataCache::CACHE_TIME);
             }
         }
 
@@ -48,30 +44,27 @@ class CafeMaker {
 
     public function getMateria(int $materiaId)
     {
-        $cachedMateria = $this->handle("xiv_Materia_{$materiaId}");
+        $cachedMateria = Redis::Cache()->get("xiv_Materia_Chs_{$materiaId}");
         if ($cachedMateria == null) {
             $query = self::URLBASE . "/Materia/{$materiaId}";
             $cachedMateria = $this->getResource($query);
             
             if ($cachedMateria != null) {
-                Redis::Cache()->set("xiv_Materia_{$materiaId}", $cachedMateria, GameDataCache::CACHE_TIME);
+                Redis::Cache()->set("xiv_Materia_Chs_{$materiaId}", $cachedMateria, GameDataCache::CACHE_TIME);
             }
         }
 
-        return json_decode($res);
+        return json_decode($cachedMateria);
     }
 
-    private function getResource(string $url) {
-        curl_setopt_array($this->curl, [
-            CURLOPT_URL => $url
+    private function getResource(string $url): String {
+        $curl = curl_init();
+        curl_setopt_array($curl, [
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => TRUE,
         ]);
-        return curl_exec($this->curl);
-    }
-
-    private function handle(string $key)
-    {
-        return Language::handle(
-            Redis::Cache()->get($key)
-        );
+        $res = curl_exec($curl);
+        curl_close($curl);
+        return $res;
     }
 }

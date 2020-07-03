@@ -7,11 +7,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
+using System.Threading.Tasks;
+using MogboardDataExporter.Models;
 
-namespace MogboardDataExporter
+namespace MogboardDataExporter.Exporters
 {
-    public static class CategoryJs
+    public static class CategoryJsExports
     {
         public static void Generate(ARealmReversed realmEn, ARealmReversed realmDe, ARealmReversed realmFr, ARealmReversed realmJp, string outputPath)
         {
@@ -19,14 +20,16 @@ namespace MogboardDataExporter
             ARealmReversed[] realms = { realmEn, realmDe, realmFr, realmJp };
             IXivSheet<Item>[] itemSheets = { realmEn.GameData.GetSheet<Item>(), realmDe.GameData.GetSheet<Item>(), realmFr.GameData.GetSheet<Item>(), realmJp.GameData.GetSheet<Item>() };
 
-            dynamic output = new JObject();
+            var baseTop = Console.CursorTop;
 
-            for (var i = 0; i < 4; i++)
+            Parallel.For(0, 4, i =>
             {
-                foreach (var category in realms[i].GameData.GetSheet<ItemSearchCategory>())
+                dynamic output = new JObject();
+                var categories = realms[i].GameData.GetSheet<ItemSearchCategory>();
+                foreach (var category in categories)
                 {
                     if (category.Key < 9)
-                        continue;
+                        goto console_update;
 
                     var categoryItems = new List<string[]>();
                     var sortedItems = itemSheets[i].Where(item => item.ItemSearchCategory.Key == category.Key).ToList();
@@ -55,74 +58,85 @@ namespace MogboardDataExporter
                     }
 
                     if (categoryItems.Count == 0)
-                        continue;
+                        goto console_update;
 
                     output[category.Key.ToString()] = JToken.FromObject(categoryItems);
 
-                    Console.WriteLine($"Cat {category.Key}: {categoryItems.Count}");
+                    console_update:
+                    Console.CursorLeft = 0;
+                    Console.CursorTop = baseTop + i;
+                    Console.Write($"{langs[i]}: [{category.Key}/{categories.Count - 1}]");
+                    Console.CursorLeft = 10 + category.Key.ToString("000").Length;
+                    Console.Write("                                                                              ");
                 }
 
                 File.WriteAllText(Path.Combine(outputPath, $"categories_{langs[i]}.js"), JsonConvert.SerializeObject(output));
-            }
+            });
+
+            Console.CursorLeft = 0;
+            Console.CursorTop = baseTop + 4;
         }
 
-        public static void GenerateChinese(ARealmReversed realm, IEnumerable<XIVAPIItem> itemsChs, string outputPath, HttpClient http)
+        public static void GenerateChinese(ARealmReversed realm, IEnumerable<CsvItem> itemsChs, string outputPath)
         {
             dynamic output = new JObject();
 
-            var categoryIndex = JObject.Parse(http.GetStringAsync(new Uri("https://cafemaker.wakingsands.com/ItemSearchCategory"))
-                .GetAwaiter().GetResult());
-            var categories = categoryIndex["Results"].Children().Select(cat => cat.ToObject<XIVAPIShortItemSearchCategory>());
-
+            var baseTop = Console.CursorTop;
             var localItems = realm.GameData.GetSheet<Item>();
-
+            var categories = realm.GameData.GetSheet<ItemSearchCategory>();
             foreach (var category in categories)
             {
-                if (category.ID < 9)
-                    continue;
+                if (category.Key < 9)
+                    goto console_update;
 
                 var categoryItems = new List<string[]>();
-                var sortedItems = itemsChs.Where(item => item?.ItemSearchCategory.Category == category.ID).ToList();
-                sortedItems.Sort((item1, item2) => item2.LevelItem - item1.LevelItem);
+                var filteredItems = itemsChs.Where(item => item?.ItemSearchCategory.Key == category.Key).ToList();
 
-                foreach (var item in sortedItems)
+                Parallel.ForEach(filteredItems, item =>
                 {
                     var outputItem = new string[6];
 
                     var classJobAbbr = item.ItemSearchCategory.ClassJob.Abbreviation ?? "";
-                    if (Resources.ClassJobMap.TryGetValue(classJobAbbr, out var jobAbbr))
+                    if (item.ItemSearchCategory.ClassJob.ParentClassJob.Abbreviation != classJobAbbr)
+                        classJobAbbr = item.ItemSearchCategory.ClassJob.ParentClassJob.Abbreviation + " " +
+                                       classJobAbbr;
+                    else if (Resources.ClassJobMap.TryGetValue(classJobAbbr, out var jobAbbr))
                         classJobAbbr += " " + jobAbbr;
+                    else if (classJobAbbr == "ADV")
+                        classJobAbbr = "";
 
-                    var iconId = (ushort) localItems.First(itm => itm.Key == item.ID).GetRaw("Icon");
+                    var iconId = (ushort) localItems.First(itm => itm.Key == item.Key).GetRaw("Icon");
                     var icon = $"/i/{Util.GetIconFolder(iconId)}/{iconId:000000}.png";
 
-                    outputItem[0] = item.ID.ToString();
+                    outputItem[0] = item.Key.ToString();
                     outputItem[1] = item.Name;
                     outputItem[2] = icon;
                     outputItem[3] = item.LevelItem.ToString();
                     outputItem[4] = item.Rarity.ToString();
                     outputItem[5] = classJobAbbr;
 
-                    categoryItems.Add(outputItem);
-                }
+                    lock(categoryItems)
+                    {
+                        categoryItems.Add(outputItem);
+                    }
+                });
+
+                categoryItems.Sort((item1, item2) => int.Parse(item2[3]) - int.Parse(item1[3]));
 
                 if (categoryItems.Count == 0)
-                    continue;
+                    goto console_update;
 
-                output[category.ID.ToString()] = JToken.FromObject(categoryItems);
+                output[category.Key.ToString()] = JToken.FromObject(categoryItems);
 
-                Console.WriteLine($"Cat {category.ID}: {categoryItems.Count}");
+                console_update:
+                Console.CursorLeft = 0;
+                Console.CursorTop = baseTop;
+                Console.Write($"ch: [{category.Key}/{categories.Count - 1}]");
             }
 
             File.WriteAllText(Path.Combine(outputPath, "categories_chs.js"), JsonConvert.SerializeObject(output));
-        }
 
-        private class XIVAPIShortItemSearchCategory
-        {
-            public int ID { get; set; }
-            public string Icon { get; set; }
-            public string Name { get; set; }
-            public string Url { get; set; }
+            Console.WriteLine();
         }
     }
 }

@@ -96,8 +96,10 @@ class ItemController extends AbstractController
         //
         // Grab item
         //
-        $item = $this->gameDataSource->getItem($itemId);
-
+        $item = $this->gameDataSource->getItem($itemId, Language::current() === 'chs');
+        if ($item == null || !isset($item->ItemSearchCategory->ID)) {
+            $item = $this->gameDataSource->getItem($itemId); // Fix to handle Chinese speakers checking International worlds
+        }
         if ($item == null || !isset($item->ItemSearchCategory->ID)) {
             return $this->redirectToRoute('404');
         }
@@ -115,14 +117,6 @@ class ItemController extends AbstractController
         $server     = GameServers::getServer($request->get('server'));
         $dcServers  = GameServers::getDataCenterServers($server);
         $dc         = GameServers::getDataCenter($server);
-
-        /*
-        // grab item queue info from db
-        $itemQueue = "SELECT * FROM companion_market_items WHERE item = ? AND server = ? LIMIT 1";
-        $itemQueue = $this->em->getConnection()->prepare($itemQueue);
-        $itemQueue->execute([ $itemId, GameServers::getServerId($server) ]);
-        $itemQueue = $itemQueue->fetch();
-        */
 
         // bits n bobs
         $this->userLists->handleRecentlyViewed($itemId);
@@ -158,7 +152,7 @@ class ItemController extends AbstractController
 
         // grab market census
         $census = $this->companionCensus->generate($dc, $itemId, $market);
-        $globalMarketData = $this->universalisApi->getItemStrLocale($dc, $itemId);
+        $globalMarketData = $this->universalisApi->getItemFromWorldOrDC($dc, $itemId);
 
         $loadSpeed = microtime(true) - $time;
 

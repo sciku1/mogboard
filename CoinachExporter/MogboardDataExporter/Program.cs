@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using CsvHelper;
+using MogboardDataExporter.Exporters;
+using MogboardDataExporter.Models;
 using SaintCoinach;
 using SaintCoinach.Ex;
 using SaintCoinach.Xiv;
@@ -38,204 +38,77 @@ namespace MogboardDataExporter
             var itemsDe = realmDe.GameData.GetSheet<Item>();
             var itemsFr = realmFr.GameData.GetSheet<Item>();
             var itemsJp = realmJp.GameData.GetSheet<Item>();
-            var itemsChs = GetChineseItems(http).GetAwaiter().GetResult();
+            var itemsChs = GetChineseItems(realm, http).ToList();
+
+            var categories = realm.GameData.GetSheet<ItemSearchCategory>();
+
+            Console.WriteLine($"Global items: {items.Count}");
+            Console.WriteLine($"CN items: {itemsChs.Count}");
 
             Console.WriteLine("Starting game data export...");
             
-            #region Category JS Export
             categoryjs:
-            CategoryJs.Generate(realm, realmDe, realmFr, realmJp, categoryJsOutputPath);
-            CategoryJs.GenerateChinese(realm, itemsChs, categoryJsOutputPath, http);
-            #endregion
-            
-            #region Item Export
+            Console.WriteLine("== Category JS Export ==");
+            CategoryJsExports.Generate(realm, realmDe, realmFr, realmJp, categoryJsOutputPath);
+            CategoryJsExports.GenerateChinese(realm, itemsChs, categoryJsOutputPath);
+
             items:
-            foreach (var category in realm.GameData.GetSheet<ItemSearchCategory>())
-            {
-                // We don't need those, not for sale
-                if (category.Key == 0)
-                    continue;
+            Console.WriteLine("== Item Export ==");
+            ItemExports.GenerateItemJSON(items, itemsDe, itemsFr, itemsJp, itemsChs, categories, outputPath);
 
-                var output = new List<JObject>();
-
-                foreach (var item in items.Where(item => item.ItemSearchCategory.Key == category.Key))
-                {
-                    dynamic outputItem = new JObject();
-
-                    outputItem.ID = item.Key;
-
-                    var iconId = (ushort) item.GetRaw("Icon");
-                    outputItem.Icon = $"/i/{Util.GetIconFolder(iconId)}/{iconId}.png";
-
-                    outputItem.Name_en = item.Name.ToString();
-                    outputItem.Name_de = itemsDe.First(localItem => localItem.Key == item.Key).Name.ToString();
-                    outputItem.Name_fr = itemsFr.First(localItem => localItem.Key == item.Key).Name.ToString();
-                    outputItem.Name_jp = itemsJp.First(localItem => localItem.Key == item.Key).Name.ToString();
-                    
-                    var nameChs = itemsChs.FirstOrDefault(localItem => localItem.ID == item.Key)?.Name.ToString();
-                    outputItem.Name_chs = string.IsNullOrEmpty(nameChs) ? item.Name.ToString() : nameChs;
-
-                    outputItem.LevelItem = item.ItemLevel.Key;
-                    outputItem.Rarity = item.Rarity;
-
-                    output.Add(outputItem);
-                }
-
-                if (output.Count == 0)
-                    continue;
-
-                Console.WriteLine($"Cat {category.Key}: {output.Count}");
-
-                System.IO.File.WriteAllText(Path.Combine(outputPath, $"ItemSearchCategory_{category.Key}.json"), JsonConvert.SerializeObject(output));
-            }
-            #endregion
-
-            #region Marketable Item JSON Export
             marketableitems:
-            dynamic itemJSONOutput = new JObject();
-            var itemID = new List<int>();
-            foreach (var category in realm.GameData.GetSheet<ItemSearchCategory>())
-            {
-                if (category.Key < 9)
-                    continue;
-                var itemSet = items
-                    .Where(item => item.ItemSearchCategory.Key == category.Key)
-                    .Select(item => item.Key);
-                if (!itemSet.Any())
-                    continue;
-                itemID = itemID.Concat(itemSet).ToList();
-
-                Console.WriteLine($"Cat {category.Key}: {itemSet.Count()}");
-            }
-            itemID.Sort();
-            itemJSONOutput.itemID = JToken.FromObject(itemID);
-            File.WriteAllText(Path.Combine(outputPath, "item.json"), JsonConvert.SerializeObject(itemJSONOutput));
-            #endregion
+            Console.WriteLine("== Marketable Item JSON Export ==");
+            ItemExports.GenerateMarketableItemJSON(items, categories, outputPath);
             
-            #region ItemSearchCategory Export
-            File.WriteAllText(Path.Combine(outputPath, "ItemSearchCategory_Keys.json"), JsonConvert.SerializeObject(realm.GameData.GetSheet("ItemSearchCategory").Keys.ToList()));
-            #endregion
+            itemsearchcategories:
+            Console.WriteLine("== Item Search Category Export ==");
+            Console.Write("...");
+            ItemSearchCategoryExports.GenerateJSON(realm, outputPath);
+            Console.WriteLine("Done!");
 
-            #region Chinese ItemSearchCategory Mappings
-            var categories = JObject.Parse(http.GetStringAsync(new Uri($"https://cafemaker.wakingsands.com/Item")).GetAwaiter()
-                .GetResult())["Results"];
-            var chsIscOutput = categories.ToDictionary(category => category["ID"].ToObject<int>(), category => category["Name"].ToObject<string>());
-            File.WriteAllText(Path.Combine(outputPath, "ItemSearchCategory_Mappings_Chs.json"), JsonConvert.SerializeObject(chsIscOutput));
-            #endregion
+            Console.WriteLine("== Chinese Item Search Category Mappings Export ==");
+            Console.Write("...");
+            ItemSearchCategoryExports.GenerateChineseMappingsJSON(http, outputPath);
+            Console.WriteLine("Done!");
             
-            #region Town Export
             town_export:
-            var towns = realm.GameData.GetSheet("Town");
-            var townsDe = realmDe.GameData.GetSheet("Town");
-            var townsFr = realmFr.GameData.GetSheet("Town");
-            var townsJp = realmJp.GameData.GetSheet("Town");
+            Console.WriteLine("== Town Export ==");
+            Console.Write("...");
+            TownExports.GenerateJSON(realm, realmDe, realmFr, realmJp, http, outputPath);
+            Console.WriteLine("Done!");
 
-            var townsChs = JObject.Parse(http.GetStringAsync(new Uri("https://cafemaker.wakingsands.com/Town"))
-                    .GetAwaiter().GetResult())["Results"]
-                .Children()
-                .Select(town => town.ToObject<XIVAPITown>())
-                .ToList();
-            townsChs.Add(new XIVAPITown
-            {
-                ID = 0,
-                Name = "不知何处",
-            });
-
-            var outputTowns = new List<JObject>();
-
-            foreach (var town in towns)
-            {
-                dynamic outputTown = new JObject();
-
-                outputTown.ID = town.Key;
-
-                var iconObj = town.GetRaw("Icon");
-                outputTown.Icon = (int) iconObj != 0 ? $"/i/{Util.GetIconFolder((int) iconObj)}/{(int) iconObj}.png" : $"/i/{Util.GetIconFolder(060880)}/060880.png";
-
-                outputTown.Name_en = town.AsString("Name").ToString();
-                outputTown.Name_de = townsDe.First(localItem => localItem.Key == town.Key).AsString("Name").ToString();
-                outputTown.Name_fr = townsFr.First(localItem => localItem.Key == town.Key).AsString("Name").ToString();
-                outputTown.Name_jp = townsJp.First(localItem => localItem.Key == town.Key).AsString("Name").ToString();
-                outputTown.Name_chs = townsChs.First(localItem => localItem.ID == town.Key).Name;
-
-                outputTowns.Add(outputTown);
-            }
-
-            System.IO.File.WriteAllText(Path.Combine(outputPath, "Town.json"), JsonConvert.SerializeObject(outputTowns));
-            #endregion
-
-            #region World Export
             world_export:
-            var worlds = realm.GameData.GetSheet("World");
-
-            var outputWorlds = new List<JObject>();
-
-            foreach (var world in worlds)
-            {
-                dynamic outputWorld = new JObject();
-
-                outputWorld.ID = world.Key;
-
-                outputWorld.Name = world.AsString("Name").ToString();
-                outputWorld.DataCenter = (byte) world.GetRaw("DataCenter");
-                outputWorld.IsPublic = world.AsBoolean("IsPublic");
-
-                outputWorlds.Add(outputWorld);
-            }
-
-            System.IO.File.WriteAllText(Path.Combine(outputPath, "World.json"), JsonConvert.SerializeObject(outputWorlds));
-            #endregion
+            Console.WriteLine("== World Export ==");
+            Console.Write("...");
+            WorldExports.GenerateJSON(realm, outputPath);
+            Console.WriteLine("Done!");
 
             end:
-            Console.WriteLine("Done!");
+            Console.WriteLine("All done!");
             Console.ReadKey();
         }
 
-        private static async Task<IEnumerable<XIVAPIItem>> GetChineseItems(HttpClient http)
+        private static IEnumerable<CsvItem> GetChineseItems(ARealmReversed realm, HttpClient http)
         {
-            var items = new List<XIVAPIItem>();
-
-            var stopwatch = new Stopwatch();
-            stopwatch.Start();
-
-            var counter = 1;
-            var pageTotal = JObject.Parse(
-                await http.GetStringAsync(new Uri($"https://cafemaker.wakingsands.com/Item")))["Pagination"]["PageTotal"].ToObject<int>();
-            Console.Write($"Downloading Chinese game data from FFCAFE (1/{pageTotal})...");
-            Parallel.For(1, pageTotal, i =>
+            var rawData = http.GetStreamAsync(new Uri("https://raw.githubusercontent.com/thewakingsands/ffxiv-datamining-cn/master/Item.csv")).GetAwaiter().GetResult();
+            using var sr = new StreamReader(rawData);
+            using var csv = new CsvReader(sr, CultureInfo.InvariantCulture);
+            var iscSheet = realm.GameData.GetSheet<ItemSearchCategory>();
+            var items = new List<CsvItem>();
+            for (var i = 0; i < 3; i++) csv.Read();
+            while (csv.Read())
             {
-                var res = JObject.Parse(http.GetStringAsync(new Uri($"https://cafemaker.wakingsands.com/Item?Columns=ID,Icon,Name,LevelItem,Rarity,ItemSearchCategory.ID,ItemSearchCategory.ClassJob.Abbreviation&Page={i}")).GetAwaiter().GetResult());
-                Console.CursorLeft = "Downloading Chinese game data from FFCAFE ".Length;
-                Console.Write($"({++counter}/{pageTotal})...");
-                items.AddRange(res["Results"].Children().Select(item => new XIVAPIItem
+                var itemSearchCategory = csv.GetField<int>(17);
+                items.Add(new CsvItem
                 {
-                    ID = item["ID"].ToObject<int>(),
-                    ItemSearchCategory = new XIVAPIMicroItemSearchCategory
-                    {
-                        Category = item["ItemSearchCategory"]["ID"].ToObject<int?>() ?? 0,
-                        ClassJob = new XIVAPIMicroClassJob
-                        {
-                            Abbreviation = item["ItemSearchCategory"]["ClassJob"]["Abbreviation"].ToObject<string>()
-                        },
-                    },
-                    LevelItem = item["LevelItem"].ToObject<int>(),
-                    Name = item["Name"].ToObject<string>(),
-                    Rarity = item["Rarity"].ToObject<int>(),
-                }));
-            });
-
-            stopwatch.Stop();
-            Console.WriteLine($" Done ({stopwatch.ElapsedMilliseconds / 1000.0f}s)!");
-
+                    Key = csv.GetField<int>(0),
+                    Name = csv.GetField<string>(10),
+                    LevelItem = csv.GetField<int>(12),
+                    Rarity = csv.GetField<int>(13),
+                    ItemSearchCategory = iscSheet.First(isc => isc.Key == itemSearchCategory),
+                });
+            }
             return items;
-        }
-
-        private class XIVAPITown
-        {
-            public int ID { get; set; }
-            public string Icon { get; set; }
-            public string Name { get; set; }
-            public string Url { get; set; }
         }
     }
 }
