@@ -15,14 +15,14 @@ class CafeMaker {
     public function getItem(int $itemId)
     {
         $cachedItem = Redis::Cache()->get("xiv_Item_Chs_{$itemId}");
-        //if ($cachedItem == null) {
+        if ($cachedItem == null) {
             $query = self::URLBASE . "/Item/{$itemId}";
             $cachedItem = $this->getResource($query);
             
             if ($cachedItem != null) {
                 Redis::Cache()->set("xiv_Item_Chs_{$itemId}", $cachedItem, GameDataCache::CACHE_TIME);
             }
-        //}
+        }
 
         return json_decode($cachedItem);
     }
