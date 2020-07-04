@@ -162,7 +162,7 @@ class GameDataCache
                 'Name_de' => $category->Name_de,
                 'Name_fr' => $category->Name_fr,
                 'Name_ja' => $category->Name_ja,
-                'Name_ch' => $chsIscMappings[$category->ID],
+                'Name_chs' => $chsIscMappings[$category->ID],
             ];
         
             // copy category over
@@ -175,7 +175,7 @@ class GameDataCache
                 'Name_de' => $category->Name_de,
                 'Name_fr' => $category->Name_fr,
                 'Name_ja' => $category->Name_ja,
-                'Name_ch' => $chsIscMappings[$category->ID],
+                'Name_chs' => $chsIscMappings[$category->ID],
             ];
         }
     

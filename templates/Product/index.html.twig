@@ -113,7 +113,7 @@
             <div class="tab">
                 {# Summary #}
                 <div class="tab-page tab-summary {{ (cookie('mogboard_homeworld', 'no') == 'yes' or reqServer) ? '' : 'open' }}">
-                    {% if globalMarketData and globalMarketData.lastUploadTime %}
+                    {% if globalMarketData and globalMarketData.stackSizeHistogram %}
                         {% include 'Product/item_market_summary.html.twig' with {
                             chart: {
                                 id: 'histogram_global',
