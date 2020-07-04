@@ -21,7 +21,7 @@ class HackyExtension extends AbstractExtension
     {
         if (Language::current() === 'chs') {
             $retObj = [];
-            $data = json_decode(file_get_contents('DataExports/ItemSearchCategory_Mappings_Chs.json'), TRUE);
+            $data = json_decode(file_get_contents('../DataExports/ItemSearchCategory_Mappings_Chs.json'), TRUE);
             foreach ($data as $i => $isc) {
                 if (in_array($i, [10, 11, 76, 86, 13, 9, 83, 73, 12, 77, 87, 14, 16, 84, 15, 85, 78, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30])) {
                     array_push($retObj['weapons'], [
