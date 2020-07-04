@@ -50,6 +50,7 @@ class HackyExtension extends AbstractExtension
                     ]);
                 }
             }
+            return $retObj;
         }
         return $obj;
     }
