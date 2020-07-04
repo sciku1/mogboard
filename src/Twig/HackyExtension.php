@@ -11,7 +11,7 @@ class HackyExtension extends AbstractExtension
     public function getFilters()
     {
         return [
-            new TwigFilter('chinaizeSearchCategories', [$this, 'chinaize']),
+            new TwigFilter('chinaize_search_categories', [$this, 'chinaize']),
         ];
     }
     
