@@ -50,7 +50,7 @@ class HackyExtension extends AbstractExtension
                 ]);
             }
             foreach ($housingCatIds as $i) {
-                array_push($retObj['weapons'], [
+                array_push($retObj['housing'], [
                     'ID' => ''.$i,
                     'Name' => $data[$i],
                 ]);
