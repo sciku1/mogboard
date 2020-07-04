@@ -20,9 +20,9 @@ class GameDataSource
         $this->cafeMaker = new CafeMaker();
     }
 
-    public function getItem(int $itemId, bool $cn = false)
+    public function getItem(int $itemId)
     {
-        if ($cn) {
+        if (GameDataSource::isChinese()) {
             return $this->cafeMaker->getItem($itemId);
         }
 
@@ -38,9 +38,9 @@ class GameDataSource
         return json_decode(json_encode($cachedItem, FALSE));
     }
     
-    public function getRecipe(int $recipeId, bool $cn = false)
+    public function getRecipe(int $recipeId)
     {
-        if ($cn) {
+        if (GameDataSource::isChinese()) {
             return $this->cafeMaker->getRecipe($recipeId);
         }
 
@@ -56,9 +56,9 @@ class GameDataSource
         return json_decode(json_encode($cachedRecipe, FALSE));
     }
 
-    public function getMateria(int $materiaId, bool $cn = false)
+    public function getMateria(int $materiaId)
     {
-        if ($cn) {
+        if (GameDataSource::isChinese()) {
             return $this->cafeMaker->getMateria($materiaId);
         }
 
@@ -74,9 +74,9 @@ class GameDataSource
         return json_decode(json_encode($cachedMateria, FALSE));
     }
 
-    public function getMateriaItem(int $materiaId, int $materiaClass, bool $cn = false)
+    public function getMateriaItem(int $materiaId, int $materiaClass)
     {
-        $materia = $this->getMateria($materiaId, $cn);
+        $materia = $this->getMateria($materiaId);
 
         return $this->getItem(((Array) $materia)["Item{$materiaClass}TargetID"]);
     }
@@ -106,5 +106,9 @@ class GameDataSource
         return Language::handle(
             Redis::Cache()->get($key)
         );
+    }
+
+    private static function isChinese(): boolean {
+        return Language::current() === 'chs';
     }
 }
