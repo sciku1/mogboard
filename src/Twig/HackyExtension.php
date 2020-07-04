@@ -31,10 +31,10 @@ class HackyExtension extends AbstractExtension
             $itemsCatIds = [43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 57, 58, 59, 60, 74, 75, 79, 80];
             $housingCatIds = [65, 66, 67, 56, 68, 69, 70, 71, 72, 81, 82];
             $data = json_decode(file_get_contents('../DataExports/ItemSearchCategory_Mappings_Chs.json'), TRUE);
-            pushToChsIscArray($weaponsCatIds, $retObj['weapons'], $data);
-            pushToChsIscArray($armorCatIds, $retObj['armor'], $data);
-            pushToChsIscArray($itemsCatIds, $retObj['items'], $data);
-            pushToChsIscArray($housingCatIds, $retObj['housing'], $data);
+            $this->pushToChsIscArray($weaponsCatIds, $retObj['weapons'], $data);
+            $this->pushToChsIscArray($armorCatIds, $retObj['armor'], $data);
+            $this->pushToChsIscArray($itemsCatIds, $retObj['items'], $data);
+            $this->pushToChsIscArray($housingCatIds, $retObj['housing'], $data);
             return $retObj;
         }
         return $obj;
