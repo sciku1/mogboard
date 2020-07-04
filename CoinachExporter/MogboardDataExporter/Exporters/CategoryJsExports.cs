@@ -79,12 +79,13 @@ namespace MogboardDataExporter.Exporters
 
         public static void GenerateChinese(ARealmReversed realm, IEnumerable<CsvItem> itemsChs, string outputPath)
         {
-            dynamic output = new JObject();
+            var output = new Dictionary<string, List<string[]>>();
 
+            var counter = 0;
             var baseTop = Console.CursorTop;
             var localItems = realm.GameData.GetSheet<Item>();
             var categories = realm.GameData.GetSheet<ItemSearchCategory>();
-            foreach (var category in categories)
+            Parallel.ForEach(categories, category =>
             {
                 if (category.Key < 9)
                     goto console_update;
@@ -115,7 +116,7 @@ namespace MogboardDataExporter.Exporters
                     outputItem[4] = item.Rarity.ToString();
                     outputItem[5] = classJobAbbr;
 
-                    lock(categoryItems)
+                    lock (categoryItems)
                     {
                         categoryItems.Add(outputItem);
                     }
@@ -126,13 +127,17 @@ namespace MogboardDataExporter.Exporters
                 if (categoryItems.Count == 0)
                     goto console_update;
 
-                output[category.Key.ToString()] = JToken.FromObject(categoryItems);
+                output[category.Key.ToString()] = categoryItems;
 
                 console_update:
                 Console.CursorLeft = 0;
                 Console.CursorTop = baseTop;
-                Console.Write($"ch: [{category.Key}/{categories.Count - 1}]");
-            }
+                Console.Write($"ch: [{counter}/{categories.Count - 1}]");
+                Console.CursorLeft = 10 + counter.ToString("000").Length;
+                Console.Write("                                                                              ");
+
+                counter++;
+            });
 
             File.WriteAllText(Path.Combine(outputPath, "categories_chs.js"), JsonConvert.SerializeObject(output));
 

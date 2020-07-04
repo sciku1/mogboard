@@ -15,7 +15,8 @@ namespace MogboardDataExporter.Exporters
         public static void GenerateItemJSON(IXivSheet<Item> items, IXivSheet<Item> itemsDe, IXivSheet<Item> itemsFr, IXivSheet<Item> itemsJp, IEnumerable<CsvItem> itemsChs, IXivSheet<ItemSearchCategory> categories, string outputPath)
         {
             var ieBaseTop = Console.CursorTop;
-            foreach (var category in categories)
+            var counter = 0;
+            Parallel.ForEach(categories, category =>
             {
                 // We don't need those, not for sale
                 if (category.Key == 0)
@@ -53,13 +54,18 @@ namespace MogboardDataExporter.Exporters
                 if (output.Count == 0)
                     goto console_update;
 
-                File.WriteAllText(Path.Combine(outputPath, $"ItemSearchCategory_{category.Key}.json"), JsonConvert.SerializeObject(output));
+                File.WriteAllText(Path.Combine(outputPath, $"ItemSearchCategory_{category.Key}.json"),
+                    JsonConvert.SerializeObject(output));
 
                 console_update:
                 Console.CursorLeft = 0;
                 Console.CursorTop = ieBaseTop;
-                Console.Write($"cat: [{category.Key}/{categories.Count - 1}]");
-            }
+                Console.Write($"cat: [{counter}/{categories.Count - 1}]");
+                Console.CursorLeft = 10 + counter.ToString("000").Length;
+                Console.Write("                                                                              ");
+
+                counter++;
+            });
 
             Console.WriteLine();
         }
