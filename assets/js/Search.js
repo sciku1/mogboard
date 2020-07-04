@@ -1,5 +1,7 @@
-import XIVAPI from './XIVAPI';
+import CafeMaker from './CafeMaker';
 import ClickEvent from './ClickEvent';
+import Settings from './Settings';
+import XIVAPI from './XIVAPI';
 
 /**
  * todo - this needs some cleaning up
@@ -21,6 +23,8 @@ class Search
             this.uiView.removeClass('open');
             this.uiInput.removeClass('complete');
 
+            const chinese = Settings.getLanguage() === 'chs';
+
             /**
              * Check search term
              */
@@ -32,10 +36,6 @@ class Search
             if (searchTerm.length === 0) {
                 this.searchTerm = '';
                 this.uiView.removeClass('open');
-                return;
-            }
-
-            if (searchTerm.length < 2) {
                 return;
             }
 
@@ -57,7 +57,7 @@ class Search
              * Search
              */
             this.loading.addClass('on');
-            XIVAPI.search(searchTerm, response => {
+            (chinese ? CafeMaker : XIVAPI).search(searchTerm, response => {
                 this.loading.removeClass('on');
                 this.render(response);
             });
@@ -81,12 +81,12 @@ class Search
         const results = [];
 
         // prep results
-        response.Results.forEach((item, i) => {
+        response.Results.forEach((item) => {
             const url = mog.url_item.replace('-id-', item.ID);
 
             results.push(
                 `<a href="${url}" class="rarity-${item.Rarity}">
-                    <span class="item-icon"><img src="http://xivapi.com/mb/loading.svg" class="lazy" data-src="https://xivapi.com${item.Icon}"></span>
+                    <span class="item-icon"><img src="http://xivapi.com/mb/loading.svg" class="lazy" data-src="${Settings.getGameDataSource()}${item.Icon}"></span>
                     <span class="item-level">${item.LevelItem}</span>
                     ${item.Name}
                     <span class="item-category">${item.ItemSearchCategory.Name}</span>

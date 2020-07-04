@@ -140,6 +140,14 @@ class Settings
         return this.getLocalStorageSetting(this.storageKeyLanguage, this.defaultLanguage);
     }
 
+    getGameDataSource()
+    {
+        if (this.getLanguage() === 'chs') {
+            return 'https://cafemaker.wakingsands.com';
+        }
+        return 'https://xivapi.com';
+    }
+
     setTimezone(timezone)
     {
         this.setLocalStorageSetting(this.storageKeyTimezone, timezone);

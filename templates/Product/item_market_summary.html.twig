@@ -126,7 +126,7 @@
 <div class="cross_world_markets">
     <div>
         {% if item.CanBeHq %}
-            <h6><img src="/i/game/hq.png" height="15"> HQ Prices (Includes 5% GST)</h6>
+            <h6><img src="/i/game/hq.png" height="15"> HQ Prices{{ (dcName in ['LuXingNiao','MoGuLi','MaoXiaoPang']) ? '' : ' (Includes 5% GST)' }}</h6>
             {% include 'Product/prices.html.twig' with {
                 'prices': census.Global.PricesHQ|slice(0, 10),
                 'crossWorld': true,
@@ -136,7 +136,7 @@
             <br>
         {% endif %}
 
-        <h6>NQ Prices (Includes 5% GST)</h6>
+        <h6>NQ Prices{{ (dcName in ['LuXingNiao','MoGuLi','MaoXiaoPang']) ? '' : ' (Includes 5% GST)' }}</h6>
         {% include 'Product/prices.html.twig' with {
             'prices': census.Global.PricesNQ|slice(0, 10),
             'crossWorld': true,

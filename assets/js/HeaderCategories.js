@@ -1,6 +1,5 @@
 import Http from "./Http";
 import Settings from './Settings';
-import ClickEvent from "./ClickEvent";
 
 class HeaderCategories
 {

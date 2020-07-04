@@ -61,48 +61,6 @@ class GameDataCache
         // we want to save cat id to item id
         $categoryToItemId = [];
 
-        /* Let's not do this for now - we will cache full items are they are needed
-        // build redis key list
-        $keys = [];
-        foreach (Redis::Cache()->get('ids_Item') as $i => $id) {
-            $keys[$i] = "xiv_Item_{$id}";
-        }
-    
-        $keys  = array_chunk($keys, 1000);
-        $total = count($keys);
-    
-        $section->writeln('Starting ...');
-        foreach ($keys as $i => $chunk) {
-            $memory  = (memory_get_peak_usage(true) / 1024 / 1024);
-            $objects = Redis::Cache()->getMulti($chunk);
-
-            // save locally
-            Redis::Cache()->startPipeline();
-            foreach ($objects as $obj) {
-                // save item
-                Redis::Cache()->set("mog_Item_{$obj->ID}", $obj, GameDataCache::CACHE_TIME);
-            
-                // save item search category data
-                if (isset($obj->ItemSearchCategory->ID)) {
-                    $categoryToItemId[$obj->ItemSearchCategory->ID][] = [
-                        'ID'        => $obj->ID,
-                        'Name_en'   => $obj->Name_en,
-                        'Name_de'   => $obj->Name_de,
-                        'Name_fr'   => $obj->Name_fr,
-                        'Name_ja'   => $obj->Name_ja,
-                        'Icon'      => $obj->Icon,
-                        'LevelItem' => $obj->LevelItem,
-                        'Rarity'    => $obj->Rarity,
-                    ];
-                }
-            }
-            Redis::Cache()->executePipeline();
-            unset($items);
-    
-            $section->overwrite("Saved chunk: ". ($i+1) ."/{$total} - {$memory} MB");
-        }
-        */
-
         $this->console->writeln('>> Caching ItemSearchCategory Item IDs');
         $section = $this->console->section();
     
@@ -184,6 +142,8 @@ class GameDataCache
 
         $categories = [];
         $categoriesFull = [];
+
+        $chsIscMappings = \json_decode(\file_get_contents('DataExports/ItemSearchCategory_Mappings_Chs.json'), TRUE);
     
         foreach ($objects as $category) {
             // ignore empty ones
@@ -202,6 +162,7 @@ class GameDataCache
                 'Name_de' => $category->Name_de,
                 'Name_fr' => $category->Name_fr,
                 'Name_ja' => $category->Name_ja,
+                'Name_chs' => $chsIscMappings[$category->ID],
             ];
         
             // copy category over
@@ -214,6 +175,7 @@ class GameDataCache
                 'Name_de' => $category->Name_de,
                 'Name_fr' => $category->Name_fr,
                 'Name_ja' => $category->Name_ja,
+                'Name_chs' => $chsIscMappings[$category->ID],
             ];
         }
     
@@ -229,6 +191,8 @@ class GameDataCache
     
         Redis::Cache()->set("mog_ItemSearchCategories", $categories, (60 * 60 * 24 * 365));
         Redis::Cache()->set("mog_ItemSearchCategoriesFull", $categoriesFull, (60 * 60 * 24 * 365));
+
+        $this->console->writeln("Done!");
     }
 
     private function cacheGameCategories()
@@ -240,6 +204,7 @@ class GameDataCache
         $itemsDe = [];
         $itemsFr = [];
         $itemsJa = [];
+        $itemsChs = [];
 
         foreach ($categories as $type => $catz) {
             foreach ($catz as $cat) {
@@ -258,6 +223,10 @@ class GameDataCache
 
                     if (!isset($itemsJa[$cat->ID])) {
                         $itemsJa[$cat->ID] = [];
+                    }
+
+                    if (!isset($itemsChs[$cat->ID])) {
+                        $itemsChs[$cat->ID] = [];
                     }
 
                     $item = Redis::Cache()->get("xiv_Item_{$item->ID}");
@@ -297,6 +266,15 @@ class GameDataCache
                         $item->Rarity,
                         $item->ClassJobCategory->Name_en ?? ''
                     ];
+
+                    $itemsChs[$cat->ID][] = [
+                        $item->ID,
+                        $item->Name_chs,
+                        $item->Icon,
+                        $item->LevelItem,
+                        $item->Rarity,
+                        $item->ClassJobCategory->Name_en ?? ''
+                    ];
                 }
             }
         }
@@ -304,9 +282,10 @@ class GameDataCache
         $root = __DIR__.'/../../../public/data';
 
         // save category data
-        file_put_contents("{$root}/categories_50_en.js", json_encode($itemsEn));
-        file_put_contents("{$root}/categories_50_de.js", json_encode($itemsDe));
-        file_put_contents("{$root}/categories_50_fr.js", json_encode($itemsFr));
-        file_put_contents("{$root}/categories_50_ja.js", json_encode($itemsJa));
+        file_put_contents("{$root}/categories_en.js", json_encode($itemsEn));
+        file_put_contents("{$root}/categories_de.js", json_encode($itemsDe));
+        file_put_contents("{$root}/categories_fr.js", json_encode($itemsFr));
+        file_put_contents("{$root}/categories_ja.js", json_encode($itemsJa));
+        file_put_contents("{$root}/categories_chs.js", json_encode($itemsChs));
     }
 }

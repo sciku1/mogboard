@@ -113,16 +113,28 @@
             <div class="tab">
                 {# Summary #}
                 <div class="tab-page tab-summary {{ (cookie('mogboard_homeworld', 'no') == 'yes' or reqServer) ? '' : 'open' }}">
-                    {% include 'Product/item_market_summary.html.twig' with {
-                        chart: {
-                            id: 'histogram_global',
-                        },
-                        serverName: 'global',
-                        stackSize: item.StackSize,
-                        stackSizeHistogram: globalMarketData.stackSizeHistogram,
-                        stackSizeHistogramNQ: globalMarketData.stackSizeHistogramNQ,
-                        stackSizeHistogramHQ: globalMarketData.stackSizeHistogramHQ,
-                    } %}
+                    {% if globalMarketData %}
+                    {% set gPricesCount  = globalMarketData.listings|length %}
+                    {% set gHistoryCount = globalMarketData.recentHistory|length %}
+                        {% if gPricesCount != 0 or gHistoryCount != 0 %}
+                            {% include 'Product/item_market_summary.html.twig' with {
+                                chart: {
+                                    id: 'histogram_global',
+                                },
+                                serverName: 'global',
+                                dcName: server.dc,
+                                stackSize: item.StackSize,
+                                stackSizeHistogram: globalMarketData.stackSizeHistogram,
+                                stackSizeHistogramNQ: globalMarketData.stackSizeHistogramNQ,
+                                stackSizeHistogramHQ: globalMarketData.stackSizeHistogramHQ,
+                            } %}
+                        {% else %}
+                            {% include 'Product/no_market_data.html.twig' with {
+                                serverName: server.dc,
+                                server: server
+                            } %}
+                        {% endif %}
+                    {% endif %}
                 </div>
 
                 {#
@@ -220,44 +232,33 @@
 
                             <div class="tab-market-tables">
                                 <div class="cw-table cw-prices">
-                                    <h4>PRICES <small>Updated: {{ marketData.lastUploadTime|dateSimple }} (Includes 5% GST)</small></h4>
+                                    {# TODO: Remove ternary on CN 5.2 #}
+                                    <h4>PRICES <small>Updated: {{ marketData.lastUploadTime|dateSimple }}{{ (server.dc in ['LuXingNiao','MoGuLi','MaoXiaoPang']) ? '' : ' (Includes 5% GST)' }}</small></h4>
                                     {% include 'Product/prices.html.twig' with {
-                                        'prices': marketData.listings,
-                                        'cheapestPrice': cheapestPrice,
-                                        'averagePricesNQ': averagePricesNQ,
-                                        'averagePricesHQ': averagePricesHQ
+                                        prices: marketData.listings,
+                                        cheapestPrice: cheapestPrice,
+                                        averagePricesNQ: averagePricesNQ,
+                                        averagePricesHQ: averagePricesHQ
                                     } %}
                                 </div>
 
                                 <div class="cw-table cw-history">
                                     <h4>HISTORY</h4>
                                     {% include 'Product/history.html.twig' with {
-                                        'history': marketData.recentHistory,
-                                        'cheapestPrice': cheapestPrice,
-                                        'averagePricesNQ': averagePricesNQ,
-                                        'averagePricesHQ': averagePricesHQ
+                                        history: marketData.recentHistory,
+                                        cheapestPrice: cheapestPrice,
+                                        averagePricesNQ: averagePricesNQ,
+                                        averagePricesHQ: averagePricesHQ
                                     } %}
                                 </div>
                             </div>
                         </div>
                     {% else %}
                         <div class="tab-page tab-cw{{ serverName }} {{ (cookie('mogboard_homeworld', 'no') == 'yes' and serverName == server.name) ? 'open' : '' }}">
-                            <div class="item-no-data">
-                                <h2 class="text-highlight">Sorry, no market data!</h2>
-                                <p>
-                                    Universalis could not find any market data for
-                                    this item on the server <strong>{{ serverName }}</strong>.
-                                </p>
-                                <p>
-                                    There can be a few reasons for this, here are some:
-                                </p>
-                                <ul>
-                                    <li>{{ serverName }} is a brand new server</li>
-                                    <li>No one has contributed any information about this item yet</li>
-                                    <li>Something broke</li>
-                                </ul>
-                                If it is that last one, be sure to jump on discord and let us know!
-                            </div>
+                            {% include 'Product/no_market_data.html.twig' with {
+                                serverName: serverName,
+                                server: server
+                            } %}
                         </div>
                     {% endif %}
 

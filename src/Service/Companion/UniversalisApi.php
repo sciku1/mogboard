@@ -35,7 +35,7 @@ class UniversalisApi
         ]);
     }
 
-    public function getItemStrLocale(String $worldIdOrDCName, int $itemId)
+    public function getItemFromWorldOrDC(String $worldIdOrDCName, int $itemId)
     {
         return $this->query("GET", "api/{$worldIdOrDCName}/{$itemId}", [
             RequestOptions::QUERY => [

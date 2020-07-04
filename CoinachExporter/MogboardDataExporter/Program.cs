@@ -1,27 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using System.Net.Http;
+using CsvHelper;
+using MogboardDataExporter.Exporters;
+using MogboardDataExporter.Models;
 using SaintCoinach;
 using SaintCoinach.Ex;
-using SaintCoinach.IO;
-using SaintCoinach.Libra;
 using SaintCoinach.Xiv;
 using Directory = System.IO.Directory;
 using Item = SaintCoinach.Xiv.Item;
 
 namespace MogboardDataExporter
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             var outputPath = Path.Combine("..", "..", "..", "..", "DataExports");
             var categoryJsOutputPath = Path.Combine("..", "..", "..", "..", "public", "data");
+
+            var http = new HttpClient();
             
             if (Directory.Exists(outputPath))
                 Directory.Delete(outputPath, true);
@@ -37,135 +38,77 @@ namespace MogboardDataExporter
             var itemsDe = realmDe.GameData.GetSheet<Item>();
             var itemsFr = realmFr.GameData.GetSheet<Item>();
             var itemsJp = realmJp.GameData.GetSheet<Item>();
+            var itemsChs = GetChineseItems(realm, http).ToList();
+
+            var categories = realm.GameData.GetSheet<ItemSearchCategory>();
+
+            Console.WriteLine($"Global items: {items.Count}");
+            Console.WriteLine($"CN items: {itemsChs.Count}");
 
             Console.WriteLine("Starting game data export...");
-            goto marketableitems;
-            #region Category JS Export
+            
             categoryjs:
-            CategoryJs.Generate(realm, realmDe, realmFr, realmJp, categoryJsOutputPath);
-            #endregion
-            
-            #region Item Export
+            Console.WriteLine("== Category JS Export ==");
+            CategoryJsExports.Generate(realm, realmDe, realmFr, realmJp, categoryJsOutputPath);
+            CategoryJsExports.GenerateChinese(realm, itemsChs, categoryJsOutputPath);
+
             items:
-            foreach (var category in realm.GameData.GetSheet<ItemSearchCategory>())
-            {
-                // We don't need those, not for sale
-                if (category.Key == 0)
-                    continue;
+            Console.WriteLine("== Item Export ==");
+            ItemExports.GenerateItemJSON(items, itemsDe, itemsFr, itemsJp, itemsChs, categories, outputPath);
 
-                var output = new List<JObject>();
-
-                foreach (var item in items.Where(item => item.ItemSearchCategory.Key == category.Key))
-                {
-                    dynamic outputItem = new JObject();
-
-                    outputItem.ID = item.Key;
-
-                    var iconId = (UInt16) item.GetRaw("Icon");
-                    outputItem.Icon = $"/i/{GetIconFolder(iconId)}/{iconId}.png";
-
-                    outputItem.Name_en = item.Name.ToString();
-                    outputItem.Name_de = itemsDe.First(localItem => localItem.Key == item.Key).Name.ToString();
-                    outputItem.Name_fr = itemsFr.First(localItem => localItem.Key == item.Key).Name.ToString();
-                    outputItem.Name_jp = itemsJp.First(localItem => localItem.Key == item.Key).Name.ToString();
-
-                    outputItem.LevelItem = item.ItemLevel.Key;
-                    outputItem.Rarity = item.Rarity;
-
-                    output.Add(outputItem);
-                }
-
-                if (output.Count == 0)
-                    continue;
-
-                Console.WriteLine($"Cat {category.Key}: {output.Count}");
-
-                System.IO.File.WriteAllText(Path.Combine(outputPath, $"ItemSearchCategory_{category.Key}.json"), JsonConvert.SerializeObject(output));
-            }
-            #endregion
-
-            #region Marketable Item JSON Export
             marketableitems:
-            dynamic itemJSONOutput = new JObject();
-            var itemID = new List<int>();
-            foreach (var category in realm.GameData.GetSheet<ItemSearchCategory>())
-            {
-                if (category.Key < 9)
-                    continue;
-                var itemSet = items
-                    .Where(item => item.ItemSearchCategory.Key == category.Key)
-                    .Select(item => item.Key);
-                if (itemSet.Count() == 0)
-                    continue;
-                itemID = itemID.Concat(itemSet).ToList();
-
-                Console.WriteLine($"Cat {category.Key}: {itemSet.Count()}");
-            }
-            itemID.Sort();
-            itemJSONOutput.itemID = JToken.FromObject(itemID);
-            System.IO.File.WriteAllText(Path.Combine(outputPath, $"item.json"), JsonConvert.SerializeObject(itemJSONOutput));
-            #endregion
-            goto end;
-            #region ItemSearchCategory Export
-            System.IO.File.WriteAllText(Path.Combine(outputPath, "ItemSearchCategory_Keys.json"), JsonConvert.SerializeObject(realm.GameData.GetSheet("ItemSearchCategory").Keys.ToList()));
-            #endregion
+            Console.WriteLine("== Marketable Item JSON Export ==");
+            ItemExports.GenerateMarketableItemJSON(items, categories, outputPath);
             
-            #region Town Export
+            itemsearchcategories:
+            Console.WriteLine("== Item Search Category Export ==");
+            Console.Write("...");
+            ItemSearchCategoryExports.GenerateJSON(realm, outputPath);
+            Console.WriteLine("Done!");
+
+            Console.WriteLine("== Chinese Item Search Category Mappings Export ==");
+            Console.Write("...");
+            ItemSearchCategoryExports.GenerateChineseMappingsJSON(http, outputPath);
+            Console.WriteLine("Done!");
+            
             town_export:
-            var towns = realm.GameData.GetSheet("Town");
-            var townsDe = realmDe.GameData.GetSheet("Town");
-            var townsFr = realmFr.GameData.GetSheet("Town");
-            var townsJp = realmJp.GameData.GetSheet("Town");
+            Console.WriteLine("== Town Export ==");
+            Console.Write("...");
+            TownExports.GenerateJSON(realm, realmDe, realmFr, realmJp, http, outputPath);
+            Console.WriteLine("Done!");
 
-            var outputTowns = new List<JObject>();
-
-            foreach (var town in towns)
-            {
-                dynamic outputTown = new JObject();
-
-                outputTown.ID = town.Key;
-
-                var iconObj = town.GetRaw("Icon");
-                outputTown.Icon = (int) iconObj != 0 ? $"/i/{GetIconFolder((int) iconObj)}/{(int) iconObj}.png" : $"/i/{GetIconFolder(060880)}/060880.png";
-
-                outputTown.Name_en = town.AsString("Name").ToString();
-                outputTown.Name_de = townsDe.First(localItem => localItem.Key == town.Key).AsString("Name").ToString();
-                outputTown.Name_fr = townsFr.First(localItem => localItem.Key == town.Key).AsString("Name").ToString();
-                outputTown.Name_jp = townsJp.First(localItem => localItem.Key == town.Key).AsString("Name").ToString();
-
-                outputTowns.Add(outputTown);
-            }
-
-            System.IO.File.WriteAllText(Path.Combine(outputPath, "Town.json"), JsonConvert.SerializeObject(outputTowns));
-            #endregion
-
-            #region World Export
             world_export:
-            var worlds = realm.GameData.GetSheet("World");
-
-            var outputWorlds = new List<JObject>();
-
-            foreach (var world in worlds)
-            {
-                dynamic outputWorld = new JObject();
-
-                outputWorld.ID = world.Key;
-
-                outputWorld.Name = world.AsString("Name").ToString();
-                outputWorld.DataCenter = (byte) world.GetRaw("DataCenter");
-                outputWorld.IsPublic = world.AsBoolean("IsPublic");
-
-                outputWorlds.Add(outputWorld);
-            }
-
-            System.IO.File.WriteAllText(Path.Combine(outputPath, "World.json"), JsonConvert.SerializeObject(outputWorlds));
-            #endregion
+            Console.WriteLine("== World Export ==");
+            Console.Write("...");
+            WorldExports.GenerateJSON(realm, outputPath);
+            Console.WriteLine("Done!");
 
             end:
-            Console.WriteLine("Done!");
+            Console.WriteLine("All done!");
             Console.ReadKey();
         }
 
-        private static string GetIconFolder(int iconId) => (Math.Floor(iconId / 1000d) * 1000).ToString("000000");
+        private static IEnumerable<CsvItem> GetChineseItems(ARealmReversed realm, HttpClient http)
+        {
+            var rawData = http.GetStreamAsync(new Uri("https://raw.githubusercontent.com/thewakingsands/ffxiv-datamining-cn/master/Item.csv")).GetAwaiter().GetResult();
+            using var sr = new StreamReader(rawData);
+            using var csv = new CsvReader(sr, CultureInfo.InvariantCulture);
+            var iscSheet = realm.GameData.GetSheet<ItemSearchCategory>();
+            var items = new List<CsvItem>();
+            for (var i = 0; i < 3; i++) csv.Read();
+            while (csv.Read())
+            {
+                var itemSearchCategory = csv.GetField<int>(17);
+                items.Add(new CsvItem
+                {
+                    Key = csv.GetField<int>(0),
+                    Name = csv.GetField<string>(10),
+                    LevelItem = csv.GetField<int>(12),
+                    Rarity = csv.GetField<int>(13),
+                    ItemSearchCategory = iscSheet.First(isc => isc.Key == itemSearchCategory),
+                });
+            }
+            return items;
+        }
     }
 }
