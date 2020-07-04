@@ -108,7 +108,7 @@ class GameDataSource
         );
     }
 
-    private static function isChinese(): boolean {
+    private static function isChinese() {
         return Language::current() === 'chs';
     }
 }
