@@ -1,0 +1,18 @@
+<div class="page-short">
+    <h5><strong>{{ name }}</strong> {{ kind }}</h5>
+    <p>
+        {{ description }}
+        <br>
+        <br>
+        <div style="width: 100%; overflow: hidden;">
+            <div style="text-align: center; {{ cn_url is defined ? 'float: left; margin-left: 19%;' : '' }}">
+                <a href="{{ intl_url }}" target="_blank"><button type="button" class="btn btn-green btn-download"><span class="icon-heart"/> Download</button></a>
+            </div>
+            {% if cn_url is defined %}
+            <div style="text-align: center; float: right; margin-right: 19%;">
+                <a href="https://gitee.com/bluefissure/Dalamud/releases/v4.9.8.2-beta.5" target="_blank"><button type="button" class="btn btn-green btn-download"><span class="icon-heart"/> 下载</button></a>
+            </div>
+            {% endif %}
+        </div>
+    </p>
+</div>
