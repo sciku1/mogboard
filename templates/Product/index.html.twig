@@ -116,7 +116,7 @@
                     {% if globalMarketData %}
                     {% set gPricesCount  = globalMarketData.listings|length %}
                     {% set gHistoryCount = globalMarketData.recentHistory|length %}
-                        {% if gPricesCount == 0 and gHistoryCount == 0 %}
+                        {% if gPricesCount != 0 or gHistoryCount != 0 %}
                             {% include 'Product/item_market_summary.html.twig' with {
                                 chart: {
                                     id: 'histogram_global',
