@@ -23,7 +23,10 @@ class GameDataSource
     public function getItem(int $itemId)
     {
         if (GameDataSource::isChinese()) {
-            return $this->cafeMaker->getItem($itemId);
+            $item = $this->cafeMaker->getItem($itemId);
+            if ($item != null) {
+                return $item;
+            }
         }
 
         $cachedItem = $this->handle("xiv_Item_{$itemId}");
@@ -41,7 +44,10 @@ class GameDataSource
     public function getRecipe(int $recipeId)
     {
         if (GameDataSource::isChinese()) {
-            return $this->cafeMaker->getRecipe($recipeId);
+            $recipe = $this->cafeMaker->getRecipe($recipeId);
+            if ($recipe != null) {
+                return $recipe;
+            }
         }
 
         $cachedRecipe = $this->handle("xiv_Recipe_{$recipeId}");
@@ -59,7 +65,10 @@ class GameDataSource
     public function getMateria(int $materiaId)
     {
         if (GameDataSource::isChinese()) {
-            return $this->cafeMaker->getMateria($materiaId);
+            $materia = $this->cafeMaker->getMateria($materiaId);
+            if ($materia != null) {
+                return $materia;
+            }
         }
 
         $cachedMateria = $this->handle("xiv_Materia_{$materiaId}");
