@@ -12,7 +12,7 @@
                     <select id="servers" class="servers">
                         <option disabled selected>{{ '- Please Choose a Server -'|translate('option_choose_server_guide') }}</option>
                         {% for dc, servers in getGameDataCenters() %}
-                            <optgroup label="{{ dc }} - {{ dc in ['Chaos','Light'] ? 'Europe' : (dc in ['Elemental','Gaia','Mana'] ? 'Japan' : (dc in ['Crystal','Primal','Aether'] ? 'America' : 'China'))}}">
+                            <optgroup label="{{ dc }} - {{ dc in ['Chaos','Light'] ? 'Europe' : (dc in ['Elemental','Gaia','Mana'] ? 'Japan' : (dc in ['Crystal','Primal','Aether'] ? 'America' : '中国'))}}">
                                 {% for server in servers %}
                                     <option value="{{ server }}">{{ server }}</option>
                                 {% endfor %}
