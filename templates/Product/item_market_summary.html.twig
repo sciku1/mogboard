@@ -10,7 +10,7 @@
 {# CHEAPEST #}
 <div class="cross_world_markets">
     <div class="cheapest">
-        <h2>Cheapest HQ</h2>
+        <h2>{{ 'Cheapest %s'|translate('market_board_cheapest_title')|format('HQ'|translate('generic_hq')) }}</h2>
         {% if item.CanBeHq %}
             {% if census.Global.Prices_CheapestHQ %}
             <div class="cheapest_price">
@@ -31,7 +31,7 @@
         {% endif %}
     </div>
     <div class="cheapest">
-        <h2>Cheapest NQ</h2>
+        <h2>{{ 'Cheapest %s'|translate('market_board_cheapest_title')|format('NQ'|translate('generic_nq')) }}</h2>
         {% if census.Global.Prices_CheapestNQ %}
         <div class="cheapest_price">
             <i class="xiv-Gil"></i>

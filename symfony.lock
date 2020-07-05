@@ -255,15 +255,6 @@
     "sentry/sentry": {
         "version": "1.10.0"
     },
-    "smmoosavi/php-gettext": {
-        "version": "v1.0.1"
-    },
-    "smmoosavi/php-gettext-core": {
-        "version": "v1.0.11-patch1"
-    },
-    "smmoosavi/twig-php-gettext": {
-        "version": "dev-master"
-    },
     "symfony/asset": {
         "version": "v4.2.4"
     },

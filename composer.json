@@ -17,7 +17,6 @@
         "ramsey/uuid": "^3.8",
         "sensio/framework-extra-bundle": "^5.2",
         "sentry/sentry": "^1.10",
-        "smmoosavi/twig-php-gettext": "dev-master",
         "symfony/console": "4.2.*",
         "symfony/dotenv": "4.2.*",
         "symfony/flex": "^1.1",

@@ -1,16 +1,16 @@
 <small>
     <div>
-        Universalis v{{ siteVersion().version ?: '0' }}({{siteVersion().hash_min}}), based on Mogboard v2.2
+        Universalis v{{ siteVersion().version ?: '0' }}({{siteVersion().hash_min}}), {{ 'based on'|translate('footer_basedon') }} Mogboard v2.2
         &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-        <a class="btn-menu" href="{{ path('about') }}">About</a>
+        <a class="btn-menu" href="{{ path('about') }}">{{ 'About'|translate('footer_about') }}</a>
         &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-        <a class="btn-menu" href="/docs">API Documentation</a>
+        <a class="btn-menu" href="/docs">{{ 'API Documentation'|translate('footer_docs') }}</a>
         &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-        <a class="btn-menu" href="https://github.com/Universalis-FFXIV/Universalis">GitHub</a>
+        <a class="btn-menu" href="https://github.com/Universalis-FFXIV/Universalis">{{ 'GitHub'|translate('footer_github') }}</a>
         &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-        <a class="btn-menu" href="https://discord.gg/JcMvMxD">Discord</a>
+        <a class="btn-menu" href="https://discord.gg/JcMvMxD">{{ 'Discord'|translate('generic_discord') }}</a>
     </div>
     <div>
-        FINAL FANTASY XIV © 2010 - 2019 SQUARE ENIX CO., LTD. All Rights Reserved.
+        {{ 'FINAL FANTASY XIV © 2010 - 2020 SQUARE ENIX CO., LTD. All Rights Reserved.'|translate('footer_license') }}
     </div>
 </small>

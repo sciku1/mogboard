@@ -2,8 +2,8 @@
     <table>
         <thead>
         <tr>
-            <th width="90%">Name</th>
-            <th width="10%">Actions</th>
+            <th width="90%">{{ 'Name'|translate('generic_name') }}</th>
+            <th width="10%">{{ 'Actions'|translate('generic_actions') }}</th>
         </tr>
         </thead>
         <tbody>
@@ -13,26 +13,26 @@
                     <h5><strong>{{ alert.name }}</strong> <small>({{ alert.uniq }})</small></h5>
                     <div class="flex">
                         <div class="flex_25">
-                            <small>HQ?</small><br>
-                            {{ alert.isTriggerHq ? '<img src="/i/game/hq.png" height="12"> HQ' : 'NQ' }}
+                            <small>{{ 'HQ?'|translate('generic_hq_question') }}</small><br>
+                            {{ alert.isTriggerHq ? '<img src="/i/game/hq.png" height="12"> ' ~ 'HQ'|translate('generic_hq') : 'NQ'|translate('generic_nq') }}
                         </div>
                         <div class="flex_25">
-                            <small>Cross-World?</small><br>
+                            <small>{{ 'Cross-World?'|translate('generic_crossworld_question') }}</small><br>
                             {{ alert.isTriggerDataCenter ? '<i class="xiv-CrossWorld"></i> Yes' : 'No' }}
                         </div>
                         <div class="flex_25">
-                            <small>Notification</small><br>
-                            {{ alert.isNotifiedViaEmail ? '[Email]' : '' }}
-                            {{ alert.isNotifiedViaDiscord ? '[Discord]' : '' }}
+                            <small>{{ 'Notification'|translate('generic_notification') }}</small><br>
+                            {{ alert.isNotifiedViaEmail ? '[' ~ 'Email'|translate('generic_email') ~ ']' : '' }}
+                            {{ alert.isNotifiedViaDiscord ? '[' ~ 'Discord'|translate('generic_discord') ~ ']' : '' }}
                         </div>
                         <div class="flex_25">
-                            <small>Sent</small><br>
-                            ({{ alert.triggersSent|number_format }}) {{ alert.triggerLastSent ? alert.triggerLastSent|date : 'Never' }}
+                            <small>{{ 'Sent'|translate('generic_sent') }}</small><br>
+                            ({{ alert.triggersSent|number_format }}) {{ alert.triggerLastSent ? alert.triggerLastSent|date : 'Never'|translate('generic_never') }}
                         </div>
                     </div>
                     {% if alert.keepUpdated %}
                     <div style="padding: 5px 0;">
-                        <strong class="text-green">DPS Perk:</strong> Keep item updated
+                        <strong class="text-green">DPS Perk:</strong> Keep item updated {# TN: I don't think this is used in Universalis? I think this is one of XIVAPI's Patreon tiers. #}
                     </div>
                     {% endif %}
                     <code class="box" style="margin-top: 5px;">
@@ -43,16 +43,16 @@
                 </td>
                 <td>
                     <div class="alert_action_row">
-                        <button type="button" class="btn_alert_edit" data-id="{{ alert.id }}">Edit</button>
+                        <button type="button" class="btn_alert_edit" data-id="{{ alert.id }}">{{ 'Edit'|translate('generic_edit') }}</button>
                     </div>
                     <div>
-                        <button type="button" class="btn_alert_delete" data-id="{{ alert.id }}">Delete</button>
+                        <button type="button" class="btn_alert_delete" data-id="{{ alert.id }}">{{ 'Delete'|translate('generic_delete') }}</button>
                     </div>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">You have no alerts for this item.</td>
+                <td colspan="5">{{ 'You have no alerts for this item.'|translate('alerts_table_no_alerts') }}</td>
             </tr>
         {% endfor %}
         </tbody>

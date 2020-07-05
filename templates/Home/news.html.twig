@@ -1,16 +1,18 @@
 <div class="the-big-news-post">
-    <h4>Welcome to Universalis!</h4>
+    <h4>{{ 'Welcome to Universalis!'|translate('news_universalis_welcome') }}</h4>
     <p>
+        {% apply translate('news_product_blurb') %}
         Universalis is a market board data site with crowd sourced information, based on mogboard.
         It can aggregate market board information from multiple sources, so if you want to help out,
         please check out our contributing page.
+        {% endapply %}
     </p>
     <p>
-        Thank you, and enjoy your stay!
+        {{ 'Thank you, and enjoy your stay!'|translate('news_enjoy') }}
     </p>
 
     <a href="{{ path('contribute') }}">
-        Contribute to market board data
+        {{ 'Contribute to market board data'|translate('news_contribute') }}
     </a>
 
 </div>

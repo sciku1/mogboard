@@ -13,45 +13,53 @@
         <br><br>
 
         <div class="page-short">
-            <h3>What is <strong>Universalis</strong>?</h3>
+            <h3>{{ 'What is <strong>Universalis</strong>?'|translate('about_whatisthis_title') }}</h3>
             <p>
+                {% apply translate('about_whatisthis_explanation_1') %}
                 The site allows you to view in-game market for multiple servers at
                 anytime, anywhere. It uses crowd-sourced data from multiple sources to provide
                 the most up-to-date prices possible.
+                {% endapply %}
             </p>
         </div>
 
         <br><br>
 
         <div class="page-short">
-            <h3>What information can I get?</h3>
+            <h3>{{ 'What information can I get?'|translate('about_whatisthis_infoquestion') }}</h3>
             <p>
+                {% apply translate('about_whatisthis_explanation_2') %}
                 All market information is available: Prices, Materia, Retainer, Crafters and even Buyers.
                 Everything that you see in-game is available. Additional data-views have been added
                 such as graphs, extended history and cross-world summary is also included.
+                {% endapply %}
             </p>
         </div>
 
         <br><br>
 
         <div class="page-short">
-            <h3>Can I have access to the data?</h3>
+            <h3>{{ 'Can I have access to the data?'|translate('about_whatisthis_accessquestion') }}</h3>
             <p>
+                {% apply translate('about_whatisthis_explanation_3')|format('<a href="https://universalis.app/docs">Universalis</a>') %}
                 <strong>Definitely!</strong>
                 <br><br>
                 Everything you see on Universalis is open for anyone to use, to learn more
                 about how to access the data using a REST API Service, check out the
-                <a href="https://universalis.app/docs">Universalis</a> documentation.
+                %s documentation.
+                {% endapply %}
             </p>
         </div>
 
         <br><br>
 
         <div class="page-short">
-            <h3>Special thanks</h3>
+            <h3>{{ 'Special thanks'|translate('generic_special_thanks') }}</h3>
             <p>
-                We would like to thank Vekien and Miu from <a href="https://xivapi.com">XIVAPI</a> for their initial work on mogboard,
+                {% apply translate('about_whatisthis_explanation_4')|format('<a href="https://xivapi.com">XIVAPI</a>') %}
+                We would like to thank Vekien and Miu from %s for their initial work on mogboard,
                 which made this site, in its current state, possible.
+                {% endapply %}
             </p>
         </div>
 
@@ -84,14 +92,18 @@
         <br><br>
 
         <div class="page-short">
-            <h3 id="technical">So, how does it actually work? Get Technical.</h3>
+            <h3 id="technical">{{ 'So, how does it actually work? Get Technical.'|translate('about_get_technical_title') }}</h3>
 
             <p>
+                {% apply translate('about_get_technical_explanation_1') %}
                 <strong>Universalis</strong> runs a REST API that applications can post market board data to,
                 after they collect the data from a running game instance by multiple users, anonymously.
+                {% endapply %}
             <p>
+                {% apply translate('about_get_technical_explanation_2') %}
                 It stores this data, and reports it back to anyone that requests its endpoints - including this frontend,
                 which visualizes the stored data and notifies you about changes.
+                {% endapply %}
             </p>
 
 {#
@@ -131,7 +143,7 @@
         <br><br>
 
         <div class="page-short">
-            <h3>Credits</h3>
+            <h3>{{ 'Credits'|translate('generic_credits') }}</h3>
             <p>
                 <div class="flex">
                     <div class="flex_10">
@@ -139,7 +151,7 @@
                     </div>
                     <div class="flex_90 mog-credits">
                         <h2>karashiiro</h2>
-                        Database API, server maintenance
+                        {{ 'Database API, server maintenance'|translate('karashiiro_credits') }}
                     </div>
                 </div>
             </p>
@@ -151,33 +163,18 @@
                     </div>
                     <div class="flex_90 mog-credits">
                         <h2>goat</h2>
-                        Game stuff, stealing mogboard
+                        {{ 'Game stuff, stealing mogboard'|translate('goat_credits') }}
                     </div>
                 </div>
             </p>
-            <p class="mog-honorable">Also thanks to: Vekien, Miu, Mino and all of our uploaders!</p>
-            <p class="mog-honorable">Game data sourced from <a href="https://xivapi.com/">XIVAPI</a> and <a href="https://ffcafe.org/">FFCafe</a></p>
+            <p class="mog-honorable">{{ 'Also thanks to: Vekien, Miu, Mino and all of our uploaders!'|translate('about_honorable_mentions') }}</p>
+            <p class="mog-honorable">{{ 'Game data sourced from <a href="%s">XIVAPI</a> and <a href="%s">FFCafe</a>'|translate('about_data_sources')|format('https://xivapi.com/', 'https://ffcafe.org/') }}</p>
         </div>
 
         <br><br>
     </div>
 
-    <div class="page-block">
-        <br><br>
-
-        <div class="page-short">
-            <h3>I have more questions!</h3>
-            <p>
-                Hop onto <a href="https://discord.gg/JcMvMxD">our discord</a> and you can
-                ask all your questions.
-            </p>
-            <p>
-                You can also pm me: <span class="text-yellow">meeboo</span> if you prefer :)
-            </p>
-        </div>
-
-        <br><br>
-    </div>
+    {% include 'Pages/more_questions.html.twig' %}
 
 </div>
 
