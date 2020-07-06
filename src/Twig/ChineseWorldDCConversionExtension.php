@@ -49,7 +49,7 @@ class ChineseWorldDCConversionExtension extends AbstractExtension
         if (Language::current() !== 'chs') {
             return $worldDC;
         }
-        if (\in_array($worldDC, self::MAPPINGS)){
+        if (\array_key_exists($worldDC, self::MAPPINGS)){
             return self::MAPPINGS[$worldDC];
         }
         return $worldDC;
