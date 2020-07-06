@@ -14,7 +14,7 @@
                         {% for dc, servers in getGameDataCenters() %}
                             <optgroup label="{{ dc }} - {{ dc in ['Chaos','Light'] ? 'Europe' : (dc in ['Elemental','Gaia','Mana'] ? 'Japan' : (dc in ['Crystal','Primal','Aether'] ? 'America' : '中国'))}}">
                                 {% for server in servers %}
-                                    <option value="{{ server }}">{{ server }}</option>
+                                    <option value="{{ server }}">{{ server|convert_if_chinese }}</option>
                                 {% endfor %}
                             </optgroup>
                         {% endfor %}
