@@ -39,7 +39,7 @@
                                     &nbsp;&nbsp;-&nbsp;&nbsp;
                                 {% endif %}
 
-                                Stack: {{ item.StackSize|number_format }}
+                                {{ 'Stack:'|translate('generic_stack_size_colon') }} {{ item.StackSize|number_format }}
 
                                 {% if item.ClassJobCategory %}
                                     &nbsp;&nbsp;-&nbsp;&nbsp;
@@ -56,7 +56,7 @@
                 </div>
 
                 <div class="item_nav_mobile_toggle">
-                    <button type="button">Menu</button>
+                    <button type="button">{{ 'Menu'|translate('generic_menu')) }}</button>
                 </div>
 
                 <div class="item_nav">
@@ -64,7 +64,7 @@
 
                         {# Cross World #}
                         <button type="button" data-tab="summary" class="btn-summary {{ (cookie('mogboard_homeworld', 'no') == 'yes' or reqServer) ? '' : 'open' }}">
-                            <i class="xiv-CrossWorld cw-summary"></i> Cross-World
+                            <i class="xiv-CrossWorld cw-summary"></i> {{ 'Cross-World'|translate('generic_cross_world')) }}
                         </button>
 
                         {#
@@ -92,9 +92,9 @@
 
                     {# Alerts #}
                     <div class="item_nav_custom">
-                        {% if auth.user and auth.user.isPatron %}
+                        {% if auth.user and auth.user.isPatron %} {# Remove second check, we have Mailgun and a Discord bot so this shouldn't be hard to get going. #}
                             <button type="button" data-tab="alerts" class="btn-alerts">
-                                <i class="xiv-app_drawer_news cw-alerts"></i> Alerts
+                                <i class="xiv-app_drawer_news cw-alerts"></i> {{ 'Alerts'|translate('generic_alerts') }}
                             </button>
                         {% endif %}
                     </div>
@@ -168,7 +168,7 @@
                                         series: [
                                             {
                                                 id:   'HC_History_HQ_'~ serverName,
-                                                name: '(HQ) Price Per Unit',
+                                                name: '(%s) Price Per Unit'|translate('market_board_ppu_title')|format('HQ'|translate('generic_hq')),
                                                 data: census[serverName].HC_History_HQ,
                                                 yAxis: 0,
                                                 showInNavigator: true,
@@ -180,7 +180,7 @@
                                             },
                                             {
                                                 id:   'HC_History_NQ_'~ serverName,
-                                                name: '(NQ) Price Per Unit',
+                                                name: '(%s) Price Per Unit'|translate('market_board_ppu')|format('NQ'|translate('generic_nq')),
                                                 data: census[serverName].HC_History_NQ,
                                                 yAxis: 0,
                                                 showInNavigator: true,
@@ -193,7 +193,7 @@
 
                                             {
                                                 id:   'HC_History_HQ_volume_'~ serverName,
-                                                name: '(High-Quality) Price Per Unit QUANTITY',
+                                                name: '(%s) Price Per Unit QUANTITY'|translate('market_board_ppu_quantity')|format('High-Quality'|translate('generic_high_quality')),
                                                 data: census[serverName].HC_History_HQ_volume,
                                                 linkedTo: 'HC_History_HQ_'~ serverName,
                                                 type: 'column',
@@ -202,7 +202,7 @@
                                             },
                                             {
                                                 id:   'HC_History_NQ_volume_'~ serverName,
-                                                name: '(Normal Quality) Price Per Unit QUANTITY',
+                                                name: '(%s) Price Per Unit QUANTITY'|translate('market_board_ppu_quantity')|format('Normal Quality'|translate('generic_normal_quality')),
                                                 data: census[serverName].HC_History_NQ_volume,
                                                 linkedTo: 'HC_History_NQ_'~ serverName,
                                                 type: 'column',
@@ -216,7 +216,7 @@
 
                             {% if item.StackSize != 1 and marketData.stackSizeHistogram %}
                             <div>
-                                <h4>STACK SIZE HISTOGRAM <small>Last 20 Sales</small></h4>
+                                <h4>{{ 'STACK SIZE HISTOGRAM <small>Last 20 Sales</small>'|translate('market_board_stack_size_histogram_title') }}</h4>
                                 {% include 'Product/histogram_hc.html.twig' with {
                                     chart: {
                                         id: 'histogram_' ~ serverName,

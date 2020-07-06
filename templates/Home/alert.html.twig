@@ -20,7 +20,7 @@
                 {% for alert in alerts %}
                     <hr>
                     <div class="home-alert-watcher">
-                        <h3>Watcher: {{ alert.Name }}</h3>
+                        <h3>{{ 'Watcher: '|translate('alert_watcher') }}{{ alert.Name }}</h3>
                         <div class="alert-dark">
                             <code>
                                 {% for trigger in alert.getTriggerConditionsFormatted %}
@@ -35,7 +35,7 @@
                     </div>
                     <div class="home-alert-watcher">
                         {% if alert.recentEvent %}
-                            <p class="text-gray">Last Triggered Event: {{ alert.recentEventDate|date }}</p>
+                            <p class="text-gray">{{ 'Last Triggered Event: %s'|translate('alert_last_triggered_event')|format(alert.recentEventDate|date) }}</p>
 
                             {% if alert.recentEvent[0].PurchaseDate is defined %}
                                 {% include 'Product/history.html.twig' with {
@@ -49,7 +49,7 @@
                                 } %}
                             {% endif %}
                         {% else %}
-                        <p class="text-red">This alert has no triggered events.</p>
+                        <p class="text-red">{{ 'This alert has no triggered events.'|translate('alert_no_triggered_events') }}</p>
                         {% endif %}
                     </div>
                 {% endfor %}

@@ -1,0 +1,18 @@
+<div class="page-block">
+    <br><br>
+
+    <div class="page-short">
+        <h3>{{ 'I have more questions!'|translate('about_more_questions') }}</h3>
+        <p>
+            {% apply translate('about_more_questions_directory')|format('https://discord.gg/JcMvMxD') %}
+            Hop onto <a href="%s">our Discord</a> and you can
+            ask all your questions.
+            {% endapply %}
+        </p>
+        <p>
+            {{ 'You can also PM me: <span class="text-yellow">%s</span> if you prefer :)'|translate('about_pm_invite')|format('meeboo') }}
+        </p>
+    </div>
+
+    <br><br>
+</div>

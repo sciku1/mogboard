@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
-{% set title = '404 Not Found' %}
+{% set title = '404 Not Found'|translate('error_404') %}
 
 {% block body %}
     <div class="error-page">
         <img src="/i/game/patch_titan.png">
         <h2>404</h2>
-        <p>Could not find the page you were looking for kupo~!</p>
+        <p>{{ 'Could not find the page you were looking for kupo~!'|translate('error_404_flavortext') }}</p>
     </div>
 {% endblock %}

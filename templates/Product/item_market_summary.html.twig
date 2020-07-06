@@ -10,7 +10,7 @@
 {# CHEAPEST #}
 <div class="cross_world_markets">
     <div class="cheapest">
-        <h2>Cheapest HQ</h2>
+        <h2>{{ 'Cheapest %s'|translate('market_board_cheapest_title')|format('HQ'|translate('generic_hq')) }}</h2>
         {% if item.CanBeHq %}
             {% if census.Global.Prices_CheapestHQ %}
             <div class="cheapest_price">
@@ -19,19 +19,19 @@
                 <span class="cheapest_value">{{ census.Global.Prices_CheapestHQ.PricePerUnit|number_format }}</span>
 
                 <span class="cheapest_price_info">
-                    Server: <strong>{{ census.Global.Prices_CheapestHQ.Server }}</strong> -
-                    Total: <strong>{{ census.Global.Prices_CheapestHQ.PriceTotal|number_format }}</strong>
+                    {{ 'Server:'|translate('generic_server_colon') }} <strong>{{ census.Global.Prices_CheapestHQ.Server }}</strong> -
+                    {{ 'Total:'|translate('generic_total_colon') }} <strong>{{ census.Global.Prices_CheapestHQ.PriceTotal|number_format }}</strong>
                 </span>
             </div>
             {% else %}
-                No HQ for sale.
+                {{ 'No %s for sale.'|translate('market_board_none_for_sale')|format('HQ'|translate('generic_hq')) }}
             {% endif %}
         {% else %}
-            <p>Item has no HQ variant.</p>
+            <p>{{ 'Item has no HQ variant.'|translate('market_board_no_hq_variant') }}</p>
         {% endif %}
     </div>
     <div class="cheapest">
-        <h2>Cheapest NQ</h2>
+        <h2>{{ 'Cheapest %s'|translate('market_board_cheapest_title')|format('NQ'|translate('generic_nq')) }}</h2>
         {% if census.Global.Prices_CheapestNQ %}
         <div class="cheapest_price">
             <i class="xiv-Gil"></i>
@@ -39,19 +39,19 @@
             <span class="cheapest_value">{{ census.Global.Prices_CheapestNQ.PricePerUnit|number_format }}</span>
 
             <span class="cheapest_price_info">
-                Server: <strong>{{ census.Global.Prices_CheapestNQ.Server }}</strong> -
-                Total: <strong>{{ census.Global.Prices_CheapestNQ.PriceTotal|number_format }}</strong>
+                {{ 'Server:'|translate('generic_server_colon') }} <strong>{{ census.Global.Prices_CheapestNQ.Server }}</strong> -
+                {{ 'Total:'|translate('generic_total_colon') }} <strong>{{ census.Global.Prices_CheapestNQ.PriceTotal|number_format }}</strong>
             </span>
         </div>
         {% else %}
-            <p>No NQ for sale.</p>
+            <p>{{ 'No %s for sale.'|translate('market_board_none_for_sale')|format('NQ'|translate('generic_nq')) }}</p>
         {% endif %}
     </div>
 </div>
 <br><br>
 
 {# Purchase History #}
-<h6>Cross-World Purchase history (500 sales)</h6>
+<h6>{{ 'Cross-World Purchase history (500 sales)'|translate('market_board_purchase_history_title') }}</h6>
 {% include 'Product/chart_hc.html.twig' with {
     chart: {
         id: 'history_global',
@@ -59,7 +59,7 @@
         series: [
             {
                 id:   'HC_History_HQ',
-                name: '(HQ) PerUnit',
+                name: '(%s) PerUnit'|translate('generic_perunit')|format('HQ'|translate('generic_hq')),
                 data: census.All.HC_History_HQ,
                 yAxis: 0,
                 showInNavigator: true,
@@ -71,7 +71,7 @@
             },
             {
                 id:   'HC_History_HQ',
-                name: '(NQ) PerUnit',
+                name: '(%s) PerUnit'|translate('generic_perunit')|format('NQ'|translate('generic_nq')),
                 data: census.All.HC_History_NQ,
                 yAxis: 0,
                 showInNavigator: true,
@@ -84,7 +84,7 @@
 
             {
                 id:   'HC_History_HQ_volume',
-                name: '(HQ) PerUnit QUANTITY',
+                name: '(%s) PerUnit QUANTITY'|translate('generic_perunit_quantity')|format('HQ'|translate('generic_hq')),
                 data: census.All.HC_History_HQ_volume,
                 linkedTo: 'HC_History_HQ',
                 type: 'column',
@@ -93,7 +93,7 @@
             },
             {
                 id:   'HC_History_NQ_volume',
-                name: '(NQ) PerUnit QUANTITY',
+                name: '(%s) PerUnit QUANTITY'|translate('generic_perunit_quantity')|format('NQ'|translate('generic_nq')),
                 data: census.All.HC_History_NQ_volume,
                 linkedTo: 'HC_History_NQ',
                 type: 'column',
@@ -126,7 +126,7 @@
 <div class="cross_world_markets">
     <div>
         {% if item.CanBeHq %}
-            <h6><img src="/i/game/hq.png" height="15"> HQ Prices{{ (dcName in ['LuXingNiao','MoGuLi','MaoXiaoPang']) ? '' : ' (Includes 5% GST)' }}</h6>
+            <h6><img src="/i/game/hq.png" height="15"> {{ '%s Prices'|translate('generic_prices_2')|format('HQ'|translate('generic_hq')) }}{{ (dcName in ['LuXingNiao','MoGuLi','MaoXiaoPang']) ? '' : ' (Includes 5% GST)' }}</h6>
             {% include 'Product/prices.html.twig' with {
                 'prices': census.Global.PricesHQ|slice(0, 10),
                 'crossWorld': true,
@@ -136,7 +136,7 @@
             <br>
         {% endif %}
 
-        <h6>NQ Prices{{ (dcName in ['LuXingNiao','MoGuLi','MaoXiaoPang']) ? '' : ' (Includes 5% GST)' }}</h6>
+        <h6>{{ '%s Prices'|translate('generic_prices_2')|format('NQ'|translate('generic_nq')) }}{{ (dcName in ['LuXingNiao','MoGuLi','MaoXiaoPang']) ? '' : ' (Includes 5% GST)' }}</h6>
         {% include 'Product/prices.html.twig' with {
             'prices': census.Global.PricesNQ|slice(0, 10),
             'crossWorld': true,
@@ -146,7 +146,7 @@
     </div>
     <div>
         {% if item.CanBeHq %}
-            <h6><img src="/i/game/hq.png" height="15"> HQ Purchase History</h6>
+            <h6><img src="/i/game/hq.png" height="15"> {{ '%s Purchase History'|translate('generic_purchase_history')|format('HQ'|translate('generic_hq')) }}</h6>
             {% include 'Product/history.html.twig' with {
                 'history': census.Global.HistoryHQ|slice(0, 10),
                 'crossWorld': true,
@@ -156,7 +156,7 @@
             <br>
         {% endif %}
 
-        <h6>NQ Purchase History</h6>
+        <h6>{{ '%s Purchase History'|translate('generic_purchase_history')|format('NQ'|translate('generic_nq')) }}</h6>
         {% include 'Product/history.html.twig' with {
             'history': census.Global.HistoryNQ|slice(0, 10),
             'crossWorld': true,
@@ -172,7 +172,7 @@
     <div>
         <div class="flex census_box">
             <div>
-                <h5>Avg. Per Unit</h5>
+                <h5>{{ 'Avg. Per Unit'|translate('market_board_avg_perunit') }}</h5>
                 <br>
                 <div class="flex avg_prices">
                     {% if item.CanBeHq %}
@@ -186,7 +186,7 @@
                 </div>
             </div>
             <div>
-                <h5>Avg. Total</h5>
+                <h5>{{ 'Avg. Total'|translate('market_board_avg_total') }}</h5>
                 <br>
                 <div class="flex avg_prices">
                     {% if item.CanBeHq %}
@@ -204,7 +204,7 @@
     <div>
         <div class="flex census_box">
             <div>
-                <h5>Avg. Per Unit</h5>
+                <h5>{{ 'Avg. Per Unit'|translate('market_board_avg_perunit') }}</h5>
                 <br>
                 <div class="flex avg_prices">
                     {% if item.CanBeHq %}
@@ -218,7 +218,7 @@
                 </div>
             </div>
             <div>
-                <h5>Avg. Total</h5>
+                <h5>{{ 'Avg. Total'|translate('market_board_avg_total') }}</h5>
                 <br>
                 <div class="flex avg_prices">
                     {% if item.CanBeHq %}
@@ -235,4 +235,4 @@
     </div>
 </div>
 
-<small class="cross_world_foot_note">Load Speed: {{ load_speed }}</small>
+<small class="cross_world_foot_note">{{ 'Load Speed: %f'|translate('load_speed')|format(load_speed) }}</small>

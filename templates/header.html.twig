@@ -9,18 +9,18 @@
         <input type="text" class="search" placeholder="Search">
         <button class="btn-market-board">
             <i class="xiv-Market"></i>
-            <span>Market</span>
+            <span>{{ 'Market'|translate('header_market') }}</span>
         </button>
     </div>
 </div>
 <div>
     {% if auth.online() %}
     <div>
-        <a href="{{ path('user_account') }}">My Account</a>
+        <a href="{{ path('user_account') }}">{{ 'My Account'|translate('header_myaccount') }}</a>
         <span class="username">{{ auth.user.username|title }}</span>
     </div>
     {% else %}
-        <a href="{{ path('account_login_discord') }}" class="btn-login">Login via Discord</a>
+    <a href="{{ path('account_login_discord') }}" class="btn-login">{{ 'Login via Discord'|translate('header_discordlogin') }}</a>
     {% endif %}
     <div>
         <button class="btn-settings" data-tippy-content="Site Settings"><span class="xiv-app_drawer_setting"></span></button>
