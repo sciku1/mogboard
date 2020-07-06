@@ -68,10 +68,10 @@
 
         {% include 'Pages/contributer.html.twig' with {
             name: 'Matcha',
-            kind: 'ACT plugin',
+            kind: 'ACT plugin'|translate('contribute_applicationkind_act_plugin'),
             description: 'If you are playing on chinese server(other servers are not supported), you can use Matcha plugin
                           provided by FFCAFE which have built-in Universalis integration. Matcha also provides a overlay
-                          to show price information from Universalis.',
+                          to show price information from Universalis.'|translate('contribute_description_matcha'),
             intl_url: 'https://ffcafe.org/matcha/universalis/'
         } %}
 
