@@ -130,8 +130,7 @@
                             } %}
                         {% else %}
                             {% include 'Product/no_market_data.html.twig' with {
-                                serverName: server.dc,
-                                server: server
+                                serverName: server.dc|convert_if_chinese
                             } %}
                         {% endif %}
                     {% endif %}
