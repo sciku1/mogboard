@@ -85,7 +85,7 @@
                                 {% if serverName == server.name %}
                                     <i class="xiv-ItemShard cw-home"></i>
                                 {% endif %}
-                                {{ serverName }}
+                                {{ serverName|convert_if_chinese }}
                             </button>
                         {% endfor %}
                     </div>
@@ -256,8 +256,8 @@
                     {% else %}
                         <div class="tab-page tab-cw{{ serverName }} {{ (cookie('mogboard_homeworld', 'no') == 'yes' and serverName == server.name) ? 'open' : '' }}">
                             {% include 'Product/no_market_data.html.twig' with {
-                                serverName: serverName,
-                                server: server
+                                serverName: serverName|convert_if_chinese,
+                                server: server|convert_if_chinese
                             } %}
                         </div>
                     {% endif %}
