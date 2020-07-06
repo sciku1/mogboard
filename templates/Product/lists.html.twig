@@ -2,12 +2,12 @@
     
     <div class="box_form">
         <div class="box_flex form">
-            <a href="https://www.garlandtools.org/db/#item/{{item.ID}}" target="_blank" rel="noopener noreferrer"><button type="button" class="btn btn_gt">Show on GarlandTools</button></a>
-            <a href="https://ffxivteamcraft.com/db/en/item/{{item.ID}}" target="_blank" rel="noopener noreferrer"><button type="button" class="btn btn_gt">Show on Teamcraft</button></a>
+            <a href="https://www.garlandtools.org/db/#item/{{item.ID}}" target="_blank" rel="noopener noreferrer"><button type="button" class="btn btn_gt">{{ 'Show on GarlandTools'|translate('ext_garlandtools') }}</button></a>
+            <a href="https://ffxivteamcraft.com/db/en/item/{{item.ID}}" target="_blank" rel="noopener noreferrer"><button type="button" class="btn btn_gt">{{ 'Show on Teamcraft'|translate('ext_teamcraft') }}</button></a>
 
             {% if auth.online() %}
-            <button class="btn_addto_list">Lists</button>
-            <button class="btn_addto_fave {{ faved ? 'on' : '' }}"><span>{{ faved ? 'Faved' : 'Favourite' }}</span></button>
+            <button class="btn_addto_list">{{ 'Lists'|translate('generic_lists') }}</button>
+            <button class="btn_addto_fave {{ faved ? 'on' : '' }}"><span>{{ faved ? 'Faved'|translate('generic_faved') : 'Favourite'|translate('generic_favourite') }}</span></button>
             {% endif %}
 {#
             {% if auth.online and auth.user.patron %}
@@ -22,34 +22,34 @@
         <button type="button" class="modal_close_button"><i class="xiv-NavigationClose"></i></button>
         <div class="modal_row">
             <div class="modal_form_row_1">
-                <h1>Add to list</h1>
+                <h1>{{ 'Add to list'|translate('lists_add_to_list') }}</h1>
             </div>
 
             {# list form #}
             <form method="post" class="modal_form create_list_form">
                 {# Name #}
-                <p>Option 1) Create a new list:</p>
+                <p>{{ 'Option 1) Create a new list:'|translate('lists_option_1') }}</p>
                 {% if auth.user.lists|length < 12 %}
                     <div>
                         <input name="list_name" id="list_name" type="text" placeholder="Name" class="full">
                     </div>
                 {% else %}
-                    <p>You have reached the maximum of 12 lists. You cannot create anymore.</p>
+                    <p>{{ 'You have reached the maximum of 12 lists. You cannot create any more.'|translate('lists_limit_reached') }}</p>
                 {% endif %}
 
                 <br>
 
                 {# Lists #}
-                <p>Option 2) Use an existing list:</p>
+                <p>{{ 'Option 2) Use an existing list:'|translate('lists_option_2') }}</p>
                 <div class="user_lists">
-                    <div class="user_lists_loading">Loading your item lists</div>
+                    <div class="user_lists_loading">{{ 'Loading your item lists'|translate('lists_loading_lists') }}</div>
                 </div>
 
                 <br><br>
 
                 {# done #}
                 <div class="modal_form_end">
-                    <button type="submit" class="btn-green btn_create_list">Add to list</button>
+                    <button type="submit" class="btn-green btn_create_list">{{ 'Add to list'|translate('lists_add_to_list') }}</button>
                 </div>
 
             </form>

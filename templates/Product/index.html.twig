@@ -233,7 +233,7 @@
                             <div class="tab-market-tables">
                                 <div class="cw-table cw-prices">
                                     {# TODO: Remove ternary on CN 5.2 #}
-                                    <h4>PRICES <small>Updated: {{ marketData.lastUploadTime|dateSimple }}{{ (server.dc in ['LuXingNiao','MoGuLi','MaoXiaoPang']) ? '' : ' (Includes 5% GST)' }}</small></h4>
+                                    <h4>{{ 'PRICES'|translate('generic_prices_capitalized') }} <small>{{ 'Updated:'|translate('generic_updated_colon') }} {{ marketData.lastUploadTime|dateSimple }}{{ (server.dc in ['LuXingNiao','MoGuLi','MaoXiaoPang']) ? '' : ' (Includes 5% GST)' }}</small></h4>
                                     {% include 'Product/prices.html.twig' with {
                                         prices: marketData.listings,
                                         cheapestPrice: cheapestPrice,

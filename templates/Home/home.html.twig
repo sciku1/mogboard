@@ -33,7 +33,7 @@
                     </button>
                 {% endfor %}
             </div>
-            <h3><img src="/i/svg/th-list-light.svg"> {{ 'Lists'|translate('home_lists') }}</h3>
+            <h3><img src="/i/svg/th-list-light.svg"> {{ 'Lists'|translate('generic_lists') }}</h3>
             <div>
                 {% for list in auth.user.lists %}
                     <button type="button" data-tab="lists_{{ list.id }}">
@@ -45,7 +45,7 @@
                     </button>
                 {% endfor %}
             </div>
-            <h3><img src="/i/svg/person-dolly-light.svg"> {{ 'Retainers'|translate('home_retainers') }}</h3>
+            <h3><img src="/i/svg/person-dolly-light.svg"> {{ 'Retainers'|translate('generic_retainers') }}</h3>
             <div>
                 {% for retainer in auth.user.retainers %}
                     <a href="{{ path('retainer_shop', { retainer: retainer.id }) }}">

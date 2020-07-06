@@ -11,22 +11,22 @@
         <thead>
         <tr>
             {% if prices %}
-                <th data-sort="int" width="2%" class="tac">#</th>
+                <th data-sort="int" width="2%" class="tac">{{ '#'|translate('generic_quantity_shorthand') }}</th>
                 {% if crossWorld is defined %}
-                <th data-sort="string" width="10%">Server</th>
+                <th data-sort="string" width="10%">{{ 'Server'|translate('generic_server') }}</th>
                 {% endif %}
-                <th data-sort="int" width="2%">HQ</th>
-                <th data-sort="int" width="8%">Mat</th>
-                <th data-sort="int" width="15%">Price</th>
-                <th data-sort="int" width="5%">QTY</th>
-                <th data-sort="int" width="15%">Total</th>
+                <th data-sort="int" width="2%">{{ 'HQ'|translate('generic_hq') }}</th>
+                <th data-sort="int" width="8%">{{ 'Mat'|translate('generic_material_shorthand') }}</th>
+                <th data-sort="int" width="15%">{{ 'Price'|translate('generic_price') }}</th>
+                <th data-sort="int" width="5%">{{ 'QTY'|translate('generic_quantity_shorthand') }}</th>
+                <th data-sort="int" width="15%">{{ 'Total'|translate('generic_total') }}</th>
                 {% if averagePricesHQ is defined %}
-                <th data-sort="int" width="2%">%Diff</th>
+                <th data-sort="int" width="2%">{{ '%Diff'|translate('generic_percent_difference_shorthand') }}</th>
                 {% endif %}
-                <th data-sort="string">Retainer</th>
-                <th data-sort="string">Creator</th>
+                <th data-sort="string">{{ 'Retainer'|translate('generic_retainer') }}</th>
+                <th data-sort="string">{{ 'Creator'|translate('generic_creator') }}</th>
             {% else %}
-                <th>No Listings</th>
+                <th>{{ 'No Listings'|translate('generic_no_listings') }}</th>
             {% endif %}
         </tr>
         </thead>
@@ -82,7 +82,7 @@
             </tr>
         {% else %}
             <tr>
-                <td>There are no listings for this item, check back later!</td>
+                <td>{{ 'There are no listings for this item, check back later!'|translate('prices_no_listings') }}</td>
             </tr>
         {% endfor %}
         </tbody>
