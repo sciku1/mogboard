@@ -23,6 +23,10 @@ class TranslationExtension extends AbstractExtension {
     {
         $lang = Language::current();
         $result = Redis::Cache()->get('translation_'.$key.'_'.$lang);
-        return $result ?? $text;
+        return isNullOrEmpty($result) ? $text : $result;
+    }
+
+    private function isNullOrEmpty($str) {
+        return (!isset($str) || trim($str) === '');
     }
 }
