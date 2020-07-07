@@ -4,6 +4,7 @@ namespace App\Twig;
 
 use App\Common\Game\GameServers;
 use App\Service\Companion\CompanionCensus;
+use App\Service\Companion\CompanionMarket;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
@@ -13,10 +14,13 @@ class MarketExtension extends AbstractExtension
 {
     /** @var CompanionCensus */
     private $companionCensus;
+    /** @var CompanionMarket */
+    private $companionMarket;
 
-    public function __construct(CompanionCensus $companionCensus)
+    public function __construct(CompanionCensus $companionCensus, CompanionMarket $companionMarket)
     {
         $this->companionCensus = $companionCensus;
+        $this->companionMarket = $companionMarket;
     }
 
     public function getFunctions()
