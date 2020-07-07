@@ -20,7 +20,7 @@
                 </div>
                 <div style="float: right;">
                     <div class="cheapest">
-                        <h2>Cheapest HQ</h2>
+                        <h6>Cheapest HQ</h6>
                         {% if item.CanBeHq %}
                             {% if census.Global.Prices_CheapestHQ %}
                             <div class="cheapest_price">
@@ -41,7 +41,7 @@
                         {% endif %}
                     </div>
                     <div class="cheapest">
-                        <h2>Cheapest NQ</h2>
+                        <h6>Cheapest NQ</h6>
                         {% if census.Global.Prices_CheapestNQ %}
                         <div class="cheapest_price">
                             <i class="xiv-Gil"></i>
@@ -56,6 +56,15 @@
                         {% else %}
                             <p>No NQ for sale.</p>
                         {% endif %}
+                    </div>
+                    <div>
+                        {% set last_updated = 0 %}
+                        {% for entry in update_times %}
+                            {% if entry.updated > last_updated %}
+                            {% set last_updated = entry.updated %}
+                            {{ entry.updated != 0 ? entry.updated|date : 'No data' }}
+                        {% endfor %}
+                        <small>Last updated: {{ last_updated != 0 ? last_updated|date : 'No data' }}</small>
                     </div>
                 </div>
             </li>
