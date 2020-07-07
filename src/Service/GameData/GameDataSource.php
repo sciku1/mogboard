@@ -35,6 +35,7 @@ class GameDataSource
             
             if ($cachedItem != null) {
                 Redis::Cache()->set("xiv_Item_{$itemId}", $cachedItem, GameDataCache::CACHE_TIME);
+                $cachedItem = $this->handle("xiv_Item_{$itemId}");
             }
         }
             
@@ -56,6 +57,7 @@ class GameDataSource
             
             if ($cachedRecipe != null) {
                 Redis::Cache()->set("xiv_Recipe_{$recipeId}", $cachedRecipe, GameDataCache::CACHE_TIME);
+                $cachedRecipe = $this->handle("xiv_Recipe_{$recipeId}");
             }
         }
             
@@ -77,6 +79,7 @@ class GameDataSource
             
             if ($cachedMateria != null) {
                 Redis::Cache()->set("xiv_Materia_{$materiaId}", $cachedMateria, GameDataCache::CACHE_TIME);
+                $cachedMateria = $this->handle("xiv_Materia_{$materiaId}");
             }
         }
             
