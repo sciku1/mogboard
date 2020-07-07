@@ -27,6 +27,7 @@ class MarketExtension extends AbstractExtension
     {
         return [
             new TwigFunction('census', [$this, 'getCensus']),
+            new TwigFunction('updateTimes', [$this, 'getUpdateTimes']),
         ];
     }
     
@@ -37,5 +38,30 @@ class MarketExtension extends AbstractExtension
         $dcServers = GameServers::getDataCenterServers($dc);
         $market = $this->companionMarket->get($dcServers, $itemId);
         return $this->companionCensus->generate($dc, $itemId, $market);
+    }
+
+    public function getUpdateTimes($itemId)
+    {
+        $world = GameServers::getServer();
+        $dc = GameServers::getDataCenter($world);
+        $dcServers = GameServers::getDataCenterServers($dc);
+        $market = $this->companionMarket->get($dcServers, $itemId);
+
+        $times = [];
+        foreach ($market as $marketServer => $md) {
+            if ($md == null) {
+                continue;
+            }
+
+            $activityCount += count($md['listings']);
+            $activityCount += count($md['recentHistory']);
+
+            $times[] = [
+                'name'     => $marketServer,
+                'updated'  => $md['lastUploadTime']
+            ];
+        }
+
+        return $times;
     }
 }

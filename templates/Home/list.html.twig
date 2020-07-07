@@ -59,6 +59,7 @@
                     </div>
                     <div>
                         {% set last_updated = 0 %}
+                        {% set update_times = updateTimes(itemId) %}
                         {% for entry in update_times %}
                             {% if entry.updated > last_updated %}
                             {% set last_updated = entry.updated %}
