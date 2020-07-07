@@ -13,7 +13,7 @@
         <br><br>
 
         <div class="page-short">
-            <h3>{{ 'What is <strong>Universalis</strong>?'|translate('about_whatisthis_title') }}</h3>
+            <h3>{{ 'What is <strong>Universalis</strong>?'|translate('about_whatisthis_title')|striptags('<strong>')|raw }}</h3>
             <p>
                 {% apply translate('about_whatisthis_explanation_1') %}
                 The site allows you to view in-game market for multiple servers at
