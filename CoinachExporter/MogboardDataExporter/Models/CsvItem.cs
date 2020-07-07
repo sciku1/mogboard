@@ -1,4 +1,4 @@
-﻿using SaintCoinach.Xiv;
+﻿using Lumina.Excel.GeneratedSheets;
 
 namespace MogboardDataExporter.Models
 {
