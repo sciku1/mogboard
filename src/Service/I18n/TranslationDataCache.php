@@ -41,7 +41,7 @@ class TranslationDataCache
             $this->console->writeln('>> Caching translations ('.$lang.')');
 
             foreach ($translationSet as $term) {
-                if (isNullOrEmpty($term)) {
+                if ($this->isNullOrEmpty($term)) {
                     continue;
                 }
 
