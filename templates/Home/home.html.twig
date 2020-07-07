@@ -18,7 +18,7 @@
                     <img src="/i/game/hammer.png"> {{ 'Market Activity'|translate('home_market_activity') }}
                 </button>
             </div>
-            <h3><img src="/i/svg/bells-light.svg"> Alerts</h3>
+            <h3><img src="/i/svg/bells-light.svg"> {{ 'Alerts'|translate('generic_alerts') }}</h3>
             <div>
                 {% for itemId, alerts in auth.user.alertsPerItem %}
                     {% if itemId %}
