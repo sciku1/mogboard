@@ -87,14 +87,14 @@
                             </div>
                         </div>
                         <div class="alert-dark">
-                            {% apply translate('alerts_create_alert_guide_6')|format('https://www.epochconverter.com/') %}
+                            {% apply translate('alerts_create_alert_guide_6')|format('https://www.epochconverter.com/')|striptags('<span>,<code>,<a>')|raw %}
                             <span class="text-red">NOTE:</span> The filter: <code>Price_Added</code> is a timestamp, it is
                             NOT a Gil value. You can convert a date to a timestamp <a href="%s" target="_blank">here</a>,
                             work is being done to improve this UI.
                             {% endapply %}
                         </div>
                         <small>
-                            {{ 'Trigger values are checked as a series of <strong>AND</strong> conditions.'|translate('alerts_create_alert_guide_7') }}
+                            {{ 'Trigger values are checked as a series of <strong>AND</strong> conditions.'|translate('alerts_create_alert_guide_7')|striptags('<strong>')|raw }}
                         </small>
 
                     </div>
@@ -140,7 +140,7 @@
 
                 <div class="alert-default" style="opacity: 0.5;">
                     <ul style="margin-bottom: 0">
-                        <li><strong>{{ 'NOTE:'|translate('generic_note_capitalized_colon') }}</strong> {{ 'You must be in <a href="%s" target="_blank">our Discord server</a> to receive alerts.'|translate('alerts_in_discord_notice')|format('https://discord.gg/JcMvMxD') }}</li>
+                        <li><strong>{{ 'NOTE:'|translate('generic_note_capitalized_colon') }}</strong> {{ 'You must be in <a href="%s" target="_blank">our Discord server</a> to receive alerts.'|translate('alerts_in_discord_notice')|format('https://discord.gg/JcMvMxD')|striptags('<a>')|raw }}</li>
                         <li><strong>{{ 'NOTE:'|translate('generic_note_capitalized_colon') }}</strong> {{ 'Keep in mind that alerts will only be fired when the item is updated by someone.'|translate('alerts_only_updates_under_condition_notice') }}</li>
                     </ul>
                 </div>

@@ -41,7 +41,7 @@
         <div class="page-short">
             <h3>{{ 'Can I have access to the data?'|translate('about_whatisthis_accessquestion') }}</h3>
             <p>
-                {% apply translate('about_whatisthis_explanation_3')|format('<a href="https://universalis.app/docs">Universalis</a>') %}
+                {% apply translate('about_whatisthis_explanation_3')|format('<a href="https://universalis.app/docs">Universalis</a>')|striptags('<a>')|raw %}
                 <strong>Definitely!</strong>
                 <br><br>
                 Everything you see on Universalis is open for anyone to use, to learn more
@@ -56,7 +56,7 @@
         <div class="page-short">
             <h3>{{ 'Special thanks'|translate('generic_special_thanks') }}</h3>
             <p>
-                {% apply translate('about_whatisthis_explanation_4')|format('<a href="https://xivapi.com">XIVAPI</a>') %}
+                {% apply translate('about_whatisthis_explanation_4')|format('<a href="https://xivapi.com">XIVAPI</a>')|striptags('<a>')|raw %}
                 We would like to thank Vekien and Miu from %s for their initial work on mogboard,
                 which made this site, in its current state, possible.
                 {% endapply %}
@@ -95,7 +95,7 @@
             <h3 id="technical">{{ 'So, how does it actually work? Get Technical.'|translate('about_get_technical_title') }}</h3>
 
             <p>
-                {% apply translate('about_get_technical_explanation_1') %}
+                {% apply translate('about_get_technical_explanation_1')|striptags('<strong>')|raw %}
                 <strong>Universalis</strong> runs a REST API that applications can post market board data to,
                 after they collect the data from a running game instance by multiple users, anonymously.
                 {% endapply %}
@@ -168,7 +168,7 @@
                 </div>
             </p>
             <p class="mog-honorable">{{ 'Also thanks to: Vekien, Miu, Mino and all of our uploaders!'|translate('about_honorable_mentions') }}</p>
-            <p class="mog-honorable">{{ 'Game data sourced from <a href="%s">XIVAPI</a> and <a href="%s">FFCafe</a>'|translate('about_data_sources')|format('https://xivapi.com/', 'https://ffcafe.org/') }}</p>
+            <p class="mog-honorable">{{ 'Game data sourced from <a href="%s">XIVAPI</a> and <a href="%s">FFCafe</a>'|translate('about_data_sources')|format('https://xivapi.com/', 'https://ffcafe.org/')|striptags('<a>')|raw }}</p>
         </div>
 
         <br><br>

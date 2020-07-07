@@ -68,13 +68,13 @@
             </p>
             <ul class="character_add_instructions">
                 <li>
-                    {% apply translate('characters_guide_2')|format('https://na.finalfantasyxiv.com/lodestone/my/setting/profile/') %}
+                    {% apply translate('characters_guide_2')|format('https://na.finalfantasyxiv.com/lodestone/my/setting/profile/')|striptags('<a>')|raw %}
                     Go to Lodestone and Login with your character.
                     Then <a href="%s">click here to edit your profile</a>.
                     {% endapply %}
                 </li>
                 <li>
-                    {% apply translate('characters_guide_3') %}
+                    {% apply translate('characters_guide_3')|striptags('<strong>')|raw %}
                     In the text box, enter in your <strong>AUTH CODE</strong>,
                     then click on Confirm (twice).
                     {% endapply %}

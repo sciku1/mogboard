@@ -97,7 +97,7 @@
                     <br>
                     <p>{{ 'Create alerts, make lists, add your retainers and get a personalised home page feed!'|translate('home_become_member_guide') }}</p>
                     <br><br>
-                    <a href="{{ path('account_login_discord') }}" class="btn-login">{{ 'Login via <strong>Discord</strong>'|translate('home_login_discord') }}</a>
+                    <a href="{{ path('account_login_discord') }}" class="btn-login">{{ 'Login via <strong>Discord</strong>'|translate('home_login_discord')|striptags('<strong>')|raw }}</a>
                 </div>
             {% endif %}
         </div>

@@ -15,5 +15,5 @@
         <li>{{ 'Something broke'|translate('no_market_data_explanation_4') }}</li>
         {% endapply %}
     </ul>
-    {{ 'If it is that last one, be sure to jump on <a href="%s">Discord</a> and let us know!'|translate('no_market_data_explanation_5')|format('https://discord.gg/JcMvMxD') }}
+    {{ 'If it is that last one, be sure to jump on <a href="%s">Discord</a> and let us know!'|translate('no_market_data_explanation_5')|format('https://discord.gg/JcMvMxD')|striptags('<a>')|raw }}
 </div>

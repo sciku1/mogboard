@@ -13,7 +13,7 @@
         <br><br>
 
         <div class="page-short">
-            <h3>{{ 'How to contribute to <strong>Universalis</strong>'|translate('contribute_howto_title') }}</h3>
+            <h3>{{ 'How to contribute to <strong>Universalis</strong>'|translate('contribute_howto_title')|striptags('<strong>')|raw }}</h3>
             <p>
                 {% apply translate('contribute_howto_explanation_1') %}
                 There are multiple ways to contribute to <strong>Universalis</strong>.
@@ -24,7 +24,7 @@
                 {% endapply %}
             </p>
             <p>
-                {% apply translate('contribute_howto_explanation_2') %}
+                {% apply translate('contribute_howto_explanation_2')|striptags('<strong>')|raw %}
                 Every contribution helps to make the data on <strong>Universalis</strong> better,
                 more accurate and more helpful. Thank you very much for helping out!
                 {% endapply %}
@@ -78,10 +78,10 @@
         <br><br>
 
         <div class="page-short">
-            <h3>{{ 'Are you making your own application?'|translate('contribute_invite_title') }}</h3>
+            <h3>{{ 'Are you making your own application?'|translate('contribute_invite_title')|striptags('<strong>,<a>')|raw }}</h3>
             <p>
                 {{ 'If you wish to contribute to <strong>Universalis</strong> with your own application,
-                please contact us on our <a href="%s">Discord</a>. Let\'s work together!'|translate('contribute_invite_explanation')|format('https://discord.gg/JcMvMxD') }}
+                please contact us on our <a href="%s">Discord</a>. Let\'s work together!'|translate('contribute_invite_explanation')|format('https://discord.gg/JcMvMxD')|striptags('<strong>,<a>')|raw }}
             </p>
         </div>
     </div>

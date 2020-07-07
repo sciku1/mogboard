@@ -30,7 +30,7 @@
                     {{ 'You must be logged in to view this area.'|translate('useraccount_index_logged_out_1') }}
                 </p>
                 <p>
-                    {{ 'You can <a href="%s">login via Discord</a> to get that juicy access!'|translate('useraccount_index_logged_out_2')|format(path('account_login_discord')) }}
+                    {{ 'You can <a href="%s">login via Discord</a> to get that juicy access!'|translate('useraccount_index_logged_out_2')|format(path('account_login_discord'))|striptags('<a>')|raw }}
                 </p>
             </div>
         </div>
