@@ -48,7 +48,7 @@
             <tr class="{{ averageHistoryHQ is defined and pricePerUnitDiff < -100 ? 'price-diff-oops' : ''}}">
                 <td class="price-num tac">{{ loop.index }}</td>
                 {% if crossWorld is defined %}
-                <td class="price-server" data-sort-value="{{ row._Server }}"><strong>{{ row._Server }}</strong></td>
+                <td class="price-server" data-sort-value="{{ row._Server }}"><strong>{{ row._Server|convert_if_chinese }}</strong></td>
                 {% endif %}
                 <td class="price-hq" data-sort-value="{{ row.hq ? 1 : 0 }}">{{ row.hq ? '<img src="/i/game/hq.png">' : '' }}</td>
                 <td class="materia" data-sort-value="{{ row.materia|length }}">

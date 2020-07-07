@@ -51,9 +51,9 @@
                 {% endif %}
                 {% if crossWorld is defined %}
                     {% if env('APP_ENV') == 'devs' %}
-                        <td class="price-server" data-sort-value="{{ row._Server }}"><strong>{{ row._Server }}</strong></td>
+                        <td class="price-server" data-sort-value="{{ row._Server }}"><strong>{{ row._Server|convert_if_chinese }}</strong></td>
                     {% else %}
-                        <td class="price-server" data-sort-value="{{ row._Server }}"><strong>{{ row._Server }}</strong></td>
+                        <td class="price-server" data-sort-value="{{ row._Server }}"><strong>{{ row._Server|convert_if_chinese }}</strong></td>
                     {% endif %}
                 {% endif %}
                 <td class="price-hq" data-sort-value="{{ row.hq ? 1 : 0 }}">{{ row.hq ? '<img src="/i/game/hq.png">' : '' }}</td>
