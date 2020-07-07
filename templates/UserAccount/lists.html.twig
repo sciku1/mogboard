@@ -3,12 +3,12 @@
 {% set accountpage = 'lists' %}
 
 {% block account %}
-<h5>Lists</h5>
+<h5>{{ 'Lists'|translate('generic_lists') }}</h5>
 
 <div class="account-panel">
     {% for list in auth.user.lists %}
         <div class="lists">
-            <h3>Items: {{ list.items|length }} - <a href="{{ path('lists_view', { list: list.id }) }}">{{ list.name }}</a></h3>
+            <h3>{{ 'Items:'|translate('generic_items_colon') }} {{ list.items|length }} - <a href="{{ path('lists_view', { list: list.id }) }}">{{ list.name }}</a></h3>
             <ul>
                 {% for itemId in list.items %}
                     {% set item = game().item(itemId) %}
@@ -25,13 +25,13 @@
             </ul>
             {% if not list.custom %}
                 <div class="delete-list-block">
-                    <a href="{{ path('list_delete', { list: list.id }) }}" class="text-red fr">Delete List</a>
+                    <a href="{{ path('list_delete', { list: list.id }) }}" class="text-red fr">{{ 'Delete List'|translate('generic_delete_list') }}</a>
                 </div>
             {% endif %}
         </div>
     {% else %}
         <div>
-            You have no lists, visit some items and create some!
+            {{ 'You have no lists, visit some items and create some!'|translate('useraccount_lists_no_lists') }}
         </div>
     {% endfor %}
 </div>

@@ -1,17 +1,17 @@
 <script>var alert_trigger_operators = {{ alerts.trigger_operators|json_encode|raw }};</script>
 <div class="alert-page">
     <div class="alert_info_button">
-        <button>What's an alert <img src="/i/svg/question-circle-light.svg" height="18"></button>
+        <button>{{ 'What\'s an alert'|translate('alerts_whatis_title') }} <img src="/i/svg/question-circle-light.svg" height="18"></button>
     </div>
 
     {% if auth.online() %}
         {% if auth.user.alerts|length >= auth.user.alertsMax %}
-            <div class="alert-default">You are currently max'd out on alerts and will not be able to create anymore.</div>
+            <div class="alert-default">{{ 'You are currently maxed-out on alerts and will not be able to create any more.'|translate('alerts_maxed_out') }}</div>
         {% endif %}
 
         <div class="alert-section">
             <div>
-                <h3>Create a new alert</h3>
+                <h3>{{ 'Create a new alert'|translate('alerts_create_alert_title') }}</h3>
                 <form id="alert_form" class="alert_form" method="post" action="{{ url('alerts_create') }}">
                     <div class="alert-form-loading">
                         <img src="/i/svg/loading3.svg" height="64px">
@@ -19,7 +19,7 @@
 
                     {# Name #}
                     <div class="form_row">
-                        <label for="alert_name">Give your alert a name (length: 4-100)</label>
+                        <label for="alert_name">{{ 'Give your alert a name (length: 4-100)'|translate('alerts_create_alert_guide_1') }}</label>
                         <input name="alert_name" id="alert_name" type="text" placeholder="Name" class="full">
                     </div>
 
@@ -27,27 +27,27 @@
                     <div class="form_row">
                         <div class="form_columns">
                             <div class="flex_50">
-                                <label>Decide if the trigger should check NQ/HQ or both.</label>
+                                <label>{{ 'Decide if the trigger should check NQ/HQ or both.'|translate('alerts_create_alert_guide_2') }}</label>
                                 <div class="form_columns">
                                     <div class="flex_50">
                                         <div class="checkbox">
                                             <input type="checkbox" id="alert_nq">
-                                            <label for="alert_nq">Normal Quality</label>
+                                            <label for="alert_nq">{{ 'Normal Quality'|translate('generic_normal_quality') }}</label>
                                         </div>
                                     </div>
                                     <div class="flex_50">
                                         <div class="checkbox">
                                             <input type="checkbox" id="alert_hq">
-                                            <label for="alert_hq">High-Quality</label>
+                                            <label for="alert_hq">{{ 'High-Quality'|translate('generic_high_quality') }}</label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="flex_50">
-                                <label>Should the alert check the whole Data-Center?</label>
+                                <label>Should the alert check the whole Data Center?</label>
                                 <div class="checkbox">
                                     <input type="checkbox" id="alert_dc">
-                                    <label for="alert_dc">Check entire Data-Center ({{ server.dc }})</label>
+                                    <label for="alert_dc">Check entire Data Center ({{ server.dc }})</label>
                                 </div>
                             </div>
                         </div>
@@ -55,13 +55,13 @@
 
                     {# Triggers #}
                     <div class="form_row">
-                        <label>Setup Triggers <strong>(Max: 15)</strong></label>
+                        <label>{{ 'Setup Triggers <strong>(Max: 15)</strong>'|translate('alerts_create_alert_guide_3') }}</label>
                         <div class="alert_entries"></div>
 
                         <div class="alert_triggers_form form_row form_columns">
                             <div class="flex_30">
                                 <select name="alert_trigger_field" id="alert_trigger_field" class="full">
-                                    <option disabled selected>- Select a Field -</option>
+                                    <option disabled selected>- {{ 'Select a Field'|translate('alerts_create_alert_guide_4') }} -</option>
                                     {% for category, triggers in alerts.trigger_fields %}
                                         <optgroup label="{{ category }}">
                                             {% for name in triggers %}
@@ -73,7 +73,7 @@
                             </div>
                             <div class="flex_30">
                                 <select name="alert_trigger_op" id="alert_trigger_op" class="full">
-                                    <option disabled selected>- Select an Operator</option>
+                                    <option disabled selected>- {{ 'Select an Operator'|translate('alerts_create_alert_guide_5') }}</option>
                                     {% for id,op in alerts.trigger_operators %}
                                         <option value="{{ id }}">{{ op }}</option>
                                     {% endfor %}
@@ -83,16 +83,18 @@
                                 <input name="alert_trigger_value" id="alert_trigger_value" type="text" placeholder="Condition Value" class="full">
                             </div>
                             <div class="flex_10">
-                                <button type="button" class="btn-blue alert_trigger_add">Add</button>
+                                <button type="button" class="btn-blue alert_trigger_add">{{ 'Add'|translate('generic_add_to_list') }}</button>
                             </div>
                         </div>
                         <div class="alert-dark">
+                            {% apply translate('alerts_create_alert_guide_6')|format('https://www.epochconverter.com/')|striptags('<span>,<code>,<a>')|raw %}
                             <span class="text-red">NOTE:</span> The filter: <code>Price_Added</code> is a timestamp, it is
-                            NOT a Gil value. You can convert a date to a timestamp <a href="https://www.epochconverter.com/" target="_blank">here</a>,
+                            NOT a Gil value. You can convert a date to a timestamp <a href="%s" target="_blank">here</a>,
                             work is being done to improve this UI.
+                            {% endapply %}
                         </div>
                         <small>
-                            Trigger values are checked as a series of <strong>AND</strong> conditions.
+                            {{ 'Trigger values are checked as a series of <strong>AND</strong> conditions.'|translate('alerts_create_alert_guide_7')|striptags('<strong>')|raw }}
                         </small>
 
                     </div>
@@ -101,69 +103,45 @@
 
                     {# Notifications #}
                     <div class="form_row">
-                        <label>How do you want to be notified?</label>
+                        <label>{{ 'How do you want to be notified?'|translate('alerts_create_alert_how_notify') }}</label>
 
                         <div class="form_columns">
                             <div class="flex_50">
                                 <div class="checkbox">
                                     <input type="checkbox" id="alert_notify_discord">
-                                    <label for="alert_notify_discord">Discord <em>({{ auth.user.username }})</em></label>
+                                    <label for="alert_notify_discord">{{ 'Discord'|translate('generic_discord') }} <em>({{ auth.user.username }})</em></label>
                                 </div>
                             </div>
                             <div class="flex_50">
                                 <div class="checkbox">
                                     <input type="checkbox" id="alert_notify_email">
-                                    <label for="alert_notify_email">Email <em>({{ auth.user.email }})</em></label>
+                                    <label for="alert_notify_email">{{ 'Email'|translate('generic_email') }} <em>({{ auth.user.email }})</em></label>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    {# DPS tier perk #}
-                    {% if auth.user.patron == 4 %}
-                        <div class="form_row">
-                            <label class="text-green"><strong>DPS Perk:</strong> Private Mogboard Alert Watcher</label>
-
-                            <p style="font-size: 13px;">
-                                Should this alert keep your item up to date? If enabled, everytime your alert is checked
-                                it will also check if the item is 10 minutes out of date and request an update
-                                if it is. Please be mindful that the more alerts you enable this on, the slower
-                                the update system will be and that 10 minutes may not be garaunteed.
-                                <strong class="text-red">Please only enable this for items you truely want to monitor accurately.</strong>
-                            </p>
-
-                            <div class="form_columns">
-                                <div class="flex_50">
-                                    <div class="checkbox">
-                                        <input type="checkbox" id="alert_dps_perk">
-                                        <label for="alert_dps_perk">Yes, keep item updated</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    {% endif %}
-
                     {# submit #}
                     <div class="form_footer">
-                        <button type="submit" class="btn-green btn_create_alert">Save Alert</button>
-                        <span class="edit_mode_enabled">You are currently editing an alert</span>
+                        <button type="submit" class="btn-green btn_create_alert">{{ 'Save Alert'|translate('alerts_save_alert') }}</button>
+                        <span class="edit_mode_enabled">{{ 'You are currently editing an alert'|translate('alerts_currently_editing') }}</span>
 
-                        <button type="button" class="btn-white-outline btn_new_alert" data-tippy-content="Reset the form and start a new alert">New Alert</button>
+                        <button type="button" class="btn-white-outline btn_new_alert" data-tippy-content="{{ 'Reset the form and start a new alert'|translate('alerts_new_alert_tooltip') }}">{{ 'New Alert'|translate('alerts_new_alert') }}</button>
                     </div>
                 </form>
             </div>
             <div>
-                <h3>Current alerts for: {{ item.Name }}</h3>
+                <h3>{{ 'Current alerts for: %s'|translate('alerts_current_alerts_for')|format(item.Name) }}</h3>
                 <div class="alerts_table">
-                    <div class="alert-default">Loading alerts...</div>
+                    <div class="alert-default">{{ 'Loading alerts...'|translate('alerts_loading') }}</div>
                 </div>
 
                 <br><br>
 
                 <div class="alert-default" style="opacity: 0.5;">
                     <ul style="margin-bottom: 0">
-                        <li><strong>NOTE:</strong> You must be in <a href="https://discord.gg/JcMvMxD" target="_blank">our discord server</a> to receive alerts.</li>
-                        <li><strong>NOTE:</strong> Keep in mind that alerts will only be fired when the item is updated by someone.</li>
+                        <li><strong>{{ 'NOTE:'|translate('generic_note_capitalized_colon') }}</strong> {{ 'You must be in <a href="%s" target="_blank">our Discord server</a> to receive alerts.'|translate('alerts_in_discord_notice')|format('https://discord.gg/JcMvMxD')|striptags('<a>')|raw }}</li>
+                        <li><strong>{{ 'NOTE:'|translate('generic_note_capitalized_colon') }}</strong> {{ 'Keep in mind that alerts will only be fired when the item is updated by someone.'|translate('alerts_only_updates_under_condition_notice') }}</li>
                     </ul>
                 </div>
                 
@@ -171,7 +149,7 @@
         </div>
     {% else %}
         <div class="alert-default">
-            You must be logged in to create item alerts.
+            {{ 'You must be logged-in to create item alerts.'|translate('alerts_must_be_logged_in') }}
         </div>
     {% endif %}
 </div>
@@ -181,11 +159,11 @@
     <div class="row">
         <h1></h1>
         <p>
-            Are you sure you wish to delete this alert?
+            {{ 'Are you sure you wish to delete this alert?'|translate('alerts_deletion_confirmation') }}
         </p>
         <br>
         <p>
-            <button type="button" class="btn_alert_delete_confirm">Yes I'm sure, delete it.</button>
+            <button type="button" class="btn_alert_delete_confirm">{{ 'Yes I\'m sure, delete it.'|translate('generic_deletion_confirmation') }}</button>
         </p>
     </div>
 </div>
@@ -193,39 +171,49 @@
 {# Information about alerts #}
 <div class="modal alert_info">
     <div class="row row_top">
-        <h1>What are alerts?</h1>
+        <h1>{{ 'What are alerts?'|translate('alerts_whatisthis_guide_1') }}</h1>
         <p>
-            Alerts allow you to setup notification watchers that can track an item and send you information such as price changes or history events.
+            {{ 'Alerts allow you to setup notification watchers that can track an item and send you information such as price changes or history events.'|translate('alerts_whatisthis_guide_2') }}
         </p>
         <br><br>
 
-        <h2>Triggers</h2>
+        <h2>{{ 'Triggers'|translate('generic_alert_trigger') }}</h2>
         <p>
+            {% apply translate('alerts_whatisthis_guide_3') %}
             <strong>Triggers</strong>, these are conditions you can set on the alert to be checked at interval times
             and if any market entry meets the criteria of the condition then your alert will be "Triggered" and you'll
-            receive a notification either via Discord or EMail.
+            receive a notification either via Discord or Email.
+            {% endapply %}
         </p>
         <p>
+            {% apply translate('alerts_whatisthis_guide_4') %}
             Trigger conditions can be set against any market field and future plans will allow you to manage
             these dynamically as well as setup automatic triggers based on your retainers current sales.
+            {% endapply %}
         </p>
         <br><br>
 
-        <h4>Trigger Condition Information</h4>
+        <h4>{{ 'Trigger Condition Information'|translate('alerts_trigger_condition_info_title') }}</h4>
         <ul>
             <li>
+                {% apply translate('alerts_trigger_condition_info_guide_1') %}
                 <strong>Prices/History: Added</strong><br>
                 This is currently an Epoch Unix Timestamp. Work is being done to improve this.
+                {% endapply %}
                 <br>
             </li>
             <li>
+                {% apply translate('alerts_trigger_condition_info_guide_2') %}
                 <strong>Prices/History: "IsXX"</strong><br>
                 The Is condition triggers such as IsHQ are bools and the value must be either 1 or 0 for true / false.
+                {% endapply %}
                 <br>
             </li>
             <li>
+                {% apply translate('alerts_trigger_condition_info_guide_3') %}
                 <strong>History:</strong><br>
                 Events for history will be based on entries added to the history after the event was created.
+                {% endapply %}
                 <br>
             </li>
         </ul>

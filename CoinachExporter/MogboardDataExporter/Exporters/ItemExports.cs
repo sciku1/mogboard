@@ -3,45 +3,45 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Lumina.Excel.GeneratedSheets;
 using MogboardDataExporter.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using SaintCoinach.Xiv;
 
 namespace MogboardDataExporter.Exporters
 {
     public static class ItemExports
     {
-        public static void GenerateItemJSON(IXivSheet<Item> items, IXivSheet<Item> itemsDe, IXivSheet<Item> itemsFr, IXivSheet<Item> itemsJp, IEnumerable<CsvItem> itemsChs, IXivSheet<ItemSearchCategory> categories, string outputPath)
+        public static void GenerateItemJSON(IEnumerable<Item> items, IEnumerable<Item> itemsDe, IEnumerable<Item> itemsFr, IEnumerable<Item> itemsJp, IEnumerable<CsvItem> itemsChs, IEnumerable<ItemSearchCategory> categories, string outputPath)
         {
             var ieBaseTop = Console.CursorTop;
             var counter = 0;
             Parallel.ForEach(categories, category =>
             {
                 // We don't need those, not for sale
-                if (category.Key == 0)
+                if (category.RowId == 0)
                     goto console_update;
 
                 var output = new List<JObject>();
 
-                Parallel.ForEach(items.Where(item => item.ItemSearchCategory.Key == category.Key), item =>
+                Parallel.ForEach(items.Where(item => item.ItemSearchCategory.Value.RowId == category.RowId), item =>
                 {
                     dynamic outputItem = new JObject();
 
-                    outputItem.ID = item.Key;
+                    outputItem.ID = item.RowId;
 
-                    var iconId = (ushort) item.GetRaw("Icon");
+                    var iconId = item.Icon;
                     outputItem.Icon = $"/i/{Util.GetIconFolder(iconId)}/{iconId}.png";
 
-                    outputItem.Name_en = item.Name.ToString();
-                    outputItem.Name_de = itemsDe.First(localItem => localItem.Key == item.Key).Name.ToString();
-                    outputItem.Name_fr = itemsFr.First(localItem => localItem.Key == item.Key).Name.ToString();
-                    outputItem.Name_jp = itemsJp.First(localItem => localItem.Key == item.Key).Name.ToString();
+                    outputItem.Name_en = item.Name;
+                    outputItem.Name_de = itemsDe.First(localItem => localItem.RowId == item.RowId).Name;
+                    outputItem.Name_fr = itemsFr.First(localItem => localItem.RowId == item.RowId).Name;
+                    outputItem.Name_jp = itemsJp.First(localItem => localItem.RowId == item.RowId).Name;
 
-                    var nameChs = itemsChs.FirstOrDefault(localItem => localItem.Key == item.Key)?.Name.ToString();
-                    outputItem.Name_chs = string.IsNullOrEmpty(nameChs) ? item.Name.ToString() : nameChs;
+                    var nameChs = itemsChs.FirstOrDefault(localItem => localItem.Key == item.RowId)?.Name;
+                    outputItem.Name_chs = string.IsNullOrEmpty(nameChs) ? item.Name : nameChs;
 
-                    outputItem.LevelItem = item.ItemLevel.Key;
+                    outputItem.LevelItem = item.LevelItem.Value.RowId;
                     outputItem.Rarity = item.Rarity;
 
                     lock (output)
@@ -54,13 +54,13 @@ namespace MogboardDataExporter.Exporters
                 if (output.Count == 0)
                     goto console_update;
 
-                File.WriteAllText(Path.Combine(outputPath, $"ItemSearchCategory_{category.Key}.json"),
+                File.WriteAllText(Path.Combine(outputPath, $"ItemSearchCategory_{category.RowId}.json"),
                     JsonConvert.SerializeObject(output));
 
                 console_update:
                 Console.CursorLeft = 0;
                 Console.CursorTop = ieBaseTop;
-                Console.Write($"cat: [{counter}/{categories.Count - 1}]");
+                Console.Write($"cat: [{counter}/{categories.Count() - 1}]");
                 Console.CursorLeft = 10 + counter.ToString("000").Length;
                 Console.Write("                                                                              ");
 
@@ -70,19 +70,20 @@ namespace MogboardDataExporter.Exporters
             Console.WriteLine();
         }
 
-        public static void GenerateMarketableItemJSON(IXivSheet<Item> items, IXivSheet<ItemSearchCategory> categories, string outputPath)
+        public static void GenerateMarketableItemJSON(IList<Item> items, IList<ItemSearchCategory> categories, string outputPath)
         {
             var mieBaseTop = Console.CursorTop;
             dynamic itemJSONOutput = new JObject();
             var itemID = new List<int>();
             foreach (var category in categories)
             {
-                if (category.Key < 9)
+                if (category.RowId < 9)
                     goto console_update;
                 var itemSet = items
                     .AsParallel()
-                    .Where(item => item.ItemSearchCategory.Key == category.Key)
-                    .Select(item => item.Key)
+                    .Where(item => item.ItemSearchCategory.Value.RowId == category.RowId)
+                    .Select(item => item.RowId)
+                    .Select(Convert.ToInt32)
                     .ToList();
                 if (!itemSet.Any())
                     goto console_update;
@@ -91,7 +92,7 @@ namespace MogboardDataExporter.Exporters
                 console_update:
                 Console.CursorLeft = 0;
                 Console.CursorTop = mieBaseTop;
-                Console.Write($"cat: [{category.Key}/{categories.Count - 1}]");
+                Console.Write($"cat: [{category.RowId}/{categories.Count - 1}]");
             }
             itemID.Sort();
             itemJSONOutput.itemID = JToken.FromObject(itemID);

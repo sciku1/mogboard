@@ -2,14 +2,14 @@
 
     {# MULTI-LANGUAGE#}
     <div class="item_details_box">
-        <h3>Purchasable from NPC Vendors</h3>
-        <p>As this item can be bought from NPCs for pure Gil, market information is not available.</p>
+        <h3>{{ 'Purchasable from NPC Vendors'|translate('item_shops_purchasable_npc_title') }}</h3>
+        <p>{{ 'As this item can be bought from NPCs for pure Gil, market information is not available.'|translate('item_shops_purchasable_npc_explanation') }}</p>
 
         <br>
 
         <h4>
             <img src="/i/game/coin.png" style="vertical-align:bottom;display:inline-table;margin:0 6px 0 0;">
-            <span class="text-yellow">{{ item.PriceMid|number_format }}</span> Gil
+            <span class="text-yellow">{{ item.PriceMid|number_format }}</span> {{ 'Gil'|translate('generic_gil') }}
         </h4>
 
         <br>
@@ -25,10 +25,10 @@
                     <tr>
                         <td>
                             {% if shop.Map.Position %}
-                                X: <span class="text-yellow">{{ shop.Map.Position.X|round(2) }}</span> -
-                                Y: <span class="text-yellow">{{ shop.Map.Position.Y|round(2) }}</span>
+                                {{ 'X: <span class="text-yellow">%f</span>'|translate('pos_x')|format(shop.Map.Position.X|round(2)) }} -
+                                {{ 'Y: <span class="text-yellow">%f</span>'|translate('pos_y')|format(shop.Map.Position.Y|round(2)) }}
                             {% else %}
-                                Position unknown, go hunt for them!
+                                {{ 'Position unknown, go hunt for them!'|translate('item_shops_purchasable_npc_not_found') }}
                             {% endif %}
                         </td>
                         <td>

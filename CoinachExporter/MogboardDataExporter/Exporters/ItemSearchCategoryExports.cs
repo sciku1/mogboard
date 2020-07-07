@@ -2,17 +2,18 @@
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using Lumina.Excel.GeneratedSheets;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using SaintCoinach;
+using Cyalume = Lumina.Lumina;
 
 namespace MogboardDataExporter.Exporters
 {
     public static class ItemSearchCategoryExports
     {
-        public static void GenerateJSON(ARealmReversed realm, string outputPath)
+        public static void GenerateJSON(Cyalume lumina, string outputPath)
         {
-            File.WriteAllText(Path.Combine(outputPath, "ItemSearchCategory_Keys.json"), JsonConvert.SerializeObject(realm.GameData.GetSheet("ItemSearchCategory").Keys.ToList()));
+            File.WriteAllText(Path.Combine(outputPath, "ItemSearchCategory_Keys.json"), JsonConvert.SerializeObject(lumina.GetExcelSheet<ItemSearchCategory>().Select(isc => isc.RowId)));
         }
 
         public static void GenerateChineseMappingsJSON(HttpClient http, string outputPath)

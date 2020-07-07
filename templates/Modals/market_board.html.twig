@@ -1,9 +1,9 @@
-{% set itemSearchCategories = cache('mog_ItemSearchCategories') %}
+{% set itemSearchCategories = cache('mog_ItemSearchCategories')|chinaizeisc %}
 
 <div class="market-board-container">
     <div class="market-board">
         <div class="categories">
-            <h2>WEAPONS</h2>
+            <h2>{{ 'WEAPONS'|translate('nav_weapons') }}</h2>
             <div class="categories-list">
                 {% for cat in itemSearchCategories.weapons %}
                     <button id="{{ cat.ID }}" data-tippy-content="{{ cat.Name }}"><span class="xiv-{{ cat.ID|xivicon }}"></span></button>
@@ -11,7 +11,7 @@
             </div>
         </div>
         <div class="categories">
-            <h2>ARMOR</h2>
+            <h2>{{ 'ARMOR'|translate('nav_armor') }}</h2>
             <div class="categories-list">
                 {% for cat in itemSearchCategories.armor %}
                     <button id="{{ cat.ID }}" data-tippy-content="{{ cat.Name }}"><span class="xiv-{{ cat.ID|xivicon }}"></span></button>
@@ -19,7 +19,7 @@
             </div>
         </div>
         <div class="categories">
-            <h2>ITEMS</h2>
+            <h2>{{ 'ITEMS'|translate('nav_items') }}</h2>
             <div class="categories-list">
                 {% for cat in itemSearchCategories.items %}
                     <button id="{{ cat.ID }}" data-tippy-content="{{ cat.Name }}"><span class="xiv-{{ cat.ID|xivicon }}"></span></button>
@@ -27,7 +27,7 @@
             </div>
         </div>
         <div class="categories">
-            <h2>HOUSING</h2>
+            <h2>{{ 'HOUSING'|translate('nav_housing') }}</h2>
             <div class="categories-list">
                 {% for cat in itemSearchCategories.housing %}
                     <button id="{{ cat.ID }}" data-tippy-content="{{ cat.Name }}"><span class="xiv-{{ cat.ID|xivicon }}"></span></button>

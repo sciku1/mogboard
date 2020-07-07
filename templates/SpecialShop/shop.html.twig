@@ -19,20 +19,20 @@
     </style>
     <div class="special_shops_list">
 
-        <h1>Special Shop: {{ special_shop.ID }} {{ special_shop.Name }}</h1>
+        <h1>{{ 'Special Shop:'|translate('special_shop_title_colon') }} {{ special_shop.ID }} {{ special_shop.Name }}</h1>
 
         <div class="table">
             <table class="striped">
                 <thead>
                     <tr>
                         <th></th>
-                        <th>Item</th>
-                        <th>Cost</th>
-                        <th>Qty Received</th>
-                        <th>Quantity</th>
-                        <th>Price Per Unit</th>
-                        <th>Price Total</th>
-                        <th>Gil Per Token</th>
+                        <th>{{ 'Item'|translate('generic_item') }}</th>
+                        <th>{{ 'Cost'|translate('generic_cost') }}</th>
+                        <th>{{ 'Qty Received'|translate('generic_qty_received') }}</th>
+                        <th>{{ 'Quantity'|translate('generic_quantity') }}</th>
+                        <th>{{ 'Price Per Unit'|translate('generic_ppu') }}</th>
+                        <th>{{ 'Price Total'|translate('generic_price_total') }}</th>
+                        <th>{{ 'Gil Per Token'|translate('generic_gil_per_token') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -49,7 +49,7 @@
                             {{ item.Info.ItemCostCount|number_format }}
                         </td>
                         <td>
-                            {{ item.Info.ItemCostReceive }} &nbsp;/&nbsp; HQ:{{ item.Info.HqReceive }}
+                            {{ item.Info.ItemCostReceive }} &nbsp;/&nbsp; {{ 'HQ:'|translate('generic_hq_colon') }}{{ item.Info.HqReceive }}
                         </td>
                         {% if item.Market %}
                             {% if item.Market[server].Prices[0] is defined %}
@@ -62,12 +62,12 @@
                                 <td><span class="profit">{{ profit }}</span></td>
                             {% else %}
                                 <td colspan="6">
-                                    <small>None on the market board</small>
+                                    <small>{{ 'None on the market board'|translate('shop_no_listings') }}</small>
                                 </td>
                             {% endif %}
                         {% else %}
                         <td colspan="6">
-                            <small>CANNOT BE SOLD</small>
+                            <small>{{ 'CANNOT BE SOLD'|translate('generic_cannot_be_sold_capitalized') }}</small>
                         </td>
                         {% endif %}
                     </tr>

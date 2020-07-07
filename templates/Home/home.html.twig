@@ -15,7 +15,7 @@
             {% if auth.online %}
             <div>
                 <button type="button" data-tab="market_activity">
-                    <img src="/i/game/hammer.png"> Market Activity
+                    <img src="/i/game/hammer.png"> {{ 'Market Activity'|translate('home_market_activity') }}
                 </button>
             </div>
             <h3><img src="/i/svg/bells-light.svg"> Alerts</h3>
@@ -29,11 +29,11 @@
                     {% endif %}
                 {% else %}
                     <button type="button" class="btn-disabled">
-                        <span class="text-gray">You have no alerts setup.</span>
+                        <span class="text-gray">{{ 'You have no alerts set up.'|translate('home_noalerts') }}</span>
                     </button>
                 {% endfor %}
             </div>
-            <h3><img src="/i/svg/th-list-light.svg"> Lists</h3>
+            <h3><img src="/i/svg/th-list-light.svg"> {{ 'Lists'|translate('generic_lists') }}</h3>
             <div>
                 {% for list in auth.user.lists %}
                     <button type="button" data-tab="lists_{{ list.id }}">
@@ -41,11 +41,11 @@
                     </button>
                 {% else %}
                     <button type="button" class="btn-disabled">
-                        <span class="text-gray">You have no lists.</span>
+                        <span class="text-gray">{{ 'You have no lists.'|translate('home_nolists') }}</span>
                     </button>
                 {% endfor %}
             </div>
-            <h3><img src="/i/svg/person-dolly-light.svg"> Retainers</h3>
+            <h3><img src="/i/svg/person-dolly-light.svg"> {{ 'Retainers'|translate('generic_retainers') }}</h3>
             <div>
                 {% for retainer in auth.user.retainers %}
                     <a href="{{ path('retainer_shop', { retainer: retainer.id }) }}">
@@ -53,37 +53,24 @@
                     </a>
                 {% else %}
                     <button type="button" class="btn-disabled">
-                        <span class="text-gray">You have no retainers.</span>
+                        <span class="text-gray">{{ 'You have no retainers.'|translate('home_noretainers') }}</span>
                     </button>
                 {% endfor %}
             </div>
 
             {% else %}
                 <section class="tac">
-                    <strong>Logged-out</strong>
+                    <strong>{{ 'Logged-out'|translate('home_logged_out') }}</strong>
                     <p class="text-gray">
+                        {% apply translate('home_logged_out_guide') %}
                         Lists, Alerts, Market activity and retainer links will show here
                         when you are logged into the site.
+                        {% endapply %}
                     </p>
                 </section>
             {% endif %}
         </div>
         <div>
-            {% if maintenance().isCompanionMaintenance %}
-                <div class="home-box2 flex">
-                    <div class="flex_5">
-                        <img src="/i/game/offline.png">
-                    </div>
-                    <div class="flex_95">
-                        <strong class="text-red">Auto-Update of Prices/History temporarily paused due to Server congestion.</strong>
-                        {# <strong class="text-red">Companion is down for maintenance</strong><br>
-                        Auto-Updating + Manual Updating has been paused. Prices / History will not update
-                        while Companion is down for maintenance. Retainers cannot be verified during maintenance
-                        and item alerts have been paused to avoid spam. #}
-                    </div>
-                </div>
-            {% endif %}
-
             {% include 'Home/news.html.twig' %}
 
             {% if auth.online %}
@@ -106,18 +93,18 @@
                         <img src="/i/brand/universalis/universalis_bodge.png" height="42">
                     </div>
                     <br>
-                    <strong>Become a member!</strong>
+                    <strong>{{ 'Become a member!'|translate('home_become_member') }}</strong>
                     <br>
-                    <p>Create alerts, make lists, add your retainers and get a personalised home page feed!</p>
+                    <p>{{ 'Create alerts, make lists, add your retainers and get a personalised home page feed!'|translate('home_become_member_guide') }}</p>
                     <br><br>
-                    <a href="{{ path('account_login_discord') }}" class="btn-login">Login via <strong>Discord</strong></a>
+                    <a href="{{ path('account_login_discord') }}" class="btn-login">{{ 'Login via <strong>Discord</strong>'|translate('home_login_discord')|striptags('<strong>')|raw }}</a>
                 </div>
             {% endif %}
         </div>
         <div>
             <div class="home-box patreon-discord">
                 <a href="https://discord.gg/JcMvMxD" class="discord" target="_blank">
-                    <span><img src="/i/brand/discord/logo_white.png"> DISCORD</span>
+                    <span><img src="/i/brand/discord/logo_white.png"> {{ 'DISCORD'|translate('discord_capitalized') }}</span>
                 </a>
                 <a href="{{ path('contribute') }}" class="patreon">
                     <span><img src="/i/brand/contribute/logo_name.png"></span>
@@ -140,14 +127,14 @@
                                     {% if item.LevelItem > 1 %}<em class="ilv">{{ item.LevelItem }}</em>{% endif %}
                                     <a href="{{ path('item_page', { itemId: itemId }) }}" class="rarity-{{ item.Rarity }}">{{ item.Name }}</a>
                                 </div>
-                                <small>{{ item.ItemSearchCategory.Name ?? '(Cannot be sold)' }}</small>
+                                <small>{{ item.ItemSearchCategory.Name ?? '(%s)'|format('Cannot be sold'|translate('generic_cannot_be_sold')) }}</small>
                             </div>
                         </div>
                     {% endif %}
                 {% endfor %}
             </div>
 #}
-            <h4>Recent Updates</h4>
+            <h4>{{ 'Recent Updates'|translate('home_recent_updates') }}</h4>
             <div class="home-box home-trending">
                 {% for itemId in recent %}
                     {% set item = game().item(itemId) %}
@@ -163,7 +150,7 @@
                                     {% if item.LevelItem > 1 %}<em class="ilv">{{ item.LevelItem }}</em>{% endif %}
                                     <a href="{{ path('item_page', { itemId: itemId }) }}" class="rarity-{{ item.Rarity }}">{{ item.Name }}</a>
                                 </div>
-                                <small>{{ item.ItemSearchCategory.Name ?? '(Cannot be sold)' }}</small>
+                                <small>{{ item.ItemSearchCategory.Name ?? '(%s)'|format('Cannot be sold'|translate('generic_cannot_be_sold')) }}</small>
                             </div>
                         </div>
                     {% endif %}
@@ -175,7 +162,7 @@
             {% if tax_rates is defined %}
             <div class="flex updates_box" style="margin-bottom: 20px">
                 <div>
-                    <h5>Current Market Tax Rates on {{ server|convert_if_chinese }}</h5>
+                    <h5>{{ 'Current Market Tax Rates on %s'|translate('home_current_tax_rates')|format(server|convert_if_chinese) }}</h5>
                     <br>
                     <div class="flex avg_prices">
                         <div class="flex_50">
@@ -205,7 +192,7 @@
 
             <div class="flex updates_box" style="margin-bottom: 20px">
                 <div>
-                    <h5>Upload Counts by World</h5>
+                    <h5>{{ 'Upload Counts by World'|translate('home_upload_counts_world') }}</h5>
                     <br>
                     <div class="flex avg_prices">
                         {% include 'Home/chart_hc.html.twig' with {
@@ -228,7 +215,7 @@
             <div>
                 <div class="flex updates_box">
                     <div>
-                        <h5>Uploads today</h5>
+                        <h5>{{ 'Uploads today'|translate('home_uploads_today') }}</h5>
                         <br>
                         <div class="flex avg_prices">
                             <div class="flex_50">
@@ -237,7 +224,7 @@
                         </div>
                     </div>
                     <div>
-                        <h5>Uploads this week</h5>
+                        <h5>{{ 'Uploads this week'|translate('home_uploads_week') }}</h5>
                         <br>
                         <div class="flex avg_prices">
                             <div class="flex_50">
@@ -246,7 +233,7 @@
                         </div>
                     </div>
                 </div>
-                <p class="mog-honorable" style="text-align: center; margin-top: 5px;">Thank you!</p>
+                <p class="mog-honorable" style="text-align: center; margin-top: 5px;">{{ 'Thank you!'|translate('thank_you') }}</p>
             </div>
         </div>
     </div>
