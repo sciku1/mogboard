@@ -2,7 +2,7 @@
     {% for entry in update_times %}
     <div>
         <h4>{{ entry.name|convert_if_chinese }}</h4>
-        <div>{{ entry.updated != 0 ? entry.updated|date : 'No data' }}</div>
+        <div>{{ entry.updated != 0 ? entry.updated|date : 'No data'|translate('generic_no_data') }}</div>
     </div>
     {% endfor %}
 </div>
