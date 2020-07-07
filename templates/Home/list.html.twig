@@ -8,8 +8,8 @@
         {% for itemId in list.items %}
             {% set item = game().item(itemId) %}
             {% set census = census(itemId) %}
-            <li>
-                <div style="float: left;">
+            <li style="display: flex;">
+                <div style="flex: 0 0 50%;">
                     <img src="{{ item.ID|icon2x }}" onerror="if (this.src != '/i/universalis/error.png') this.src = '/i/universalis/error.png';">
                     {% if item.LevelItem > 1 %}<em class="ilv">{{ item.LevelItem }}</em>{% endif %}
                     <a href="{{ path('item_page', { itemId: itemId }) }}" class="rarity-{{ item.Rarity }}">{{ item.Name }}</a>
@@ -18,28 +18,26 @@
                         {{ item.ItemSearchCategory.ID is defined ? item.ItemSearchCategory.Name : '(Not Sellable)' }}
                     </small>
                 </div>
-                <div style="float: right;">
+                <div style="flex: 0 0 50%;">
+                    {% if item.CanBeHq %}
                     <div class="cheapest">
                         <h6>Cheapest HQ</h6>
-                        {% if item.CanBeHq %}
-                            {% if census.Global.Prices_CheapestHQ %}
-                            <div class="cheapest_price">
-                                <i class="xiv-Gil"></i>
-                                <em>{{ census.Global.Prices_CheapestHQ.Quantity|number_format }} x</em>
-                                <span class="cheapest_value">{{ census.Global.Prices_CheapestHQ.PricePerUnit|number_format }}</span>
+                        {% if census.Global.Prices_CheapestHQ %}
+                        <div class="cheapest_price">
+                            <i class="xiv-Gil"></i>
+                            <em>{{ census.Global.Prices_CheapestHQ.Quantity|number_format }} x</em>
+                            <span class="cheapest_value">{{ census.Global.Prices_CheapestHQ.PricePerUnit|number_format }}</span>
 
-                                <span class="cheapest_price_info">
-                                    Server: <strong>{{ census.Global.Prices_CheapestHQ.Server }}</strong> -
-                                    Total: <strong>{{ census.Global.Prices_CheapestHQ.PriceTotal|number_format }}</strong>
-                                </span>
-                            </div>
-                            {% else %}
-                                No HQ for sale.
-                            {% endif %}
+                            <span class="cheapest_price_info">
+                                Server: <strong>{{ census.Global.Prices_CheapestHQ.Server }}</strong> -
+                                Total: <strong>{{ census.Global.Prices_CheapestHQ.PriceTotal|number_format }}</strong>
+                            </span>
+                        </div>
                         {% else %}
-                            <p>Item has no HQ variant.</p>
+                            No HQ for sale.
                         {% endif %}
                     </div>
+                    {% endif %}
                     <div class="cheapest">
                         <h6>Cheapest NQ</h6>
                         {% if census.Global.Prices_CheapestNQ %}
