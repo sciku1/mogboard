@@ -162,7 +162,7 @@
             {% if tax_rates is defined %}
             <div class="flex updates_box" style="margin-bottom: 20px">
                 <div>
-                    <h5>{{ 'Current Market Tax Rates on %s'|translate('home_current_tax_rates')|format(server) }}</h5>
+                    <h5>{{ 'Current Market Tax Rates on %s'|translate('home_current_tax_rates')|format(server|convert_if_chinese) }}</h5>
                     <br>
                     <div class="flex avg_prices">
                         <div class="flex_50">
