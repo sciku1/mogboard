@@ -53,9 +53,6 @@ class MarketExtension extends AbstractExtension
                 continue;
             }
 
-            $activityCount += count($md['listings']);
-            $activityCount += count($md['recentHistory']);
-
             $times[] = [
                 'name'     => $marketServer,
                 'updated'  => $md['lastUploadTime']
