@@ -39,12 +39,12 @@ namespace MogboardDataExporter.Exporters
                     {
                         var outputItem = new string[6];
 
-                        string classJobAbbr = item.ItemSearchCategory.Value.ClassJob.Value.Abbreviation;
+                        var classJobAbbr = item.ItemSearchCategory.Value.ClassJob.Value.Abbreviation;
                         if (item.ItemSearchCategory.Value.ClassJob.Value.ClassJobParent.Value.Abbreviation != classJobAbbr)
                             classJobAbbr = item.ItemSearchCategory.Value.ClassJob.Value.ClassJobParent.Value.Abbreviation + " " + classJobAbbr;
                         else if (Resources.ClassJobMap.TryGetValue(classJobAbbr, out var jobAbbr))
                             classJobAbbr += " " + jobAbbr;
-                        else if (classJobAbbr == "ADV")
+                        else if (classJobAbbr == "ADV" || classJobAbbr == "ABE" || classJobAbbr == "AVN")
                             classJobAbbr = "";
 
                         outputItem[0] = item.RowId.ToString();
