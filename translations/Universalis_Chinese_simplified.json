@@ -2129,8 +2129,32 @@
     },
     {
         "term": "If you are playing on chinese server(other servers are not supported), you can use Matcha plugin provided by FFCAFE which have built-in Universalis integration. Matcha also provides a overlay to show price information from Universalis.",
-        "definition": "\u5982\u679c\u60a8\u5728\u56fd\u670d\uff0c\u5219\u53ef\u4ee5\u4f7f\u7528 FFCAFE \u63d0\u4f9b\u7684\u62b9\u8336 Matcha \u63d2\u4ef6\uff08\u4e0d\u652f\u6301\u56fd\u9645\u670d\uff09\uff0c\u8be5\u63d2\u4ef6\u5177\u6709\u5185\u7f6e Universalis \u96c6\u6210\u3002 \u62b9\u8336\u8fd8\u63d0\u4f9b\u4e86\u4e00\u4e2a\u60ac\u6d6e\u7a97\u4ee5\u663e\u793a\u6765\u81ea Universalis \u7684\u4ef7\u683c\u4fe1\u606f\u3002",
+        "definition": "\u5982\u679c\u60a8\u5728\u56fd\u670d\uff0c\u5219\u53ef\u4ee5\u4f7f\u7528 FFCafe \u63d0\u4f9b\u7684\u62b9\u8336 Matcha \u63d2\u4ef6\uff0c\u8be5\u63d2\u4ef6\u652f\u6301\u9009\u62e9\u81ea\u52a8\u5411 Universalist \u4e0a\u62a5\u6570\u636e\u3002 \u62b9\u8336 Matcha \u8fd8\u63d0\u4f9b\u4e86\u4e00\u4e2a\u60ac\u6d6e\u7a97\u53ef\u4ee5\u5b9e\u65f6\u67e5\u770b\u6765\u81ea Universalis \u7684\u4ef7\u683c\u4fe1\u606f\u3002",
         "context": "contribute_description_matcha",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "No data",
+        "definition": "\u65e0\u6570\u636e",
+        "context": "generic_no_data",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Not Sellable",
+        "definition": "\u4e0d\u53ef\u51fa\u552e",
+        "context": "generic_not_sellable",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Cannot be sold",
+        "definition": "\u65e0\u6cd5\u88ab\u51fa\u552e",
+        "context": "generic_cannot_be_sold",
         "term_plural": "",
         "reference": "",
         "comment": ""
