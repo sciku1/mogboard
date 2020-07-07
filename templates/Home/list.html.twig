@@ -13,7 +13,7 @@
                 <a href="{{ path('item_page', { itemId: itemId }) }}" class="rarity-{{ item.Rarity }}">{{ item.Name }}</a>
                 <small>
                     {{ item.ItemKind.Name }} -
-                    {{ item.ItemSearchCategory.ID is defined ? item.ItemSearchCategory.Name : '(Not Sellable)' }}
+                    {{ item.ItemSearchCategory.ID is defined ? item.ItemSearchCategory.Name : '(%s)'|format('Not Sellable'|translate('generic_not_sellable')) }}
                 </small>
             </li>
         {% endfor %}
