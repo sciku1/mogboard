@@ -127,7 +127,7 @@
                                     {% if item.LevelItem > 1 %}<em class="ilv">{{ item.LevelItem }}</em>{% endif %}
                                     <a href="{{ path('item_page', { itemId: itemId }) }}" class="rarity-{{ item.Rarity }}">{{ item.Name }}</a>
                                 </div>
-                                <small>{{ item.ItemSearchCategory.Name ?? '(Cannot be sold)' }}</small>
+                                <small>{{ item.ItemSearchCategory.Name ?? '(%s)'|format('Cannot be sold'|translate('generic_cannot_be_sold')) }}</small>
                             </div>
                         </div>
                     {% endif %}
@@ -150,7 +150,7 @@
                                     {% if item.LevelItem > 1 %}<em class="ilv">{{ item.LevelItem }}</em>{% endif %}
                                     <a href="{{ path('item_page', { itemId: itemId }) }}" class="rarity-{{ item.Rarity }}">{{ item.Name }}</a>
                                 </div>
-                                <small>{{ item.ItemSearchCategory.Name ?? '(Cannot be sold)' }}</small>
+                                <small>{{ item.ItemSearchCategory.Name ?? '(%s)'|format('Cannot be sold'|translate('generic_cannot_be_sold')) }}</small>
                             </div>
                         </div>
                     {% endif %}
