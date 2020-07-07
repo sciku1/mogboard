@@ -58,12 +58,12 @@
                         {% endif %}
                     </div>
                     <div>
+                        {# This should not be done here lol, move it to MarketExtension #}
                         {% set last_updated = 0 %}
                         {% set update_times = updateTimes(itemId) %}
                         {% for entry in update_times %}
                             {% if entry.updated > last_updated %}
                             {% set last_updated = entry.updated %}
-                            {{ entry.updated != 0 ? entry.updated|date : 'No data' }}
                             {% endif %}
                         {% endfor %}
                         <small>Last updated: {{ last_updated != 0 ? last_updated|date : 'No data' }}</small>
