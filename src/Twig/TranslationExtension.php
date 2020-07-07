@@ -5,7 +5,7 @@ namespace App\Twig;
 use App\Common\Service\Redis\Redis;
 use App\Common\Utils\Language;
 use Twig\Extension\AbstractExtension;
-use Twig\TwigFunction;
+use Twig\TwigFilter;
 
 class TranslationExtension extends AbstractExtension {
     public function getFilters()
