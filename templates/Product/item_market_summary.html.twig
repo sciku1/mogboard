@@ -1,7 +1,7 @@
 <div class="market_update_times">
     {% for entry in update_times %}
     <div>
-        <h4>{{ entry.name }}</h4>
+        <h4>{{ entry.name|convert_if_chinese }}</h4>
         <div>{{ entry.updated != 0 ? entry.updated|date : 'No data' }}</div>
     </div>
     {% endfor %}
@@ -19,7 +19,7 @@
                 <span class="cheapest_value">{{ census.Global.Prices_CheapestHQ.PricePerUnit|number_format }}</span>
 
                 <span class="cheapest_price_info">
-                    {{ 'Server:'|translate('generic_server_colon') }} <strong>{{ census.Global.Prices_CheapestHQ.Server }}</strong> -
+                    {{ 'Server:'|translate('generic_server_colon') }} <strong>{{ census.Global.Prices_CheapestHQ.Server|convert_if_chinese }}</strong> -
                     {{ 'Total:'|translate('generic_total_colon') }} <strong>{{ census.Global.Prices_CheapestHQ.PriceTotal|number_format }}</strong>
                 </span>
             </div>
@@ -39,7 +39,7 @@
             <span class="cheapest_value">{{ census.Global.Prices_CheapestNQ.PricePerUnit|number_format }}</span>
 
             <span class="cheapest_price_info">
-                {{ 'Server:'|translate('generic_server_colon') }} <strong>{{ census.Global.Prices_CheapestNQ.Server }}</strong> -
+                {{ 'Server:'|translate('generic_server_colon') }} <strong>{{ census.Global.Prices_CheapestNQ.Server|convert_if_chinese }}</strong> -
                 {{ 'Total:'|translate('generic_total_colon') }} <strong>{{ census.Global.Prices_CheapestNQ.PriceTotal|number_format }}</strong>
             </span>
         </div>
