@@ -84,7 +84,9 @@
                 {# Lists #}
                 {% for list in auth.user.lists %}
                     <div class="home-tab" id="lists_{{ list.id }}">
-                        {% include 'Home/list.html.twig' %}
+                        {% include 'Home/list.html.twig' with {
+                            server: server
+                        } %}
                     </div>
                 {% endfor %}
             {% else %}
