@@ -1,16 +1,18 @@
 <div class="item-no-data">
-    <h2 class="text-highlight">Sorry, no market data!</h2>
+    <h2 class="text-highlight">{{ 'Sorry, no market data!'|translate('no_market_data_title_1') }}</h2>
     <p>
+        {% apply translate('no_market_data_explanation_1')|format(serverName|convert_if_chinese)|striptags('<strong>')|raw %}
         Universalis could not find any market data for
-        this item on the server <strong>{{ serverName }}</strong>.
+        this item on the server <strong>%s</strong>.
+        {% endapply %}
     </p>
     <p>
-        There can be a few reasons for this, here are some:
+        {{ 'There can be a few reasons for this, here are some:'|translate('no_market_data_title_2') }}
     </p>
     <ul>
-        <li>{{ serverName }} is a brand new server</li>
-        <li>No one has contributed any information about this item yet</li>
-        <li>Something broke</li>
+        <li>{{ '%s is a brand new server'|translate('no_market_data_explanation_2')|format(serverName|convert_if_chinese) }}</li>
+        <li>{{ 'No one has contributed any information about this item yet'|translate('no_market_data_explanation_3') }}</li>
+        <li>{{ 'Something broke'|translate('no_market_data_explanation_4') }}</li>
     </ul>
-    If it is that last one, be sure to jump on <a href="https://discord.gg/JcMvMxD">Discord</a> and let us know!
+    {{ 'If it is that last one, be sure to jump on <a href="%s">Discord</a> and let us know!'|translate('no_market_data_explanation_5')|format('https://discord.gg/JcMvMxD')|striptags('<a>')|raw }}
 </div>

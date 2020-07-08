@@ -4,39 +4,45 @@
 
 {% block account %}
 <div class="alerts">
-    <h5>Alerts</h5>
+    <h5>{{ 'Alerts'|translate('generic_alerts') }}</h5>
     <p>
+        {% apply translate('alerts_useraccount_guide_2') %}
         Alerts allow you to track all kinds of information about items on the market and be informed either by
-        discord or email for any changes that meet your requirements. To get started with creating alerts, go
+        Discord or email for any changes that meet your requirements. To get started with creating alerts, go
         search for any item and then click on the Alert tab on the left.
+        {% endapply %}
     </p>
     <p>
-        You can create: <strong class="text-green">{{ auth.user.alertsMax }}</strong> with an
-        expiry time of: <strong class="text-green">{{ auth.user.alertsExpiry / 24 / 60 / 60 }} days</strong>.
+        {% apply translate('alerts_useraccount_quota')|format(auth.user.alertsMax, auth.user.alertsExpiry / 24 / 60 / 60) %}
+        You can create: <strong class="text-green">%d</strong> alerts with an
+        expiry time of: <strong class="text-green">%d days</strong>.
+        {% endapply %}
     </p>
     <small>
+        {% apply translate('alerts_useraccount_guide_3') %}
         <strong>Alert Expiration:</strong> To keep the system clean, alerts will expire after a set amount of time
         from when they were created. To refresh a notification you must return to Universalis and be logged in.
+        {% endapply %}
     </small>
 
     <hr>
 
-    <h3>Alerts</h3>
+    <h3>{{ 'Alerts'|translate('generic_alerts') }}</h3>
 
     <div class="alert_info_box table-dark">
         <table>
             <thead>
                 <tr>
-                    <th>Max Alerts</th>
-                    <th>Alert Expiry Time</th>
-                    <th>Alert Item Update</th>
+                    <th>{{ 'Max Alerts'|translate('generic_max_alerts') }}</th>
+                    <th>{{ 'Alert Expiry Time'|translate('generic_alert_expiry_time') }}</th>
+                    <th>{{ 'Alert Item Update'|translate('generic_alert_item_update') }}</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>{{ auth.user.alerts|length }} / {{ auth.user.alertsMax }}</td>
-                    <td>{{ auth.user.alertsExpiry / 60 / 60 / 24 }} days</td>
-                    <td>{{ auth.user.alertsUpdate ? 'Yes' : 'No'}}</td>
+                    <td>{{ '%d days'|translate('generic_n_days')|format(auth.user.alertsExpiry / 60 / 60 / 24) }}</td>
+                    <td>{{ auth.user.alertsUpdate ? 'Yes'|translate('generic_yes') : 'No'|translate('generic_no')}}</td>
                 </tr>
             </tbody>
         </table>
@@ -63,7 +69,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td width="20%">Item</td>
+                        <td width="20%">{{ 'Item'|translate('generic_item') }}</td>
                         <td>
                             <div class="flex">
                                 <div class="flex_10">
@@ -77,51 +83,51 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>Information</td>
+                        <td>{{ 'Information'|translate('generic_information') }}</td>
                         <td>
                             <div class="flex">
                                 <div class="flex_30">
-                                    <h6>Type</h6>
+                                    <h6>{{ 'Type'|translate('generic_type') }}</h6>
                                     {{ alert.triggerType|title }}
                                 </div>
                                 <div class="flex_30">
-                                    <h6>Sent Today</h6>
+                                    <h6>{{ 'Sent Today'|translate('generic_sent_today') }}</h6>
                                     {{ alert.triggersSent }}
                                 </div>
                                 <div class="flex_30">
-                                    <h6>Last Sent</h6>
+                                    <h6>{{ 'Last Sent'|translate('generic_last_sent') }}</h6>
                                     {{ alert.triggerLastSent ? alert.triggerLastSent|date : 'Never' }}
                                 </div>
                             </div>
                             <br>
                             <div class="flex">
                                 <div class="flex_20">
-                                    <h6>Data-Center</h6>
+                                    <h6>{{ 'Data Center'|translate('generic_data_center') }}</h6>
                                     {{ alert.triggerDataCenter|bool }}
                                 </div>
                                 <div class="flex_20">
-                                    <h6>High-Quality</h6>
+                                    <h6>{{ 'High-Quality'|translate('generic_high_quality') }}</h6>
                                     {{ alert.triggerHq|bool }}
                                 </div>
                                 <div class="flex_20">
-                                    <h6>Normal Quality</h6>
+                                    <h6>{{ 'Normal Quality'|translate('generic_normal_quality') }}</h6>
                                     {{ alert.triggerNq|bool }}
                                 </div>
                                 <div class="flex_20">
-                                    <h6>Email</h6>
+                                    <h6>{{ 'Email'|translate('generic_email') }}</h6>
                                     {{ alert.notifiedViaEmail|bool }}
                                 </div>
                                 <div class="flex_20">
-                                    <h6>Discord</h6>
+                                    <h6>{{ 'Discord'|translate('generic_discord') }}</h6>
                                     {{ alert.notifiedViaDiscord|bool }}
                                 </div>
                             </div>
                             <br>
-                            {{ alert.triggerActive|bool }} {{ alert.triggerActive ? 'Alert is active' : 'Alert has been disabled.' }} - Expires: {{ alert.expiry|date }}
+                            {{ alert.triggerActive|bool }} {{ alert.triggerActive ? 'Alert is active'|translate('alerts_is_active') : 'Alert has been disabled.'|translate('alerts_is_inactive') }} - {{ 'Expires:'|translate('generic_expires_colon') }} {{ alert.expiry|date }}
                         </td>
                     </tr>
                     <tr>
-                        <td>Conditions</td>
+                        <td>{{ 'Triggers'|translate('generic_alert_trigger') }}</td>
                         <td>
                             <code class="box">
                                 {% for trigger in alert.getTriggerConditionsFormatted %}
@@ -131,7 +137,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>Events<br><small>Max: 5</small></td>
+                        <td>{{ 'Events'|translate('generic_events') }}<br><small>{{ 'Max: %d'|translate('generic_max_quantity')|format(5) }}</small></td>
                         <td>
                             {% for event in alert.events %}
                                 {% if loop.index < 5 %}
@@ -139,16 +145,16 @@
                                         <table class="small">
                                             <thead>
                                                 <tr>
-                                                    <th>Server</th>
-                                                    <th>Quantity</th>
-                                                    <th>Price Per Unit</th>
-                                                    <th>Price Total</th>
+                                                    <th>{{ 'Server'|translate('generic_server') }}</th>
+                                                    <th>{{ 'Quantity'|translate('generic_quantity') }}</th>
+                                                    <th>{{ 'Price Per Unit'|translate('generic_ppu') }}</th>
+                                                    <th>{{ 'Price Total'|translate('generic_price_total') }}</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr>
                                                     <td colspan="4">
-                                                        Sent: {{ event.added|date }}
+                                                        {{ 'Sent'|translate('generic_sent') ~ ': ' ~ event.added|date }}
                                                     </td>
                                                 </tr>
                                             {% for eventData in event.data %}
@@ -167,7 +173,7 @@
                                     </div>
                                 {% endif %}
                             {% else %}
-                            <small>Alert has not sent any notifications.</small>
+                            <small>{{ 'Alert has not sent any notifications.'|translate('alerts_none_sent') }}</small>
                             {% endfor %}
                         </td>
                     </tr>
@@ -176,7 +182,7 @@
         </div>
     {% else %}
         <div class="alert-white">
-            You have no alerts. You can add alerts on item pages.
+            {{ 'You have no alerts for this item.'|translate('alerts_table_no_alerts') }} {{ 'You can add alerts on item pages.'|translate('alerts_useraccount_guide_1') }}
         </div>
     {% endfor %}
 </div>

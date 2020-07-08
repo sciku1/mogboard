@@ -3,27 +3,27 @@
         <thead>
         <tr>
             {% if history %}
-                <th data-sort="int" width="2%" class="tac">#</th>
+                <th data-sort="int" width="2%" class="tac">{{ '#'|translate('generic_quantity_shorthand') }}</th>
                 {% if has_item is defined %}
                 <th data-sort="string" width="2%">-</th>
-                <th data-sort="string" width="20%">Item</th>
+                <th data-sort="string" width="20%">{{ 'Item'|translate('generic_item') }}</th>
                 {% endif %}
                 {% if crossWorld is defined %}
-                <th data-sort="string" width="10%">Server</th>
+                <th data-sort="string" width="10%">{{ 'Server'|translate('generic_server') }}</th>
                 {% endif %}
-                <th data-sort="int" width="2%">HQ</th>
-                <th data-sort="int" width="15%">Price</th>
-                <th data-sort="int" width="5%">QTY</th>
-                <th data-sort="int" width="18%">Total</th>
+                <th data-sort="int" width="2%">{{ 'HQ'|translate('generic_hq') }}</th>
+                <th data-sort="int" width="15%">{{ 'Price'|translate('generic_price') }}</th>
+                <th data-sort="int" width="5%">{{ 'QTY'|translate('generic_quantity_shorthand') }}</th>
+                <th data-sort="int" width="18%">{{ 'Total'|translate('generic_total') }}</th>
                 {% if averagePricesHQ is defined %}
-                    <th data-sort="int" width="2%">%Diff</th>
+                    <th data-sort="int" width="2%">{{ '%Diff'|translate('generic_percent_difference_shorthand') }}</th>
                 {% endif %}
                 {% if is_owner is not defined %}
-                <th data-sort="string">Buyer</th>
+                <th data-sort="string">{{ 'Buyer'|translate('generic_buyer') }}</th>
                 {% endif %}
-                <th data-sort="int" width="20%">Date</th>
+                <th data-sort="int" width="20%">{{ 'Date'|translate('generic_date') }}</th>
             {% else %}
-                <th>Really rare!?</th>
+                <th>{{ 'Really rare!?'|translate('market_board_really_rare') }}</th>
             {% endif %}
         </tr>
         </thead>
@@ -51,9 +51,9 @@
                 {% endif %}
                 {% if crossWorld is defined %}
                     {% if env('APP_ENV') == 'devs' %}
-                        <td class="price-server" data-sort-value="{{ row._Server }}"><strong>{{ row._Server }}</strong></td>
+                        <td class="price-server" data-sort-value="{{ row._Server }}"><strong>{{ row._Server|convert_if_chinese }}</strong></td>
                     {% else %}
-                        <td class="price-server" data-sort-value="{{ row._Server }}"><strong>{{ row._Server }}</strong></td>
+                        <td class="price-server" data-sort-value="{{ row._Server }}"><strong>{{ row._Server|convert_if_chinese }}</strong></td>
                     {% endif %}
                 {% endif %}
                 <td class="price-hq" data-sort-value="{{ row.hq ? 1 : 0 }}">{{ row.hq ? '<img src="/i/game/hq.png">' : '' }}</td>
@@ -76,7 +76,7 @@
             </tr>
         {% else %}
             <tr>
-                <td>There is currently no recorded history for this item on Universalis.</td>
+                <td>{{ 'There is currently no recorded history for this item on Universalis.'|translate('market_board_no_recorded_history') }}</td>
             </tr>
         {% endfor %}
         </tbody>

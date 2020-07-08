@@ -1,9 +1,9 @@
 <div class="home-box2 home-itemlist">
     <h3><a href="{{ path('lists_view', { list: list.id }) }}">{{ list.name }}</a></h3>
-    <p>Click on the list title to view market information for this list.</p>
+    <p>{{ 'Click on the list title to view market information for this list.'|translate('list_guide') }}</p>
     <br>
 
-    <h6>{{ list.items|length }} items in this list</h6>
+    <h6>{{ '%d items in this list'|translate('list_items_contained')|format(list.items|length) }}</h6>
     <ul>
         {% for itemId in list.items %}
             {% set item = game().item(itemId) %}
@@ -15,7 +15,7 @@
                     <a href="{{ path('item_page', { itemId: itemId }) }}" class="rarity-{{ item.Rarity }}">{{ item.Name }}</a>
                     <small>
                         {{ item.ItemKind.Name }} -
-                        {{ item.ItemSearchCategory.ID is defined ? item.ItemSearchCategory.Name : '(Not Sellable)' }}
+                        {{ item.ItemSearchCategory.ID is defined ? item.ItemSearchCategory.Name : '(%s)'|format('Not Sellable'|translate('generic_not_sellable')) }}
                     </small>
                 </div>
                 <div style="flex: 0 0 50%;">

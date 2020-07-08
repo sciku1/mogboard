@@ -1,56 +1,56 @@
 ﻿using MogboardDataExporter.Data;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using SaintCoinach;
-using SaintCoinach.Xiv;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Lumina.Excel.GeneratedSheets;
 using MogboardDataExporter.Models;
+using Cyalume = Lumina.Lumina;
 
 namespace MogboardDataExporter.Exporters
 {
     public static class CategoryJsExports
     {
-        public static void Generate(ARealmReversed realmEn, ARealmReversed realmDe, ARealmReversed realmFr, ARealmReversed realmJp, string outputPath)
+        public static void Generate(Cyalume luminaEn, Cyalume luminaDe, Cyalume luminaFr, Cyalume luminaJp, string outputPath)
         {
             string[] langs = { "en", "de", "fr", "ja" };
-            ARealmReversed[] realms = { realmEn, realmDe, realmFr, realmJp };
-            IXivSheet<Item>[] itemSheets = { realmEn.GameData.GetSheet<Item>(), realmDe.GameData.GetSheet<Item>(), realmFr.GameData.GetSheet<Item>(), realmJp.GameData.GetSheet<Item>() };
+            Cyalume[] realms = { luminaEn, luminaDe, luminaFr, luminaJp };
+            IEnumerable<Item>[] itemSheets = { luminaEn.GetExcelSheet<Item>(), luminaDe.GetExcelSheet<Item>(), luminaFr.GetExcelSheet<Item>(), luminaJp.GetExcelSheet<Item>() };
 
             var baseTop = Console.CursorTop;
 
             Parallel.For(0, 4, i =>
             {
                 dynamic output = new JObject();
-                var categories = realms[i].GameData.GetSheet<ItemSearchCategory>();
+                var categories = realms[i].GetExcelSheet<ItemSearchCategory>();
                 foreach (var category in categories)
                 {
-                    if (category.Key < 9)
+                    if (category.RowId < 9)
                         goto console_update;
 
                     var categoryItems = new List<string[]>();
-                    var sortedItems = itemSheets[i].Where(item => item.ItemSearchCategory.Key == category.Key).ToList();
-                    sortedItems.Sort((item1, item2) => item2.ItemLevel.Key - item1.ItemLevel.Key);
+                    var sortedItems = itemSheets[i].Where(item => item.ItemSearchCategory.Row == category.RowId).ToList();
+                    sortedItems.Sort((item1, item2) => (int)(item2.LevelItem.Row - item1.LevelItem.Row));
 
                     foreach (var item in sortedItems)
                     {
                         var outputItem = new string[6];
 
-                        string classJobAbbr = item.ItemSearchCategory.ClassJob.Abbreviation;
-                        if (item.ItemSearchCategory.ClassJob.ParentClassJob.Abbreviation != classJobAbbr)
-                            classJobAbbr = item.ItemSearchCategory.ClassJob.ParentClassJob.Abbreviation + " " + classJobAbbr;
+                        var classJobAbbr = item.ItemSearchCategory.Value.ClassJob.Value.Abbreviation;
+                        if (item.ItemSearchCategory.Value.ClassJob.Value.ClassJobParent.Value.Abbreviation != classJobAbbr)
+                            classJobAbbr = item.ItemSearchCategory.Value.ClassJob.Value.ClassJobParent.Value.Abbreviation + " " + classJobAbbr;
                         else if (Resources.ClassJobMap.TryGetValue(classJobAbbr, out var jobAbbr))
                             classJobAbbr += " " + jobAbbr;
-                        else if (classJobAbbr == "ADV")
+                        else if (classJobAbbr == "ADV" || classJobAbbr == "ABE" || classJobAbbr == "AVN")
                             classJobAbbr = "";
 
-                        outputItem[0] = item.Key.ToString();
-                        outputItem[1] = item.Name.ToString();
-                        outputItem[2] = $"/i/{item.Icon.Path.Substring(8, 13)}.png";
-                        outputItem[3] = item.ItemLevel.ToString();
+                        outputItem[0] = item.RowId.ToString();
+                        outputItem[1] = item.Name;
+                        outputItem[2] = $"/i/{item.Icon}.png";
+                        outputItem[3] = item.LevelItem.Row.ToString();
                         outputItem[4] = item.Rarity.ToString();
                         outputItem[5] = classJobAbbr;
 
@@ -60,13 +60,13 @@ namespace MogboardDataExporter.Exporters
                     if (categoryItems.Count == 0)
                         goto console_update;
 
-                    output[category.Key.ToString()] = JToken.FromObject(categoryItems);
+                    output[category.RowId.ToString()] = JToken.FromObject(categoryItems);
 
                     console_update:
                     Console.CursorLeft = 0;
                     Console.CursorTop = baseTop + i;
-                    Console.Write($"{langs[i]}: [{category.Key}/{categories.Count - 1}]");
-                    Console.CursorLeft = 10 + category.Key.ToString("000").Length;
+                    Console.Write($"{langs[i]}: [{category.RowId}/{categories.Count() - 1}]");
+                    Console.CursorLeft = 10 + category.RowId.ToString("000").Length;
                     Console.Write("                                                                              ");
                 }
 
@@ -77,36 +77,36 @@ namespace MogboardDataExporter.Exporters
             Console.CursorTop = baseTop + 4;
         }
 
-        public static void GenerateChinese(ARealmReversed realm, IEnumerable<CsvItem> itemsChs, string outputPath)
+        public static void GenerateChinese(Cyalume lumina, IEnumerable<CsvItem> itemsChs, string outputPath)
         {
             var output = new Dictionary<string, List<string[]>>();
 
             var counter = 0;
             var baseTop = Console.CursorTop;
-            var localItems = realm.GameData.GetSheet<Item>();
-            var categories = realm.GameData.GetSheet<ItemSearchCategory>();
+            var localItems = lumina.GetExcelSheet<Item>();
+            var categories = lumina.GetExcelSheet<ItemSearchCategory>();
             Parallel.ForEach(categories, category =>
             {
-                if (category.Key < 9)
+                if (category.RowId < 9)
                     goto console_update;
 
                 var categoryItems = new List<string[]>();
-                var filteredItems = itemsChs.Where(item => item?.ItemSearchCategory.Key == category.Key).ToList();
+                var filteredItems = itemsChs.Where(item => item?.ItemSearchCategory.RowId == category.RowId).ToList();
 
                 Parallel.ForEach(filteredItems, item =>
                 {
                     var outputItem = new string[6];
 
-                    var classJobAbbr = item.ItemSearchCategory.ClassJob.Abbreviation ?? "";
-                    if (item.ItemSearchCategory.ClassJob.ParentClassJob.Abbreviation != classJobAbbr)
-                        classJobAbbr = item.ItemSearchCategory.ClassJob.ParentClassJob.Abbreviation + " " +
+                    var classJobAbbr = item.ItemSearchCategory.ClassJob.Value.Abbreviation ?? "";
+                    if (item.ItemSearchCategory.ClassJob.Value.ClassJobParent.Value.Abbreviation != classJobAbbr)
+                        classJobAbbr = item.ItemSearchCategory.ClassJob.Value.ClassJobParent.Value.Abbreviation + " " +
                                        classJobAbbr;
                     else if (Resources.ClassJobMap.TryGetValue(classJobAbbr, out var jobAbbr))
                         classJobAbbr += " " + jobAbbr;
                     else if (classJobAbbr == "ADV")
                         classJobAbbr = "";
 
-                    var iconId = (ushort) localItems.First(itm => itm.Key == item.Key).GetRaw("Icon");
+                    var iconId = (ushort) localItems.First(itm => itm.RowId == item.Key).Icon;
                     var icon = $"/i/{Util.GetIconFolder(iconId)}/{iconId:000000}.png";
 
                     outputItem[0] = item.Key.ToString();
@@ -127,12 +127,12 @@ namespace MogboardDataExporter.Exporters
                 if (categoryItems.Count == 0)
                     goto console_update;
 
-                output[category.Key.ToString()] = categoryItems;
+                output[category.RowId.ToString()] = categoryItems;
 
                 console_update:
                 Console.CursorLeft = 0;
                 Console.CursorTop = baseTop;
-                Console.Write($"ch: [{counter}/{categories.Count - 1}]");
+                Console.Write($"ch: [{counter}/{categories.Count() - 1}]");
                 Console.CursorLeft = 10 + counter.ToString("000").Length;
                 Console.Write("                                                                              ");
 

@@ -6,7 +6,7 @@
 <script>var appEnableCharacters = 1;</script>
 <script>var verify_code = '{{ auth.user.getCharacterPassPhrase() }}';</script>
 <div class="characters">
-    <h1>Characters</h1>
+    <h1>{{ 'Characters'|translate('generic_characters') }}</h1>
 
 {#
     <br>
@@ -20,7 +20,6 @@
             <li>Patron benefits</li>
             <li>View your own purchase history</li>
             <li>View your friends purchases (if friends are public on Lodestone)</li>
-            <li>Added to XIVAPI which many FFXIV Fan-sites sites use.</li>
         </ul>
         Thank you.
     </div>
@@ -32,14 +31,14 @@
                     <img src="{{ character.avatar }}" class="character_avatar">
                 </div>
                 <div class="flex_90 character_info">
-                    <a href="{{ path('characters_delete', { character: character.id }) }}" class="character_remove">REMOVE</a>
+                    <a href="{{ path('characters_delete', { character: character.id }) }}" class="character_remove">{{ 'REMOVE'|translate('generic_remove_capitalized') }}</a>
                     <h4 class="char_name"><strong>{{ character.main ? '[MAIN]' : '' }}</strong> {{ character.name }}</h4>
                     <p>
                         {{ character.server }}
-                        - Updated: {{ character.updated|date }}
+                        - {{ 'Updated:'|translate('generic_updated_colon') }} {{ character.updated|date }}
                     </p>
                     <p>
-                        <a href="{{ path('character_main', { character: character.id }) }}">Set character as MAIN.</a>
+                        <a href="{{ path('character_main', { character: character.id }) }}">{{ 'Set character as MAIN.'|translate('characters_set_main') }}</a>
                     </p>
                     <p>
                         {# <a href="{{ path('character_history', { character: character.id }) }}">View Purchase History</a> #}
@@ -48,7 +47,7 @@
             </div>
         {% else %}
             <div class="account-none">
-                You have no characters, why not add one below!
+                {{ 'You have no characters, why not add one below!'|translate('characters_no_characters') }}
             </div>
         {% endfor %}
     </div>
@@ -58,28 +57,34 @@
     <div class="account-panel">
         <div>
             <h5 class="text-green">
-                Add a new character
-                <span class="character_auth_code">AUTH CODE: {{ auth.user.getCharacterPassPhrase() }}</span>
+                {{ 'Add a new character'|translate('characters_add_new_title') }}
+                <span class="character_auth_code">{{ 'AUTH CODE: %s'|translate('characters_auth_code')|format(auth.user.getCharacterPassPhrase()) }}</span>
             </h5>
 
             <br><br>
 
             <p>
-                To add a new character, you must first add your verification code. <strong>Please add your MAIN character first</strong>.
+                {{ 'To add a new character, you must first add your verification code. <strong>Please add your MAIN character first</strong>.'|translate('characters_guide_1') }}
             </p>
             <ul class="character_add_instructions">
                 <li>
+                    {% apply translate('characters_guide_2')|format('https://na.finalfantasyxiv.com/lodestone/my/setting/profile/')|striptags('<a>')|raw %}
                     Go to Lodestone and Login with your character.
-                    Then <a href="https://na.finalfantasyxiv.com/lodestone/my/setting/profile/">Click here to edit your profile</a>.
+                    Then <a href="%s">click here to edit your profile</a>.
+                    {% endapply %}
                 </li>
                 <li>
+                    {% apply translate('characters_guide_3')|striptags('<strong>')|raw %}
                     In the text box, enter in your <strong>AUTH CODE</strong>,
                     then click on Confirm (twice).
+                    {% endapply %}
                 </li>
                 <li>
+                    {% apply translate('characters_guide_4') %}
                     Hop back to Universalis and fill in the form below.
                     The site will search for your character
-                    and confirm auth code.
+                    and confirm your auth code.
+                    {% endapply %}
                 </li>
             </ul>
         </div>
@@ -87,16 +92,16 @@
         <div class="form character_form">
             <div class="form_row form_columns flex">
                 <div class="flex_50">
-                    <label for="character_string">Name, ID, or Lodestone URL</label>
+                    <label for="character_string">{{ 'Name, ID, or Lodestone URL'|translate('generic_name_id_lodestone_url') }}</label>
                     <input type="text" class="full" name="character_string" id="character_string" placeholder="">
                 </div>
                 <div class="flex_40">
-                    <label for="character_server">Server</label>
+                    <label for="character_server">{{ 'Server'|translate('generic_server') }}</label>
                     <select class="full" name="character_server" id="character_server">
                         {% for dc, servers in getGameDataCenters() %}
-                            <optgroup label="{{ dc }}">
+                            <optgroup label="{{ dc|convert_if_chinese }}">
                                 {% for server in servers %}
-                                    <option value="{{ server }}" {{ server == getServer() ? 'selected' : '' }}>{{ server }}</option>
+                                    <option value="{{ server }}" {{ server == getServer() ? 'selected'|translate('generic_selected') : '' }}>{{ server|convert_if_chinese }}</option>
                                 {% endfor %}
                             </optgroup>
                         {% endfor %}
@@ -104,15 +109,11 @@
                 </div>
                 <div class="flex_10">
                     <label>&nbsp;</label>
-                    <button type="button" class="btn-blue character_add">Search</button>
+                    <button type="button" class="btn-blue character_add">{{ 'Search'|translate('generic_search') }}</button>
                 </div>
             </div>
             <div class="character_add_response"></div>
         </div>
-        
     </div>
-
-
-
 </div>
 {% endblock %}

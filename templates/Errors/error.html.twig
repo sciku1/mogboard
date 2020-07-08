@@ -1,16 +1,16 @@
 {% extends 'base.html.twig' %}
-{% set title = 'Something went wrong' %}
+{% set title = 'Something went wrong'|translate('error_generic_tabtitle') %}
 
 {% block body %}
     <div class="error-page">
         <img src="/i/game/patch_titan.png">
-        <h2>Something went wrong!</h2>
+        <h2>{{ 'Something went wrong!'|translate('error_generic_title') }}</h2>
         <p>{{ error.code }}</p>
 
         {% if made_aware %}
-            <p>A goat has been made aware of this problem and will be looking into it for you!</p>
+            <p>{{ 'A goat has been made aware of this problem and will be looking into it for you!'|translate('error_generic_made_aware') }}</p>
         {% else %}
-            <p>If you continue to run into this issue, please jump on the discord for help!</p>
+            <p>{{ 'If you continue to run into this issue, please jump on the discord for help!'|translate('error_generic_not_aware') }}</p>
         {% endif %}
         <small>{{ error.ex_class }}<br>{{ error.req_action }}<br>{{ error.hash }}<br>{{ error.req_path }}</small>
     </div>

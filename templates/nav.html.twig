@@ -5,7 +5,7 @@
 </a>
 
 <div class="nav-box">
-    <div class="nav-heading" data-nav="weapons">WEAPONS</div>
+    <div class="nav-heading" data-nav="weapons">{{ 'WEAPONS'|translate('nav_weapons') }}</div>
     <div>
         {% for cat in itemSearchCategories.weapons %}
             {% if cat.ID in [14,19,27] %}
@@ -20,7 +20,7 @@
 </div>
 
 <div class="nav-box">
-    <div class="nav-heading" data-nav="armor">ARMOR</div>
+    <div class="nav-heading" data-nav="armor">{{ 'ARMOR'|translate('nav_armor') }}</div>
     <div>
         {% for cat in itemSearchCategories.armor %}
             <button id="{{ cat.ID }}" class="type-armor">
@@ -32,7 +32,7 @@
 </div>
 
 <div class="nav-box">
-    <div class="nav-heading" data-nav="items">ITEMS</div>
+    <div class="nav-heading" data-nav="items">{{ 'ITEMS'|translate('nav_items') }}</div>
     <div>
         {% for cat in itemSearchCategories.items %}
             <button id="{{ cat.ID }}" class="type-items">
@@ -44,7 +44,7 @@
 </div>
 
 <div class="nav-box">
-    <div class="nav-heading" data-nav="housing">HOUSING</div>
+    <div class="nav-heading" data-nav="housing">{{ 'HOUSING'|translate('nav_housing') }}</div>
     <div>
         {% for cat in itemSearchCategories.housing %}
             <button id="{{ cat.ID }}" class="type-housing">

@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Runtime.ExceptionServices;
 using System.Text;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
+using Lumina;
+using Lumina.Data;
+using Lumina.Excel.GeneratedSheets;
 using Newtonsoft.Json;
-using SaintCoinach;
-using SaintCoinach.Ex;
-using SaintCoinach.Xiv;
+using Cyalume = Lumina.Lumina;
 
 namespace IconDownloader
 {
@@ -27,34 +27,34 @@ namespace IconDownloader
 
             Directory.CreateDirectory(outputPath);
 
-            var realmJp = new ARealmReversed(args[0], Language.Japanese);
+            var luminaJp = new Cyalume(args[0], new LuminaOptions { DefaultExcelLanguage = Language.Japanese });
 
             switch (mode)
             {
                 case "alllist": 
-                    MakeListAll(realmJp, outputPath);
+                    MakeListAll(luminaJp, outputPath);
                     return;
                 case "allicon":
-                    DownloadIconAll(realmJp, outputPath);
+                    DownloadIconAll(luminaJp, outputPath);
                     return;
             }
         }
 
-        private static void MakeListAll(ARealmReversed realm, string outputPath)
+        private static void MakeListAll(Cyalume lumina, string outputPath)
         {
             Console.WriteLine("Starting game data export...");
 
-            var itemsJp = realm.GameData.GetSheet<Item>();
+            var itemsJp = lumina.GetExcelSheet<Item>();
 
-            foreach (var category in realm.GameData.GetSheet<ItemSearchCategory>())
+            foreach (var category in lumina.GetExcelSheet<ItemSearchCategory>())
             {
                 // We don't need those, not for sale
-                if (category.Key == 0)
+                if (category.RowId == 0)
                     continue;
 
-                foreach (var item in itemsJp.Where(item => item.ItemSearchCategory.Key == category.Key))
+                foreach (var item in itemsJp.Where(item => item.ItemSearchCategory.Value.RowId == category.RowId))
                 {
-                    marketableDict.Add(item.Name, item.Key);
+                    marketableDict.Add(item.Name, (int)item.RowId);
                 }
             }
 
@@ -101,7 +101,7 @@ namespace IconDownloader
             }
         }
 
-        private static void DownloadIconAll(ARealmReversed realm, string outputPath)
+        private static void DownloadIconAll(Cyalume lumina, string outputPath)
         {
             var dbEntries =
                 JsonConvert.DeserializeObject<Dictionary<int, string>>(

@@ -1,16 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using Lumina.Excel.GeneratedSheets;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using SaintCoinach;
+using Cyalume = Lumina.Lumina;
 
 namespace MogboardDataExporter.Exporters
 {
     public static class WorldExports
     {
-        public static void GenerateJSON(ARealmReversed realm, string outputPath)
+        public static void GenerateJSON(Cyalume lumina, string outputPath)
         {
-            var worlds = realm.GameData.GetSheet("World");
+            var worlds = lumina.GetExcelSheet<World>();
 
             var outputWorlds = new List<JObject>();
 
@@ -18,11 +19,11 @@ namespace MogboardDataExporter.Exporters
             {
                 dynamic outputWorld = new JObject();
 
-                outputWorld.ID = world.Key;
+                outputWorld.ID = world.RowId;
 
-                outputWorld.Name = world.AsString("Name").ToString();
-                outputWorld.DataCenter = (byte) world.GetRaw("DataCenter");
-                outputWorld.IsPublic = world.AsBoolean("IsPublic");
+                outputWorld.Name = world.Name;
+                outputWorld.DataCenter = (byte) world.DataCenter.Row;
+                outputWorld.IsPublic = world.IsPublic;
 
                 outputWorlds.Add(outputWorld);
             }

@@ -7,10 +7,10 @@
 
             {# Server Select #}
             <div class="flex_50">
-                <label for="servers">Your Server</label>
+                <label for="servers">{{ 'Your Server'|translate('generic_your_server') }}</label>
                 <div class="form">
                     <select id="servers" class="servers">
-                        <option disabled selected>- Please Choose a Server -</option>
+                        <option disabled selected>{{ '- Please Choose a Server -'|translate('option_choose_server_guide') }}</option>
                         {% for dc, servers in getGameDataCenters() %}
                             {# Should probably translate the region names #}
                             <optgroup label="{{ dc|convert_if_chinese }} - {{ dc in ['Chaos','Light'] ? 'Europe' : (dc in ['Elemental','Gaia','Mana'] ? 'Japan' : (dc in ['Crystal','Primal','Aether'] ? 'America' : '中国'))}}">
@@ -25,10 +25,10 @@
 
             {# Language Select#}
             <div class="flex_50">
-                <label for="languages">Language</label>
+                <label for="languages">{{ 'Language'|translate('generic_language') }}</label>
                 <div class="form">
                     <select id="languages" class="languages">
-                        <option disabled selected>- Choose your language -</option>
+                        <option disabled selected>{{ '- Choose your language -'|translate('option_choose_language_guide') }}</option>
                         <option value="en">English</option>
                         <option value="fr">Français</option>
                         <option value="de">Deutsch</option>
@@ -43,10 +43,10 @@
     </div>
 
     <div class="row row_top">
-        <label for="timezones">Timezone</label>
+        <label for="timezones">{{ 'Timezone'|translate('generic_timezone') }}</label>
         <div class="form">
             <select id="timezones" class="timezones">
-                <option disabled selected>- Choose your timezone -</option>
+                <option disabled selected>{{ '- Choose your timezone -'|translate('option_choose_timezone_guide') }}</option>
                 {% for format, name in timezones() %}
                     <option value="{{ format }}">{{ name }}</option>
                 {% endfor %}
@@ -58,31 +58,31 @@
         <div class="flex">
             {# Nav Menu #}
             <div class="flex_50">
-                <label for="leftnav">Left Navigation</label>
+                <label for="leftnav">{{ 'Left Navigation'|translate('generic_left_navigation') }}</label>
                 <div style="padding-bottom: 10px;">
                     <small>
-                        This enables a quick-access left-navigation of all market categories.
+                        {{ 'This enables a quick-access left-navigation of all market categories.'|translate('option_left_nav_guide') }}
                     </small>
                 </div>
                 <div class="form">
                     <select id="leftnav" class="leftnav">
-                        <option value="off">No</option>
-                        <option value="on">Yes</option>
+                        <option value="off">{{ 'No'|translate('generic_no') }}</option>
+                        <option value="on">{{ 'Yes'|translate('generic_yes') }}</option>
                     </select>
                 </div>
             </div>
             {# Default home world #}
             <div class="flex_50">
-                <label for="homeworld">Default Home World</label>
+                <label for="homeworld">{{ 'Default Home World'|translate('generic_default_home_world') }}</label>
                 <div style="padding-bottom: 10px;">
                     <small>
-                        This will show prices/history on your home world by default instead of cross-world.
+                        {{ 'This will show prices/history on your home world by default instead of cross-world.'|translate('option_default_home_world_guide') }}
                     </small>
                 </div>
                 <div class="form">
                     <select id="homeworld" class="homeworld">
-                        <option value="yes">Yes</option>
-                        <option value="no">No</option>
+                        <option value="yes">{{ 'Yes'|translate('generic_yes') }}</option>
+                        <option value="no">{{ 'No'|translate('generic_no') }}</option>
                     </select>
                 </div>
             </div>
@@ -90,6 +90,6 @@
     </div>
 
     <div class="row form tac">
-        <button type="button" class="btn-green">Save Settings</button>
+        <button type="button" class="btn-green">{{ 'Save Settings'|translate('option_save_settings') }}</button>
     </div>
 </div>

@@ -1,19 +1,19 @@
 {% extends 'base.html.twig' %}
-{% set title = list.name ~' - List' %}
-{% set description = "Custom Universalis list by " ~ list.user.username %}
+{% set title = list.name ~ ' - ' ~ 'List'|translate('generic_list') %}
+{% set description = "Custom Universalis list by %s"|translate('userlist_tab_title')|format(list.user.username) %}
 
 {% block body %}
     <div class="pl">
-        <small>LIST</small>
+        <small>{{ 'LIST'|translate('generic_list_capitalized') }}</small>
         <h1>
             {{ list.name }}
             <span>
-                {{ list.items|length }} / {{ max_items }} items
+                {{ '%d / %d items'|translate('n_of_m_items')|format(list.items|length, max_items) }}
                 &nbsp;&nbsp;|&nbsp;&nbsp;
                 {% if app.request.get('home') %}
-                    <a href="{{ path('lists_view', { list: list.id }) }}">Show Cross-World</a>
+                    <a href="{{ path('lists_view', { list: list.id }) }}">{{ 'Show Cross-World'|translate('generic_show_cross_world') }}</a>
                 {% else %}
-                    <a href="{{ path('lists_view', { list: list.id, home: 1 }) }}">Show Home Server Only</a>
+                    <a href="{{ path('lists_view', { list: list.id, home: 1 }) }}">{{ 'Show Home Server Only'|translate('generic_show_home_server_only') }}</a>
                 {% endif %}
             </span>
         </h1>
@@ -36,7 +36,7 @@
 
                         {# Delete Icon if viewer is owner #}
                         {% if auth.online and list.user == auth.user %}
-                        <a class="pl_remove" data-tippy-content="Remove item from list" href="{{ path('lists_remove_item', { list: list.id, itemId: item.ID, redirect: true }) }}">
+                        <a class="pl_remove" data-tippy-content="{{ 'Remove item from list'|translate('userlists_remove_item_tooltip') }}" href="{{ path('lists_remove_item', { list: list.id, itemId: item.ID, redirect: true }) }}">
                             <i class="xiv-NavigationClose"></i>
                         </a>
                         {% endif %}
@@ -48,7 +48,7 @@
                         {# top 5 cheapest #}
                         <div class="flex_50 pl_mt_p">
                             <div class="pl-mt">
-                                <h3>Top 5 cheapest - Total for sale: {{ stats.TotalForSale }}</h3>
+                                <h3>{{ 'Top 5 cheapest - Total for sale: %d'|translate('userlists_top_5_sale')|format(stats.TotalForSale) }}</h3>
                                 <div>
                                     {% include 'Product/prices.html.twig' with {
                                         'prices': stats.Top5CheapestServers,
@@ -60,7 +60,7 @@
                         {# top 5 sale sales#}
                         <div class="flex_50 pl_mt_h">
                             <div class="pl-mt">
-                                <h3>Last 5 sales</h3>
+                                <h3>{{ 'Last 5 sales'|translate('generic_last_5_sales') }}</h3>
                                 <div>
                                     {% include 'Product/history.html.twig' with {
                                         'history': stats.Top5HistorySales,
@@ -68,22 +68,22 @@
                                     } %}
                                 </div>
                                 <small>
-                                    Last updated: {{ stats.RoughUpdateTime|date }}
+                                    {{ 'Last updated:'|translate('generic_last_updated_colon') }} {{ stats.RoughUpdateTime|date }}
                                 </small>
                             </div>
                         </div>
                     </div>
                     {% else %}
-                        <div class="alert-light">Market info could not be fetched for: {{ item.Name }} at this time.</div>
+                        <div class="alert-light">{{ 'Market info could not be fetched for: %s at this time.'|translate('userlists_fetch_failed_for_item')|format(item.Name) }}</div>
                     {% endif %}
                 </div>
             </div>
             {% else %}
-                <div class="alert-light">Market info could not be fetched for: {{ item.Name }} at this time.</div>
+                <div class="alert-light">{{ 'Market info could not be fetched for: %s at this ti{{ 'Market info could not be fetched for: %s at this time.'|translate('userlists_fetch_failed_for_item')|format(item.Name) }}e.'|translate('userlists_fetch_failed_for_item')|format(item.Name) }}</div>
             {% endif %}
         {% else %}
             <div class="alert-dark">
-                You have no items in this list.
+                {{ 'You have no items in this list.'|translate('userlists_no_items') }}
             </div>
         {% endfor %}
     </div>
