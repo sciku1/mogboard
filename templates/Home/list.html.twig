@@ -21,7 +21,7 @@
                 <div style="flex: 0 0 50%;">
                     {% if item.CanBeHq %}
                     <div class="cheapest">
-                        <h2 style="margin: 0;">Cheapest HQ</h2>
+                        <h2 style="margin: 0;">{{ 'Cheapest %s'|translate('market_board_cheapest_title')|format('HQ') }}</h2>
                         {% if census.Global.Prices_CheapestHQ %}
                         <div class="cheapest_price">
                             <i class="xiv-Gil"></i>
@@ -29,17 +29,17 @@
                             <span class="cheapest_value">{{ census.Global.Prices_CheapestHQ.PricePerUnit|number_format }}</span>
 
                             <span class="cheapest_price_info">
-                                Server: <strong>{{ census.Global.Prices_CheapestHQ.Server }}</strong> -
-                                Total: <strong>{{ census.Global.Prices_CheapestHQ.PriceTotal|number_format }}</strong>
+                                {{ 'Server:'|translate('generic_server_colon') }} <strong>{{ census.Global.Prices_CheapestHQ.Server }}</strong> -
+                                {{ 'Total:'|translate('generic_total_colon') }} <strong>{{ census.Global.Prices_CheapestHQ.PriceTotal|number_format }}</strong>
                             </span>
                         </div>
                         {% else %}
-                            No HQ for sale.
+                            {{ 'No %s for sale.'|translate('market_board_none_for_sale')|format('HQ') }}
                         {% endif %}
                     </div>
                     {% endif %}
                     <div class="cheapest">
-                        <h2 style="margin: 0;">Cheapest NQ</h2>
+                        <h2 style="margin: 0;">{{ 'Cheapest %s'|translate('market_board_cheapest_title')|format('NQ') }}</h2>
                         {% if census.Global.Prices_CheapestNQ %}
                         <div class="cheapest_price">
                             <i class="xiv-Gil"></i>
@@ -47,17 +47,17 @@
                             <span class="cheapest_value">{{ census.Global.Prices_CheapestNQ.PricePerUnit|number_format }}</span>
 
                             <span class="cheapest_price_info">
-                                Server: <strong>{{ census.Global.Prices_CheapestNQ.Server }}</strong> -
-                                Total: <strong>{{ census.Global.Prices_CheapestNQ.PriceTotal|number_format }}</strong>
+                                {{ 'Server:'|translate('generic_server_colon') }} <strong>{{ census.Global.Prices_CheapestNQ.Server }}</strong> -
+                                {{ 'Total:'|translate('generic_total_colon') }} <strong>{{ census.Global.Prices_CheapestNQ.PriceTotal|number_format }}</strong>
                             </span>
                         </div>
                         {% else %}
-                            <p>No NQ for sale.</p>
+                            <p>{{ 'No %s for sale.'|translate('market_board_none_for_sale')|format('NQ') }}</p>
                         {% endif %}
                     </div>
                     <div>
                         {% set last_updated = lastUpdateTime(itemId) %}
-                        <small>Last updated: {{ last_updated != 0 ? last_updated|date : 'No data' }}</small>
+                        <small>{{ 'Last updated:'|translate('generic_last_updated_colon') }} {{ last_updated != 0 ? last_updated|date : 'No data'|translate('generic_no_data') }}</small>
                     </div>
                 </div>
             </li>
