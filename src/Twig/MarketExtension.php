@@ -26,26 +26,35 @@ class MarketExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
+            new TwigFunction('market', [$this, 'getMarket']),
             new TwigFunction('census', [$this, 'getCensus']),
             new TwigFunction('updateTimes', [$this, 'getUpdateTimes']),
+            new TwigFunction('lastUpdateTime', [$this, 'getLastUpdateTimesDC']),
         ];
     }
-    
-    public function getCensus($itemId)
+
+    public function getMarket($itemId, $server = null)
     {
-        $world = GameServers::getServer();
+        $world = $server ?? GameServers::getServer();
         $dc = GameServers::getDataCenter($world);
-        $dcServers = GameServers::getDataCenterServers($dc);
+        $dcServers = GameServers::getDataCenterServers($world);
         $market = $this->companionMarket->get($dcServers, $itemId);
-        return $this->companionCensus->generate($dc, $itemId, $market);
+        return $market;
+    }
+    
+    public function getCensus($itemId, $server = null)
+    {
+        $world = $server ?? GameServers::getServer();
+        $dc = GameServers::getDataCenter($world);
+        $dcServers = GameServers::getDataCenterServers($world);
+        $market = $this->companionMarket->get($dcServers, $itemId);
+        $census = $this->companionCensus->generate($dc, $itemId, $market);
+        return $census;
     }
 
-    public function getUpdateTimes($itemId)
+    public function getUpdateTimes($itemId, $server = null)
     {
-        $world = GameServers::getServer();
-        $dc = GameServers::getDataCenter($world);
-        $dcServers = GameServers::getDataCenterServers($dc);
-        $market = $this->companionMarket->get($dcServers, $itemId);
+        $market = $this->getMarket($itemId, $server);
 
         $times = [];
         foreach ($market as $marketServer => $md) {
@@ -60,5 +69,19 @@ class MarketExtension extends AbstractExtension
         }
 
         return $times;
+    }
+
+    public function getLastUpdateTimesDC($itemId, $server = null)
+    {
+        $times = $this->getUpdateTimes($itemId, $server);
+        $lastUpdated = 0;
+
+        foreach ($times as $entry) {
+            if ($entry['updated'] > $lastUpdated) {
+                $lastUpdated = $entry['updated'];
+            }
+        }
+
+        return $lastUpdated;
     }
 }
