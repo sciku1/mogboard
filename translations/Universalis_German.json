@@ -57,7 +57,7 @@
     },
     {
         "term": "based on",
-        "definition": "basiert auf",
+        "definition": "basierend auf",
         "context": "footer_basedon",
         "term_plural": "",
         "reference": "https:\/\/idioms.thefreedictionary.com\/based+on",
@@ -113,7 +113,7 @@
     },
     {
         "term": "Could not find the page you were looking for kupo~!",
-        "definition": "Konnte diese Seite nicht finden, kupo!",
+        "definition": "Konnte diese Seite nicht finden, kupo~!",
         "context": "error_404_flavortext",
         "term_plural": "",
         "reference": "",
@@ -129,7 +129,7 @@
     },
     {
         "term": "Something went wrong",
-        "definition": "Irgendwas ist schief gelaufen!",
+        "definition": "Etwas ist schief gelaufen",
         "context": "error_generic_tabtitle",
         "term_plural": "",
         "reference": "",
@@ -137,7 +137,7 @@
     },
     {
         "term": "Something went wrong!",
-        "definition": "Irgendwas ist schief gelaufen!",
+        "definition": "Etwas ist schief gelaufen!",
         "context": "error_generic_title",
         "term_plural": "",
         "reference": "",
@@ -145,7 +145,7 @@
     },
     {
         "term": "A goat has been made aware of this problem and will be looking into it for you!",
-        "definition": "Ein Entwickler wurde \u00fcber dieses Problem benachrichtigt und wird es sofort \u00fcberpr\u00fcfen.",
+        "definition": "Ein Entwickler wurde \u00fcber dieses Problem benachrichtigt und wird es \u00fcberpr\u00fcfen.",
         "context": "error_generic_made_aware",
         "term_plural": "",
         "reference": "",
@@ -641,7 +641,7 @@
     },
     {
         "term": "There are multiple ways to contribute to <strong>Universalis<\/strong>. All of your contributions are anonymous - no one will be able to refer back to your character or account to know that you have uploaded any data. The applications below are tested by us to make sure that they don't endanger your account or your characters.",
-        "definition": null,
+        "definition": "Es gibt viele M\u00f6glichkeiten wie du bei <strong>Universalis<\/strong> mitmachen kannst. Alle Daten werden anonym ausgewertet. Es kann also keiner R\u00fcckschl\u00fcsse auf deine Charaktere oder deinen Account ziehen. Die Anwendungen unten sind alle getestet, um sicher zu stellen, dass sie deine Charaktere und deinen Account nicht gef\u00e4hrden.",
         "context": "contribute_howto_explanation_1",
         "term_plural": "",
         "reference": "",
@@ -649,7 +649,7 @@
     },
     {
         "term": "Every contribution helps to make the data on <strong>Universalis<\/strong> better, more accurate and more helpful. Thank you very much for helping out!",
-        "definition": null,
+        "definition": "Jeder Beitrags hilft uns die Daten auf <strong>Universalis<\/strong> beser, genauer und hilfreicher zu gestalten. Vielen Dank f\u00fcr deine Mithilfe!",
         "context": "contribute_howto_explanation_2",
         "term_plural": "",
         "reference": "",
@@ -665,7 +665,7 @@
     },
     {
         "term": "FFXIVQuickLauncher is a faster launcher for FFXIV  aims to fix the slowness and tediousness of the regular launcher and adds a lot of QoL features to the game.",
-        "definition": null,
+        "definition": "FFXIVQuickLauncher ist ein schnellerer Launcher f\u00fcr FFXIV. Er zielt darauf ab die Tr\u00e4gheit und Umst\u00e4ndlichkeit des normalen Launchers zu beheben, und bringt zus\u00e4tzlich noch viele praktische Features mit.",
         "context": "contribute_description_xivlauncher",
         "term_plural": "",
         "reference": "",
@@ -673,7 +673,7 @@
     },
     {
         "term": "This is a regular ACT plugin that runs next to the always-used FFXIV_ACT_PLUGIN - just drop it into your ACT plugins folder, add it to ACT and you\\'re good to go! No configuration needed.",
-        "definition": null,
+        "definition": "Dieses Plugin ist ein normales ACT Plugin, das normal neben dem FFXIV_ACT_PLUGIN l\u00e4uft. Installiere es einfach in deinem Plugin Ordner und f\u00fcge es ACT hinzu. Du brauchst keine weiteren Einstellungen!",
         "context": "contribute_description_act_plugin",
         "term_plural": "",
         "reference": "",
@@ -697,7 +697,7 @@
     },
     {
         "term": "FFXIV Teamcraft is a tool for Final Fantasy XIV players that helps with crafting lists organization and crafting\/gathering in general. It has a lot of features to make it a one stop shop, with things like integrated alarms, custom items, permissions system, realtime sharing, etc.",
-        "definition": null,
+        "definition": "FFXIV Teamcraft ist nein n\u00fctzliches Tool f\u00fcr FF14, dass Spielern bei Handwerksberufen und ",
         "context": "contribute_description_teamcraft",
         "term_plural": "",
         "reference": "",
@@ -921,7 +921,7 @@
     },
     {
         "term": "<span class=\"text-red\">NOTE:<\/span> The filter: <code>Price_Added<\/code> is a timestamp, it is NOT a Gil value. You can convert a date to a timestamp <a href=\"%s\" target=\"_blank\">here<\/a>, work is being done to improve this UI.",
-        "definition": null,
+        "definition": "<span class=\"text-red\">BEACHTE:<\/span> Filter: <code>Preis hinzugef\u00fcgt<\/code> Ist ein Datum, kein Gil Wert. Du kannst ein Datum in einen Zeitpunkt umwandeln <a href=\"%s\" target=\"_blank\">here<\/a>, es wird daran gearbeitet das Interface zu verbessern.",
         "context": "alerts_create_alert_guide_6",
         "term_plural": "",
         "reference": "",
@@ -929,7 +929,7 @@
     },
     {
         "term": "Trigger values are checked as a series of <strong>AND<\/strong> conditions.",
-        "definition": null,
+        "definition": "Erf\u00fclle <strong>ALLE<\/strong> Bedingungen um den Alarm auszul\u00f6sen.",
         "context": "alerts_create_alert_guide_7",
         "term_plural": "",
         "reference": "",
@@ -1049,7 +1049,7 @@
     },
     {
         "term": "Alerts allow you to setup notification watchers that can track an item and send you information such as price changes or history events.",
-        "definition": null,
+        "definition": "Alarme erlauben es dir Benachrichtigungen zu erhalten, wenn sich zum Beispiel der Preis eines Items \u00e4ndert.",
         "context": "alerts_whatisthis_guide_2",
         "term_plural": "",
         "reference": "",
@@ -1065,7 +1065,7 @@
     },
     {
         "term": "<strong>Triggers<\/strong>, these are conditions you can set on the alert to be checked at interval times and if any market entry meets the criteria of the condition then your alert will be \"Triggered\" and you'll receive a notification either via Discord or Email.",
-        "definition": null,
+        "definition": "<strong>Ausl\u00f6ser<\/strong>, diese Bedingungen kannst du unter Alarme einstellen und benachrichtigt dich sobald ein Markteintrag diese erf\u00fcllt. Du kannst dich via Discord oder per Email dar\u00fcber informieren lassen.",
         "context": "alerts_whatisthis_guide_3",
         "term_plural": "",
         "reference": "",
@@ -1073,7 +1073,7 @@
     },
     {
         "term": "Trigger conditions can be set against any market field and future plans will allow you to manage these dynamically as well as setup automatic triggers based on your retainers current sales.",
-        "definition": null,
+        "definition": "Ausl\u00f6sebedingungen k\u00f6nnen \u00fcberall, und in Zukunft sogar dynamisch genutzt werden. Es wird m\u00f6glich sein diese auch anhand der Verk\u00e4ufe deiner Gehilfen anzupassen.",
         "context": "alerts_whatisthis_guide_4",
         "term_plural": "",
         "reference": "",
@@ -1097,7 +1097,7 @@
     },
     {
         "term": "<strong>Prices\/History: \"IsXX\"<\/strong><br>\nThe Is condition triggers such as IsHQ are bools and the value must be either 1 or 0 for true \/ false.",
-        "definition": null,
+        "definition": "<strong> Preise\/Verlauf: \"IsXX\"<\/strong><br>\nDiese Bedingung setzt den Wert von IsHQ auf 0 oder 1 (true \/ false), wie eine Boolean.",
         "context": "alerts_trigger_condition_info_guide_2",
         "term_plural": "",
         "reference": "",
@@ -1105,7 +1105,7 @@
     },
     {
         "term": "<strong>History:<\/strong><br>\nEvents for history will be based on entries added to the history after the event was created.",
-        "definition": null,
+        "definition": "<strong>Verlauf:<\/strong><br>\nDer Verlauf beachtet alle Eintr\u00e4ge, die nach dem erstellen get\u00e4tigt werden.",
         "context": "alerts_trigger_condition_info_guide_3",
         "term_plural": "",
         "reference": "",
@@ -1113,7 +1113,7 @@
     },
     {
         "term": "If logged in and character verified, show if any friends have purchased this item.",
-        "definition": null,
+        "definition": "Zeigt Freunde die das Item gekauft haben an, wenn du eingeloggt bist und deinen Charakter verifiziert hast.",
         "context": "friends_guide_1",
         "term_plural": "",
         "reference": "",
@@ -1257,7 +1257,7 @@
     },
     {
         "term": "STACK SIZE HISTOGRAM <small>Last 20 Sales<\/small>",
-        "definition": null,
+        "definition": "Stapelgr\u00f6\u00dfen-Verteilung <small>Letzte 20 Verk\u00e4ufe<\/small>",
         "context": "market_board_stack_size_histogram_title",
         "term_plural": "",
         "reference": "",
@@ -1857,7 +1857,7 @@
     },
     {
         "term": "Alerts allow you to track all kinds of information about items on the market and be informed either by Discord or email for any changes that meet your requirements. To get started with creating alerts, go search for any item and then click on the Alert tab on the left.",
-        "definition": null,
+        "definition": "Alarme erlauben es dir alle m\u00f6glichen Informationen zu einem Item im Blick zu behalten. Du kannst du \u00fcber Discord oder Email informieren lassen, sollten die eingestellten Bedingungen erf\u00fcllt werden. Um einen Alarm zu erstellen, besuche eine beliebige Item-Seite, und klicke links auf \"Alarm\".",
         "context": "alerts_useraccount_guide_2",
         "term_plural": "",
         "reference": "",
@@ -1865,7 +1865,7 @@
     },
     {
         "term": "<strong>Alert Expiration:<\/strong> To keep the system clean, alerts will expire after a set amount of time from when they were created. To refresh a notification you must return to Universalis and be logged in.",
-        "definition": null,
+        "definition": "<strong>Alarm l\u00e4uft ab:<\/strong> Um das System nicht unn\u00f6tig zu belasten, laufen Alarme nach einer festgelegten Zeit aus. Um sie wieder zu aktivieren, besuche einfach wieder Universalis und logge dich ein.",
         "context": "alerts_useraccount_guide_3",
         "term_plural": "",
         "reference": "",
@@ -1873,7 +1873,7 @@
     },
     {
         "term": "You can create: <strong class=\"text-green\">%d<\/strong> alerts with an expiry time of: <strong class=\"text-green\">%d days<\/strong>.",
-        "definition": null,
+        "definition": "Du kannst erstellen: <strong class=\"text-green\">%d<\/strong>Alarme mit einer Lufzeit von: <strong class=\"text-green\">%d Tage<\/strong>. ",
         "context": "alerts_useraccount_quota",
         "term_plural": "",
         "reference": "",
