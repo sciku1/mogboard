@@ -64,7 +64,7 @@
             <br><br>
 
             <p>
-                {{ 'To add a new character, you must first add your verification code. <strong>Please add your MAIN character first</strong>.'|translate('characters_guide_1') }}
+                {{ 'To add a new character, you must first add your verification code. <strong>Please add your MAIN character first</strong>.'|translate('characters_guide_1')|striptags('<strong>')|raw }}
             </p>
             <ul class="character_add_instructions">
                 <li>
