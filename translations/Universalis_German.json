@@ -241,7 +241,7 @@
     },
     {
         "term": "Login via <strong>Discord<\/strong>",
-        "definition": "Mit Discord einloggen",
+        "definition": "Mit <strong>Discord<\/strong> einloggen ",
         "context": "home_login_discord",
         "term_plural": "",
         "reference": "Don't translate HTML tags.",
@@ -481,7 +481,7 @@
     },
     {
         "term": "What is <strong>Universalis<\/strong>?",
-        "definition": "Was ist Universalis?",
+        "definition": "Was ist <strong>Universalis<\/strong>?",
         "context": "about_whatisthis_title",
         "term_plural": "",
         "reference": "Don't translate HTML tags.",
@@ -1865,7 +1865,7 @@
     },
     {
         "term": "<strong>Alert Expiration:<\/strong> To keep the system clean, alerts will expire after a set amount of time from when they were created. To refresh a notification you must return to Universalis and be logged in.",
-        "definition": "<strong>Alarm l\u00e4uft ab:<\/strong> Um das System nicht unn\u00f6tig zu belasten, laufen Alarme nach einer festgelegten Zeit aus. Um sie wieder zu aktivieren, besuche einfach wieder Universalis und logge dich ein.",
+        "definition": "<strong>Alarm l\u00e4uft aus:<\/strong> Um das System nicht unn\u00f6tig zu belasten, laufen Alarme nach einer festgelegten Zeit aus. Um sie wieder zu aktivieren, besuche einfach wieder Universalis und logge dich ein.",
         "context": "alerts_useraccount_guide_3",
         "term_plural": "",
         "reference": "",
@@ -1877,7 +1877,7 @@
         "context": "alerts_useraccount_quota",
         "term_plural": "",
         "reference": "",
-        "comment": ""
+        "comment": "<strong> doesnt show up in original string"
     },
     {
         "term": "Reports",
@@ -1929,11 +1929,11 @@
     },
     {
         "term": "To add a new character, you must first add your verification code. <strong>Please add your MAIN character first<\/strong>.",
-        "definition": "Um einen neuen Charakter hinzuzuf\u00fcgen, musst du zuerst deinen Best\u00e4tigungscode hinzuf\u00fcgen. <strong>Bitte f\u00fcge zuerst deinen Hauptcharakter hinzu<\/strong>.",
+        "definition": "Um einen neuen Charakter hinzuzuf\u00fcgen, musst du zuerst deinen Best\u00e4tigungscode hinzuf\u00fcgen. Bitte f\u00fcge zuerst deinen Hauptcharakter hinzu!",
         "context": "characters_guide_1",
         "term_plural": "",
         "reference": "",
-        "comment": ""
+        "comment": "<strong> in original string doesnt show up"
     },
     {
         "term": "selected",
@@ -2017,7 +2017,7 @@
     },
     {
         "term": "Delete List",
-        "definition": "L\u00f6sche Lsite",
+        "definition": "L\u00f6sche Liste",
         "context": "generic_delete_list",
         "term_plural": "",
         "reference": "",
