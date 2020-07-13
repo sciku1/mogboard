@@ -13,13 +13,13 @@
         {% endapply %}
     </p>
     <p>
-        {% apply translate('alerts_useraccount_quota')|format(auth.user.alertsMax, auth.user.alertsExpiry / 24 / 60 / 60) %}
+        {% apply translate('alerts_useraccount_quota')|format(auth.user.alertsMax, auth.user.alertsExpiry / 24 / 60 / 60)|striptags('<strong>')|raw %}
         You can create: <strong class="text-green">%d</strong> alerts with an
         expiry time of: <strong class="text-green">%d days</strong>.
         {% endapply %}
     </p>
     <small>
-        {% apply translate('alerts_useraccount_guide_3') %}
+        {% apply translate('alerts_useraccount_guide_3')|striptags('<strong>')|raw %}
         <strong>Alert Expiration:</strong> To keep the system clean, alerts will expire after a set amount of time
         from when they were created. To refresh a notification you must return to Universalis and be logged in.
         {% endapply %}
