@@ -215,7 +215,7 @@
 
                             {% if item.StackSize != 1 and marketData.stackSizeHistogram %}
                             <div>
-                                <h4>{{ 'STACK SIZE HISTOGRAM <small>Last 20 Sales</small>'|translate('market_board_stack_size_histogram_title') }}</h4>
+                                <h4>{{ 'STACK SIZE HISTOGRAM <small>Last 20 Sales</small>'|translate('market_board_stack_size_histogram_title')|striptags('<small>')|raw }}</h4>
                                 {% include 'Product/histogram_hc.html.twig' with {
                                     chart: {
                                         id: 'histogram_' ~ serverName,
