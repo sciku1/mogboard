@@ -79,7 +79,7 @@
                 </div>
             </div>
             {% else %}
-                <div class="alert-light">{{ 'Market info could not be fetched for: %s at this ti{{ 'Market info could not be fetched for: %s at this time.'|translate('userlists_fetch_failed_for_item')|format(item.Name) }}e.'|translate('userlists_fetch_failed_for_item')|format(item.Name) }}</div>
+                <div class="alert-light">{{ 'Market info could not be fetched for: %s at this time.'|translate('userlists_fetch_failed_for_item')|format(item.Name) }}</div>
             {% endif %}
         {% else %}
             <div class="alert-dark">
