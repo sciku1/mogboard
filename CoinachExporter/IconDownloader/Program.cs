@@ -35,7 +35,7 @@ namespace IconDownloader
                     MakeListAll(luminaJp, outputPath);
                     return;
                 case "allicon":
-                    DownloadIconAll(luminaJp, outputPath);
+                    DownloadIconAll(outputPath);
                     return;
             }
         }
@@ -62,7 +62,7 @@ namespace IconDownloader
 
             var pages = GetPageCount();
 
-            for (var i = 1; i <= pages; i++)
+            Parallel.For(1, pages, i =>
             {
                 // Can't access i in there cause it gets modified
                 var thisPage = i;
@@ -88,7 +88,8 @@ namespace IconDownloader
                     Console.WriteLine($"    => {itemName}: {itemUrl}");
                     if (marketableDict.TryGetValue(itemName, out var key))
                     {
-                        eorzeaDbDict.Add(key, itemUrl);
+                        lock (eorzeaDbDict)
+                            eorzeaDbDict.Add(key, itemUrl);
                         Console.WriteLine($"         => MARKETABLE");
                     }
                     else
@@ -97,23 +98,30 @@ namespace IconDownloader
                     }
                 }
 
-                File.WriteAllText(Path.Combine(outputPath, "dbMapping.json"), JsonConvert.SerializeObject(eorzeaDbDict, Formatting.Indented));
-            }
+                lock (eorzeaDbDict)
+                {
+                    File.WriteAllText(Path.Combine(outputPath, "dbMapping.json"),
+                        JsonConvert.SerializeObject(eorzeaDbDict, Formatting.Indented));
+                }
+            });
         }
 
-        private static void DownloadIconAll(Cyalume lumina, string outputPath)
+        private static void DownloadIconAll(string outputPath)
         {
             var dbEntries =
                 JsonConvert.DeserializeObject<Dictionary<int, string>>(
                     File.ReadAllText(Path.Combine(outputPath, "dbMapping.json")));
 
+            var counter = 1;
             Parallel.For(0, dbEntries.Count, new ParallelOptions
             {
                 MaxDegreeOfParallelism = 4
-            }, (index) => {
+            }, index =>
+            {
                 var dbEntry = dbEntries.ElementAt(index);
                 if (DownloadIcon(dbEntry.Key, dbEntry.Value, outputPath))
-                    Console.WriteLine($"         => DOWNLOADED: {dbEntry.Key}, {index}/{dbEntries.Count}");
+                    Console.WriteLine($"         => DOWNLOADED: {dbEntry.Key}, {counter}/{dbEntries.Count}");
+                counter++;
             });
         }
 
@@ -121,13 +129,13 @@ namespace IconDownloader
         {
             if (File.Exists(Path.Combine(outputPath, $"{key}.png")))
             {
-                Console.WriteLine($"         => ALREADY EXIST");
+                Console.WriteLine("         => ALREADY EXIST");
             }
             else
             {
                 try
                 {
-                    var itemPage = Retry.Do<HtmlDocument>(
+                    var itemPage = Retry.Do(
                         () => Get("https://jp.finalfantasyxiv.com" + url), TimeSpan.FromSeconds(5),
                         100);
                     var imageUrl = itemPage.DocumentNode
