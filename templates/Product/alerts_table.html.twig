@@ -14,11 +14,11 @@
                     <div class="flex">
                         <div class="flex_25">
                             <small>{{ 'HQ?'|translate('generic_hq_question') }}</small><br>
-                            {{ alert.isTriggerHq ? '<img src="/i/game/hq.png" height="12"> ' ~ 'HQ'|translate('generic_hq') : 'NQ'|translate('generic_nq') }}
+                            {{ alert.isTriggerHq ? '<img src="/i/game/hq.png" height="12"> ' ~ 'HQ'|translate('generic_hq')|striptags('<img>')|raw : 'NQ'|translate('generic_nq') }}
                         </div>
                         <div class="flex_25">
                             <small>{{ 'Cross-World?'|translate('generic_crossworld_question') }}</small><br>
-                            {{ alert.isTriggerDataCenter ? '<i class="xiv-CrossWorld"></i> Yes' : 'No' }}
+                            {{ alert.isTriggerDataCenter ? '<i class="xiv-CrossWorld"></i> Yes'|striptags('<i>')|raw : 'No' }}
                         </div>
                         <div class="flex_25">
                             <small>{{ 'Notification'|translate('generic_notification') }}</small><br>
