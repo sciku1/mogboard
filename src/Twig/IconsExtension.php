@@ -29,7 +29,7 @@ class IconsExtension extends AbstractExtension
      */
     public function getIcon2x($icon)
     {
-        return "/i/icon2x/{$icon}.png";
+        return "https://universalis-ffxiv.github.io/universalis-assets/icon2x/{$icon}.png";
     }
     
     /**
