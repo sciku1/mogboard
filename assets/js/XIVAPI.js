@@ -27,6 +27,7 @@ class XIVAPI
             filters: 'ItemSearchCategory.ID>=1',
             columns: 'ID,Icon,Name,LevelItem,Rarity,ItemSearchCategory.Name,ItemSearchCategory.ID,ItemKind.Name',
             string:  string.trim(),
+            string_algo: "fuzzy",
             limit:   100,
             sort_field: 'LevelItem',
             sort_order: 'desc'
