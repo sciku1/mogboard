@@ -19,36 +19,84 @@ class XIVAPI
     }
 
     /**
+     * Fuse the results of two searches, calling the provided callback after the second search is provided.
+     */
+    fuse(callback) {
+        let json1, json2;
+        return (json) => {
+            if (!json1) {
+                json1 = json;
+                return;
+            } else {
+                json2 = json;
+                const fusedJson = json1;
+
+                fusedJson.Results = json1.Results
+                    .concat(json2.Results)
+                    .reverse() // Reverse once to trim from the end
+                    .filter((result, i, array) => {
+                        const firstI = array
+                            .reverse() // Reverse back to search from the beginning
+                            .findIndex(item => item.ID === result.ID);
+                        
+                        if (i !== firstI) {
+                            return false;
+                        } else {
+                            return true;
+                        }
+                    });
+
+                callback(fusedJson);
+            }
+        };
+    }
+
+    /**
      * Search for an item
      */
     search(string, callback) {
-        let params = {
-            indexes: 'item',
-            filters: 'ItemSearchCategory.ID>=1',
-            columns: 'ID,Icon,Name,LevelItem,Rarity,ItemSearchCategory.Name,ItemSearchCategory.ID,ItemKind.Name',
-            string:  string.trim(),
-            string_algo: "fuzzy",
-            limit:   100,
-            sort_field: 'LevelItem',
-            sort_order: 'desc'
+        const fusedCb = this.fuse(callback);
+
+        const params1 = {
+            indexes:     'item',
+            filters:     'ItemSearchCategory.ID>=1',
+            columns:     'ID,Icon,Name,LevelItem,Rarity,ItemSearchCategory.Name,ItemSearchCategory.ID,ItemKind.Name',
+            string:      string.trim(),
+            limit:        100,
+            sort_field:  'LevelItem',
+            sort_order:  'desc'
         };
 
-        this.get(`/search`, params, callback);
+        const params2 = {
+            ...params1,
+            string_algo: 'fuzzy',
+        };
+
+        this.get(`/search`, params1, fusedCb);
+        this.get(`/search`, params2, fusedCb);
     }
 
     /**
      * A limited search
      */
     searchLimited(string, callback) {
-        let params = {
-            indexes: 'item',
-            filters: 'ItemSearchCategory.ID>=1',
-            columns: 'ID,Name',
-            string:  string.trim(),
-            limit:   10,
+        const fusedCb = this.fuse(callback);
+
+        const params1 = {
+            indexes:     'item',
+            filters:     'ItemSearchCategory.ID>=1',
+            columns:     'ID,Name',
+            string:      string.trim(),
+            limit:       10,
         };
 
-        this.get(`/search`, params, callback);
+        const params2 = {
+            ...params1,
+            string_algo: 'fuzzy',
+        };
+
+        this.get(`/search`, params1, fusedCb);
+        this.get(`/search`, params2, fusedCb);
     }
 
     /**
