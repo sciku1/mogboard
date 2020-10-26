@@ -32,8 +32,8 @@ class XIVAPI
                 const fusedJson = json1;
 
                 fusedJson.Results = json1.Results
-                    .concat(json2.Results)
-                    .reverse() // Reverse once to trim from the end
+                    .concat(json2.Results);
+                    /*.reverse() // Reverse once to trim from the end
                     .filter((result, i, array) => {
                         const firstI = array
                             .reverse() // Reverse back to search from the beginning
@@ -44,7 +44,7 @@ class XIVAPI
                         } else {
                             return true;
                         }
-                    });
+                    });*/
 
                 callback(fusedJson);
             }
