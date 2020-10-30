@@ -32,19 +32,13 @@ class XIVAPI
                 const fusedJson = json1;
 
                 fusedJson.Results = json1.Results
-                    .concat(json2.Results);
-                    /*.reverse() // Reverse once to trim from the end
+                    .concat(json2.Results)
                     .filter((result, i, array) => {
                         const firstI = array
-                            .reverse() // Reverse back to search from the beginning
+                            .reverse()
                             .findIndex(item => item.ID === result.ID);
-                        
-                        if (i !== firstI) {
-                            return false;
-                        } else {
-                            return true;
-                        }
-                    });*/
+                        return i === firstI;
+                    });
 
                 callback(fusedJson);
             }
