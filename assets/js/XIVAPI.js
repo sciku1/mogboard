@@ -32,8 +32,8 @@ class XIVAPI
                 const fusedJson = search1;
 
                 search2.Results.forEach(result => {
-                    if (fusedJson.Results.find(item => item.ID === result.ID)) {
-                        fusedJson.Results.append(result);
+                    if (!fusedJson.Results.find(item => item.ID === result.ID)) {
+                        fusedJson.Results.push(result);
                     }
                 });
 
