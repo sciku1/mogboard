@@ -22,22 +22,23 @@ class XIVAPI
      * Fuse the results of two searches, calling the provided callback after the second search is provided.
      */
     fuse(callback) {
-        let json1, json2;
+        let search1, search2;
         return (json) => {
-            if (!json1) {
-                json1 = json;
+            if (!search1) {
+                search1 = json;
                 return;
             } else {
-                json2 = json;
-                const fusedJson = json1;
+                search2 = json;
+                const fusedJson = search1;
 
-                json2.Results.forEach(result => {
-                    if (!fusedJson.Results.find(item => item.ID === result.ID)) {
+                search2.Results.forEach(result => {
+                    if (fusedJson.Results.find(item => item.ID === result.ID)) {
                         fusedJson.Results.append(result);
                     }
                 });
 
                 fusedJson.Pagination.Results = fusedJson.Results.length
+                fusedJson.Pagination.ResultsTotal = fusedJson.Results.length
 
                 callback(fusedJson);
             }
