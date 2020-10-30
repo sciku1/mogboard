@@ -31,15 +31,12 @@ class XIVAPI
                 json2 = json;
                 const fusedJson = json1;
 
-                fusedJson.Results = json1.Results
-                    .concat(json2.Results)
-                    .filter((result, i, array) => {
-                        const firstI = array
-                            .reverse()
-                            .findIndex(item => item.ID === result.ID);
-                        return i === firstI;
-                    });
-                
+                json2.Results.forEach(result => {
+                    if (!fusedJson.Results.find(item => item.ID === result.ID)) {
+                        fusedJson.Results.append(result);
+                    }
+                });
+
                 fusedJson.Pagination.Results = fusedJson.Results.length
 
                 callback(fusedJson);
