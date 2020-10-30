@@ -40,7 +40,7 @@ class XIVAPI
                         return i === firstI;
                     });
                 
-                fusedJson.Pagination.ResultsTotal = fusedJson.Results.length
+                fusedJson.Pagination.Results = fusedJson.Results.length
 
                 callback(fusedJson);
             }
