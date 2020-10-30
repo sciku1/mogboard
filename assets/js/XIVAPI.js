@@ -39,6 +39,8 @@ class XIVAPI
                             .findIndex(item => item.ID === result.ID);
                         return i === firstI;
                     });
+                
+                fusedJson.Pagination.ResultsTotal = fusedJson.Results.length
 
                 callback(fusedJson);
             }
