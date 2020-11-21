@@ -58,10 +58,7 @@ class CafeMaker // For some crazy reason this can't extend the XIVAPI class, it 
             sort_order:  'desc'
         };
 
-        const params2 = {
-            ...params1,
-            string_algo: 'fuzzy',
-        };
+        const params2 = {...params1}; // For some reason it needs to be set up the same way as XIVAPI; this should just be an implementation detail, TODO debug
 
         this.get(`/search`, params1, fusedCb);
         this.get(`/search`, params2, fusedCb);
@@ -81,10 +78,7 @@ class CafeMaker // For some crazy reason this can't extend the XIVAPI class, it 
             limit:       10,
         };
 
-        const params2 = {
-            ...params1,
-            string_algo: 'wildcard_plus', // Use a different lenient algorithm for Chinese that makes more sense
-        };
+        const params2 = {...params1};
 
         this.get(`/search`, params1, fusedCb);
         this.get(`/search`, params2, fusedCb);
