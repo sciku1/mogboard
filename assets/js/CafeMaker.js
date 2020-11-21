@@ -16,35 +16,78 @@ class CafeMaker // For some crazy reason this can't extend the XIVAPI class, it 
     }
 
     /**
+     * Fuse the results of two searches, calling the provided callback after the second search is provided.
+     */
+    fuse(callback) {
+        let search1, search2;
+        return (json) => {
+            if (!search1) {
+                search1 = json;
+                return;
+            } else {
+                search2 = json;
+                const fusedJson = search1;
+
+                search2.Results.forEach(result => {
+                    if (!fusedJson.Results.find(item => item.ID === result.ID)) {
+                        fusedJson.Results.push(result);
+                    }
+                });
+
+                fusedJson.Pagination.Results = fusedJson.Results.length
+                fusedJson.Pagination.ResultsTotal = fusedJson.Results.length
+
+                callback(fusedJson);
+            }
+        };
+    }
+
+    /**
      * Search for an item
      */
     search(string, callback) {
-        let params = {
-            indexes: 'item',
-            filters: 'ItemSearchCategory.ID>=1',
-            columns: 'ID,Icon,Name,LevelItem,Rarity,ItemSearchCategory.Name,ItemSearchCategory.ID,ItemKind.Name',
-            string:  string.trim(),
-            limit:   100,
-            sort_field: 'LevelItem',
-            sort_order: 'desc'
+        const fusedCb = this.fuse(callback);
+
+        const params1 = {
+            indexes:     'item',
+            filters:     'ItemSearchCategory.ID>=1',
+            columns:     'ID,Icon,Name,LevelItem,Rarity,ItemSearchCategory.Name,ItemSearchCategory.ID,ItemKind.Name',
+            string:      string.trim(),
+            limit:        100,
+            sort_field:  'LevelItem',
+            sort_order:  'desc'
         };
 
-        this.get(`/search`, params, callback);
+        const params2 = {
+            ...params1,
+            string_algo: 'fuzzy',
+        };
+
+        this.get(`/search`, params1, fusedCb);
+        this.get(`/search`, params2, fusedCb);
     }
 
     /**
      * A limited search
      */
     searchLimited(string, callback) {
-        let params = {
-            indexes: 'item',
-            filters: 'ItemSearchCategory.ID>=1',
-            columns: 'ID,Name',
-            string:  string.trim(),
-            limit:   10,
+        const fusedCb = this.fuse(callback);
+
+        const params1 = {
+            indexes:     'item',
+            filters:     'ItemSearchCategory.ID>=1',
+            columns:     'ID,Name',
+            string:      string.trim(),
+            limit:       10,
         };
 
-        this.get(`/search`, params, callback);
+        const params2 = {
+            ...params1,
+            string_algo: 'fuzzy',
+        };
+
+        this.get(`/search`, params1, fusedCb);
+        this.get(`/search`, params2, fusedCb);
     }
 
     /**
