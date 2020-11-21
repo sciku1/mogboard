@@ -83,7 +83,7 @@ class CafeMaker // For some crazy reason this can't extend the XIVAPI class, it 
 
         const params2 = {
             ...params1,
-            string_algo: 'fuzzy',
+            string_algo: 'wildcard_plus', // Use a different lenient algorithm for Chinese that makes more sense
         };
 
         this.get(`/search`, params1, fusedCb);
