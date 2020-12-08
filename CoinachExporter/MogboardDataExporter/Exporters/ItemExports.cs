@@ -33,10 +33,10 @@ namespace MogboardDataExporter.Exporters
                     var iconId = item.Icon;
                     outputItem.Icon = $"/i/{Util.GetIconFolder(iconId)}/{iconId}.png";
 
-                    outputItem.Name_en = item.Name;
-                    outputItem.Name_de = itemsDe.First(localItem => localItem.RowId == item.RowId).Name;
-                    outputItem.Name_fr = itemsFr.First(localItem => localItem.RowId == item.RowId).Name;
-                    outputItem.Name_jp = itemsJp.First(localItem => localItem.RowId == item.RowId).Name;
+                    outputItem.Name_en = (string)item.Name;
+                    outputItem.Name_de = (string)itemsDe.First(localItem => localItem.RowId == item.RowId).Name;
+                    outputItem.Name_fr = (string)itemsFr.First(localItem => localItem.RowId == item.RowId).Name;
+                    outputItem.Name_jp = (string)itemsJp.First(localItem => localItem.RowId == item.RowId).Name;
 
                     var nameChs = itemsChs.FirstOrDefault(localItem => localItem.Key == item.RowId)?.Name;
                     outputItem.Name_chs = string.IsNullOrEmpty(nameChs) ? item.Name : nameChs;

@@ -41,11 +41,11 @@ namespace MogboardDataExporter.Exporters
                 var iconObj = town.Icon;
                 outputTown.Icon = iconObj != 0 ? $"/i/{Util.GetIconFolder(iconObj)}/{iconObj}.png" : $"/i/{Util.GetIconFolder(060880)}/060880.png";
 
-                outputTown.Name_en = town.Name;
-                outputTown.Name_de = townsDe.First(localItem => localItem.RowId == town.RowId).Name;
-                outputTown.Name_fr = townsFr.First(localItem => localItem.RowId == town.RowId).Name;
-                outputTown.Name_jp = townsJp.First(localItem => localItem.RowId == town.RowId).Name;
-                outputTown.Name_chs = townsChs.First(localItem => localItem.ID == town.RowId).Name;
+                outputTown.Name_en = (string)town.Name;
+                outputTown.Name_de = (string)townsDe.First(localItem => localItem.RowId == town.RowId).Name;
+                outputTown.Name_fr = (string)townsFr.First(localItem => localItem.RowId == town.RowId).Name;
+                outputTown.Name_jp = (string)townsJp.First(localItem => localItem.RowId == town.RowId).Name;
+                outputTown.Name_chs = (string)townsChs.First(localItem => localItem.ID == town.RowId).Name;
 
                 outputTowns.Add(outputTown);
             }
