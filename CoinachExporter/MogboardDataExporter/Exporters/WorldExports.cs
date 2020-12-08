@@ -21,7 +21,7 @@ namespace MogboardDataExporter.Exporters
 
                 outputWorld.ID = world.RowId;
 
-                outputWorld.Name = world.Name;
+                outputWorld.Name = (string)world.Name;
                 outputWorld.DataCenter = (byte) world.DataCenter.Row;
                 outputWorld.IsPublic = world.IsPublic;
 

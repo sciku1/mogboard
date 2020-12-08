@@ -39,7 +39,7 @@ namespace MogboardDataExporter.Exporters
                     {
                         var outputItem = new string[6];
 
-                        var classJobAbbr = item.ItemSearchCategory.Value.ClassJob.Value.Abbreviation;
+                        string classJobAbbr = item.ItemSearchCategory.Value.ClassJob.Value.Abbreviation;
                         if (item.ItemSearchCategory.Value.ClassJob.Value.ClassJobParent.Value.Abbreviation != classJobAbbr)
                             classJobAbbr = item.ItemSearchCategory.Value.ClassJob.Value.ClassJobParent.Value.Abbreviation + " " + classJobAbbr;
                         else if (Resources.ClassJobMap.TryGetValue(classJobAbbr, out var jobAbbr))
@@ -48,7 +48,7 @@ namespace MogboardDataExporter.Exporters
                             classJobAbbr = "";
 
                         outputItem[0] = item.RowId.ToString();
-                        outputItem[1] = item.Name;
+                        outputItem[1] = (string)item.Name;
                         outputItem[2] = $"/i/{item.Icon}.png";
                         outputItem[3] = item.LevelItem.Row.ToString();
                         outputItem[4] = item.Rarity.ToString();
