@@ -76,7 +76,7 @@ class HeaderCategories
             items.forEach(item => {
                 const id     = item[0];
                 const name   = item[1];
-                const icon   = 'https://xivapi.com/i/0' + Math.floor(id / 1000) * 1000 + '/0' + id + '.png';
+                const icon   = 'https://xivapi.com/i' + item[2];
                 const ilv    = item[3];
                 const rarity = item[4];
                 const url    = mog.url_item.replace('-id-', id);
