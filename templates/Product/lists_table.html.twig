@@ -2,7 +2,7 @@
     {% for list in auth.user.customLists %}
         <button type="button" class="user_list_existing_button {{ itemId in list.items ? 'user_list_inlist' : '' }}" data-id="{{ list.id }}" data-action="{{ itemId in list.items ? 'remove' : 'add' }}">
             <strong>{{ 'Items:'|translate('generic_items_colon') }} {{ list.items|length }}</strong> {{ list.name }}
-            {{ itemId in list.items ? '<span>%s</span>'|format('REMOVE'|translate('generic_remove_capitalized')|striptags('<span>')|raw) : '' }}
+            {{ itemId in list.items ? '<span>%s</span>'|format('REMOVE'|translate('generic_remove_capitalized'))|striptags('<span>')|raw : '' }}
         </button>
     {% else %}
     <div class="user_no_lists">
