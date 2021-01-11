@@ -31,7 +31,7 @@ namespace MogboardDataExporter.Exporters
                     outputItem.ID = item.RowId;
 
                     var iconId = item.Icon;
-                    outputItem.Icon = $"/i/{Util.GetIconFolder(iconId)}/{iconId}.png";
+                    outputItem.Icon = $"/i/{Util.GetIconFolder(iconId)}/{iconId:000000}.png";
 
                     outputItem.Name_en = (string)item.Name;
                     outputItem.Name_de = (string)itemsDe.First(localItem => localItem.RowId == item.RowId).Name;
