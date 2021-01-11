@@ -49,7 +49,7 @@ namespace MogboardDataExporter.Exporters
 
                         outputItem[0] = item.RowId.ToString();
                         outputItem[1] = (string)item.Name;
-                        outputItem[2] = $"/i/{item.Icon}.png";
+                        outputItem[2] = $"/i/{Util.GetIconFolder(item.Icon)}/{item.Icon:000000}.png";
                         outputItem[3] = item.LevelItem.Row.ToString();
                         outputItem[4] = item.Rarity.ToString();
                         outputItem[5] = classJobAbbr;
