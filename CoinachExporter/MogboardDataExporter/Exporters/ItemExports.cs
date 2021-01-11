@@ -100,62 +100,42 @@ namespace MogboardDataExporter.Exporters
             Console.WriteLine();
         }
 
-        public static void GenerateIdNameMappingJSON(IList<Item> items, IList<ItemSearchCategory> categories, string outputPath)
+        public static void GenerateIdNameMappingJSON(IEnumerable<Item> items, string outputPath)
         {
-            var mieBaseTop = Console.CursorTop;
-            var idNames = new Dictionary<int, string>();
-            foreach (var category in categories)
-            {
-                if (category.RowId < 9)
-                    goto console_update;
-                var itemSet = items
-                    .AsParallel()
-                    .Where(item => item.ItemSearchCategory.Value.RowId == category.RowId)
-                    .Select(item => new {Key = Convert.ToInt32(item.RowId), Value = item.Name.RawString})
-                    .ToDictionary(item => item.Key, item => item.Value);
-                if (!itemSet.Any())
-                    goto console_update;
-                idNames = (new[] {idNames, itemSet})
-                    .AsEnumerable()
-                    .SelectMany(d => d)
-                    .ToDictionary(item => item.Key, item => item.Value);
-
-            console_update:
-                Console.CursorLeft = 0;
-                Console.CursorTop = mieBaseTop;
-                Console.Write($"name IDs: [{category.RowId}/{categories.Count - 1}]");
-            }
+            Console.Write("Exporting name IDs... ");
+            var idNames = items
+                .AsParallel()
+                .Where(item => item.Name != "")
+                .Select(item => new {Key = Convert.ToInt32(item.RowId), Value = item.Name.RawString})
+                .ToDictionary(item => item.Key, item => item.Value);
             File.WriteAllText(Path.Combine(outputPath, "itemNameIds.json"), JsonConvert.SerializeObject(idNames));
-            Console.WriteLine();
+            Console.WriteLine("Done!");
         }
 
-        public static void GenerateNameIdMappingJSON(IList<Item> items, IList<ItemSearchCategory> categories, string outputPath)
+        public static void GenerateNameIdMappingJSON(IEnumerable<Item> items, string outputPath)
         {
-            var mieBaseTop = Console.CursorTop;
-            var idNames = new Dictionary<string, int>();
-            foreach (var category in categories)
-            {
-                if (category.RowId < 9)
-                    goto console_update;
-                var itemSet = items
-                    .AsParallel()
-                    .Where(item => item.ItemSearchCategory.Value.RowId == category.RowId)
-                    .Select(item => new { Key = item.Name.RawString, Value = Convert.ToInt32(item.RowId) })
-                    .ToDictionary(item => item.Key, item => item.Value);
-                if (!itemSet.Any())
-                    goto console_update;
-                idNames = (new[] { idNames, itemSet })
-                    .AsEnumerable()
-                    .SelectMany(d => d)
-                    .ToDictionary(item => item.Key, item => item.Value);
+            Console.Write("Exporting ID names... ");
+            var idNames = items
+                .AsParallel()
+                .Where(item => item.Name != "")
+                .Select(item => new HolderNameId { Key = item.Name.RawString, Value = Convert.ToInt32(item.RowId)})
+                .ToList();
 
-                console_update:
-                Console.CursorLeft = 0;
-                Console.CursorTop = mieBaseTop;
-                Console.Write($"ID names: [{category.RowId}/{categories.Count - 1}]");
-            }
-            File.WriteAllText(Path.Combine(outputPath, "itemIdNames.json"), JsonConvert.SerializeObject(idNames));
-            Console.WriteLine();
+            var keys = idNames.Select(iN => iN.Key).ToList();
+            idNames = idNames
+                .Where(item => keys.IndexOf(item.Key) == keys.LastIndexOf(item.Key))
+                .ToList();
+            
+            var output = idNames.ToDictionary(item => item.Key, item => item.Value);
+
+            File.WriteAllText(Path.Combine(outputPath, "itemIdNames.json"), JsonConvert.SerializeObject(output));
+            Console.WriteLine("Done!");
+        }
+
+        private struct HolderNameId
+        {
+            public string Key { get; set; }
+            public int Value { get; set; }
         }
     }
 }
