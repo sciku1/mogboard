@@ -99,5 +99,63 @@ namespace MogboardDataExporter.Exporters
             File.WriteAllText(Path.Combine(outputPath, "item.json"), JsonConvert.SerializeObject(itemJSONOutput));
             Console.WriteLine();
         }
+
+        public static void GenerateIdNameMappingJSON(IList<Item> items, IList<ItemSearchCategory> categories, string outputPath)
+        {
+            var mieBaseTop = Console.CursorTop;
+            var idNames = new Dictionary<int, string>();
+            foreach (var category in categories)
+            {
+                if (category.RowId < 9)
+                    goto console_update;
+                var itemSet = items
+                    .AsParallel()
+                    .Where(item => item.ItemSearchCategory.Value.RowId == category.RowId)
+                    .Select(item => new {Key = Convert.ToInt32(item.RowId), Value = item.Name.RawString})
+                    .ToDictionary(item => item.Key, item => item.Value);
+                if (!itemSet.Any())
+                    goto console_update;
+                idNames = (new[] {idNames, itemSet})
+                    .AsEnumerable()
+                    .SelectMany(d => d)
+                    .ToDictionary(item => item.Key, item => item.Value);
+
+            console_update:
+                Console.CursorLeft = 0;
+                Console.CursorTop = mieBaseTop;
+                Console.Write($"name IDs: [{category.RowId}/{categories.Count - 1}]");
+            }
+            File.WriteAllText(Path.Combine(outputPath, "itemNameIds.json"), JsonConvert.SerializeObject(idNames));
+            Console.WriteLine();
+        }
+
+        public static void GenerateNameIdMappingJSON(IList<Item> items, IList<ItemSearchCategory> categories, string outputPath)
+        {
+            var mieBaseTop = Console.CursorTop;
+            var idNames = new Dictionary<string, int>();
+            foreach (var category in categories)
+            {
+                if (category.RowId < 9)
+                    goto console_update;
+                var itemSet = items
+                    .AsParallel()
+                    .Where(item => item.ItemSearchCategory.Value.RowId == category.RowId)
+                    .Select(item => new { Key = item.Name.RawString, Value = Convert.ToInt32(item.RowId) })
+                    .ToDictionary(item => item.Key, item => item.Value);
+                if (!itemSet.Any())
+                    goto console_update;
+                idNames = (new[] { idNames, itemSet })
+                    .AsEnumerable()
+                    .SelectMany(d => d)
+                    .ToDictionary(item => item.Key, item => item.Value);
+
+                console_update:
+                Console.CursorLeft = 0;
+                Console.CursorTop = mieBaseTop;
+                Console.Write($"ID names: [{category.RowId}/{categories.Count - 1}]");
+            }
+            File.WriteAllText(Path.Combine(outputPath, "itemIdNames.json"), JsonConvert.SerializeObject(idNames));
+            Console.WriteLine();
+        }
     }
 }
