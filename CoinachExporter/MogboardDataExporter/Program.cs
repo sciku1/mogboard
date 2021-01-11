@@ -58,7 +58,9 @@ namespace MogboardDataExporter
             marketableitems:
             Console.WriteLine("== Marketable Item JSON Export ==");
             ItemExports.GenerateMarketableItemJSON(items, categories, outputPath);
-            
+            ItemExports.GenerateIdNameMappingJSON(items, categories, outputPath);
+            ItemExports.GenerateNameIdMappingJSON(items, categories, outputPath);
+
             itemsearchcategories:
             Console.WriteLine("== Item Search Category Export ==");
             Console.Write("...");
