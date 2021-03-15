@@ -1,1 +1,810 @@
-{}
+{
+    "header_market": {
+        "Market": "Marché"
+    },
+    "header_myaccount": {
+        "My Account": "Mon compte"
+    },
+    "header_discordlogin": {
+        "Login via Discord": "Se connecter avec Discord"
+    },
+    "nav_weapons": {
+        "WEAPONS": "Armes"
+    },
+    "nav_armor": {
+        "ARMOR": "Équipement"
+    },
+    "nav_items": {
+        "ITEMS": "Objets"
+    },
+    "nav_housing": {
+        "HOUSING": "Logement"
+    },
+    "footer_basedon": {
+        "based on": "fondé sur"
+    },
+    "footer_about": {
+        "About": "À propos"
+    },
+    "footer_docs": {
+        "API Documentation": "Documentation API"
+    },
+    "footer_github": {
+        "GitHub": "GitHub"
+    },
+    "generic_discord": {
+        "Discord": "Discord"
+    },
+    "footer_license": {
+        "FINAL FANTASY XIV © 2010 - 2020 SQUARE ENIX CO., LTD. All Rights Reserved.": "FINAL FANTASY XIV © 2010 - 2020 SQUARE ENIX CO., LTD. All Rights Reserved."
+    },
+    "base_tabtitle": {
+        "Final Fantasy XIV Online: Market Board aggregator. Find Prices, track Item History and create Price Alerts. Anywhere, anytime.": "Final Fantasy XIV Online: agrégateur de tableau des ventes. Rechercher les prix, suivre l'historique des objets et créer des alertes de prix. N'importe où, n'importe quand."
+    },
+    "error_404_flavortext": {
+        "Could not find the page you were looking for kupo~!": "Impossible de trouver la page recherchée, kuppo~!"
+    },
+    "error_404": {
+        "404 Not Found": "404 Page non trouvée"
+    },
+    "error_generic_tabtitle": {
+        "Something went wrong": "Quelque chose a mal tourné"
+    },
+    "error_generic_title": {
+        "Something went wrong!": "Quelque chose a mal tourné !"
+    },
+    "error_generic_made_aware": {
+        "A goat has been made aware of this problem and will be looking into it for you!": "Une chèvre a été informée de ce problème et l'examinera pour vous !"
+    },
+    "error_generic_not_aware": {
+        "If you continue to run into this issue, please jump on the discord for help!": "Si vous continuez à rencontrer ce problème, merci de rejoindre Discord pour obtenir de l'aide !"
+    },
+    "home_market_activity": {
+        "Market Activity": "Activité du tableau des ventes"
+    },
+    "home_noalerts": {
+        "You have no alerts set up.": "Tu n'as aucune alerte de configurée."
+    },
+    "generic_lists": {
+        "Lists": "Listes"
+    },
+    "home_nolists": {
+        "You have no lists.": "Tu n'as aucune liste."
+    },
+    "generic_retainers": {
+        "Retainers": "Servants"
+    },
+    "home_noretainers": {
+        "You have no retainers.": "Tu n'a aucun servant."
+    },
+    "home_logged_out": {
+        "Logged-out": "Déconnecté"
+    },
+    "home_logged_out_guide": {
+        "Lists, Alerts, Market activity and retainer links will show here when you are logged into the site.": "Les liens Listes, Alertes, Activité du tableau des ventes et Servants seront affichés ici lorsque tu seras connecté sur ce site."
+    },
+    "home_become_member": {
+        "Become a member!": "Deviens membre !"
+    },
+    "home_become_member_guide": {
+        "Create alerts, make lists, add your retainers and get a personalised home page feed!": "Crée des alertes, fais des listes, ajoute tes servants pour avoir une page d'accueil personnalisée !"
+    },
+    "home_login_discord": {
+        "Login via <strong>Discord</strong>": "Se connecter avec <strong>Discord</strong>"
+    },
+    "discord_capitalized": {
+        "DISCORD": "DISCORD"
+    },
+    "home_recent_updates": {
+        "Recent Updates": "Mises à jour récentes"
+    },
+    "home_upload_counts_world": {
+        "Upload Counts by World": "Nombre de mises à jour by Monde"
+    },
+    "home_uploads_today": {
+        "Uploads today": "Mises à jour aujourd'hui"
+    },
+    "home_uploads_week": {
+        "Uploads this week": "Mises à jour cette semaine"
+    },
+    "thank_you": {
+        "Thank you!": "Merci !"
+    },
+    "home_current_tax_rates": {
+        "Current Market Tax Rates on %s": "Taxes actuelles du marché sur %s"
+    },
+    "alert_watcher": {
+        "Watcher: ": "Observateur : "
+    },
+    "alert_last_triggered_event": {
+        "Last Triggered Event: %s": "Dernier événement déclencheur : %s"
+    },
+    "alert_no_triggered_events": {
+        "This alert has no triggered events.": "Cette alerte n'a aucun événement déclencheur."
+    },
+    "list_guide": {
+        "Click on the list title to view market information for this list.": "Clique sur le titre de la liste pour voir les informations du marché pour cette liste."
+    },
+    "list_items_contained": {
+        "%d items in this list": "%d objets dans cette liste"
+    },
+    "news_universalis_welcome": {
+        "Welcome to Universalis!": "Bienvenue sur Universalis !"
+    },
+    "news_contribute": {
+        "Contribute to market board data": "Participe à la mise à jour des données du tableau des ventes"
+    },
+    "news_enjoy": {
+        "Thank you, and enjoy your stay!": "Merci, et profite de ton séjour ici !"
+    },
+    "news_product_blurb": {
+        "Universalis is a market board data site with crowd sourced information, based on mogboard. It can aggregate market board information from multiple sources, so if you want to help out, please check out our contributing page.": "Universalis est un site de données participatives du tableau des ventes, basé sur Mogboard. Il est capable d'agréger les informations du tableau des ventes à partir de plusieurs sources, donc n'hésite pas à jeter un œil à notre page dédié à la contribution si tu veux nous aider."
+    },
+    "generic_your_server": {
+        "Your Server": "Ton serveur"
+    },
+    "option_choose_server_guide": {
+        "- Please Choose a Server -": "- Merci de sélectionner un serveur -"
+    },
+    "generic_language": {
+        "Language": "Langue"
+    },
+    "option_choose_language_guide": {
+        "- Choose your language -": "- Choisis ta langue -"
+    },
+    "generic_timezone": {
+        "Timezone": "Fuseau horaire"
+    },
+    "option_choose_timezone_guide": {
+        "- Choose your timezone -": "- Choisis ton fuseau horaire -"
+    },
+    "generic_left_navigation": {
+        "Left Navigation": "Menu de navigation gauche"
+    },
+    "option_left_nav_guide": {
+        "This enables a quick-access left-navigation of all market categories.": "Permet un accès rapide à toutes les catégories du tableau des ventes dans le menu à gauche"
+    },
+    "generic_no": {
+        "No": "Non"
+    },
+    "generic_yes": {
+        "Yes": "Oui"
+    },
+    "option_save_settings": {
+        "Save Settings": "Sauvegarder la configuration"
+    },
+    "generic_default_home_world": {
+        "Default Home World": "Monde d'origine par défaut"
+    },
+    "option_default_home_world_guide": {
+        "This will show prices/history on your home world by default instead of cross-world.": "Montre les prix/historique sur ton Monde d'origine par défaut, au lieu des informations inter-Monde"
+    },
+    "about_whatisthis_title": {
+        "What is <strong>Universalis</strong>?": "Qu'est-ce que <strong>Universalis</strong> ?"
+    },
+    "about_whatisthis_explanation_1": {
+        "The site allows you to view in-game market for multiple servers at anytime, anywhere. It uses crowd-sourced data from multiple sources to provide the most up-to-date prices possible.": "Ce site permet de visualiser le tableau des ventes du jeu pour plusieurs serveurs n'importe quand et de n'importe où. Il utilise des données participatives provenant de plusieurs sources pour fournir les prix les plus à jour possible."
+    },
+    "about_whatisthis_infoquestion": {
+        "What information can I get?": "Quel information puis-je obtenir ici ?"
+    },
+    "about_whatisthis_explanation_2": {
+        "All market information is available: Prices, Materia, Retainer, Crafters and even Buyers. Everything that you see in-game is available. Additional data-views have been added such as graphs, extended history and cross-world summary is also included.": "Toutes les informations du marché sont disponibles : prix, matérias, servants, artisans et même les acheteurs. Tout ce que tu peux voir dans le jeu est disponible ici. D'autres vues de données ont été ajoutées comme des graphiques, des historiques étendus et un résumé des informations inter-Monde a également été ajouté."
+    },
+    "about_whatisthis_accessquestion": {
+        "Can I have access to the data?": "Puis-je accéder aux données ?"
+    },
+    "about_whatisthis_explanation_3": {
+        "<strong>Definitely!</strong>\n<br><br>\nEverything you see on Universalis is open for anyone to use, to learn more about how to access the data using a REST API Service, check out the %s documentation.": "<strong>Bien sûr !</strong>\n<br><br>\nTout ce que tu vois sur Universalis est ouvert à chacun pour utilisation. Pour en savoir plus sur comment accéder aux données en utilisant le service d'API REST, consulte la documentation %s."
+    },
+    "generic_special_thanks": {
+        "Special thanks": "Remerciements particuliers"
+    },
+    "about_whatisthis_explanation_4": {
+        "We would like to thank Vekien and Miu from %s for their initial work on mogboard, which made this site, in its current state, possible.": "Nous aimerions remercier Vekien et Miu de %s pour leur travail initial sur Mogboard qui a permis à ce site, dans sa version actuelle, d'exister."
+    },
+    "about_get_technical_title": {
+        "So, how does it actually work? Get Technical.": "Et donc, comment ça marche concrètement ? Parle moi <em>technique</em>."
+    },
+    "about_get_technical_explanation_1": {
+        "<strong>Universalis</strong> runs a REST API that applications can post market board data to, after they collect the data from a running game instance by multiple users, anonymously.": "<strong>Universalis</strong> fais tourner une API REST que les applications peuvent utiliser pour y envoyer anonymement les données du tableau des ventes, après avoir collecté les données à partir d'une instance du jeu, par plusieurs utilisateurs."
+    },
+    "about_get_technical_explanation_2": {
+        "It stores this data, and reports it back to anyone that requests its endpoints - including this frontend, which visualizes the stored data and notifies you about changes.": "Il enregistre les données et les renvoie à n'importe qui les demandant aux endpoints (y compris le frontend qui permet la visualisation des données stockées et te notifies de tous changements)."
+    },
+    "generic_credits": {
+        "Credits": "Remerciements"
+    },
+    "karashiiro_credits": {
+        "Database API, server maintenance": "Base de données API, maintenance du serveur"
+    },
+    "goat_credits": {
+        "Game stuff, stealing mogboard": "Truc du jeu, pompage de mogboard"
+    },
+    "about_honorable_mentions": {
+        "Also thanks to: Vekien, Miu, Mino and all of our uploaders!": "Remerciements également à : Vekien, Miu, Mino et tous nos uploaders !"
+    },
+    "about_data_sources": {
+        "Game data sourced from <a href=\"%s\">XIVAPI</a> and <a href=\"%s\">FFCafe</a>": "Données du jeu obtenues de <a href=\"%s\">XIVAPI</a> et <a href=\"%s\">FFCafe</a>"
+    },
+    "about_more_questions": {
+        "I have more questions!": "J'ai encore des questions !"
+    },
+    "about_more_questions_directory": {
+        "Hop onto <a href=\"%s\">our Discord</a> and you can ask all your questions.": "Rejoins <a href=\"%s\">notre Discord</a> et tu pourras poser toutes les questions que tu veux."
+    },
+    "about_pm_invite": {
+        "You can also PM me: <span class=\"text-yellow\">%s</span> if you prefer :)": "Tu peux également m'envoyer un message privé : <span class=\"text-yellow\">%s</span> si tu préfères :)"
+    },
+    "contribute_howto_title": {
+        "How to contribute to <strong>Universalis</strong>": "Comment contribuer à <strong>Universalis</strong>"
+    },
+    "contribute_howto_explanation_1": {
+        "There are multiple ways to contribute to <strong>Universalis</strong>. All of your contributions are anonymous - no one will be able to refer back to your character or account to know that you have uploaded any data. The applications below are tested by us to make sure that they don't endanger your account or your characters.": "Il y a plusieurs manières de contribuer à <strong>Universalis</strong>. Toutes les contributions sont anonymes (personne ne pourra remonter jusqu'à ton personnage ou compte pour savoir que tu as envoyé des données). Les applications ci-dessous ont été testées par nos soins pour être surs qu'elles ne mettent pas en danger ton compte ou tes personnages."
+    },
+    "contribute_howto_explanation_2": {
+        "Every contribution helps to make the data on <strong>Universalis</strong> better, more accurate and more helpful. Thank you very much for helping out!": "Chaque contribution aide <strong>Universalis</strong> à fournir de meilleures données, plus précises et utiles. Merci beaucoup de nous y aider !"
+    },
+    "contribute_applicationkind_ingame_addon": {
+        "In-Game addon": "Module complémentaire du jeu"
+    },
+    "contribute_description_xivlauncher": {
+        "FFXIVQuickLauncher is a faster launcher for FFXIV  aims to fix the slowness and tediousness of the regular launcher and adds a lot of QoL features to the game.": "FFXIVQuickLauncher est un lanceur pour FFXIV plus rapide qui vise à corriger la lenteur et les problèmes du lanceur habituel, et ajoute des fonctionnalités au jeu qui améliore son utilisation."
+    },
+    "contribute_description_act_plugin": {
+        "This is a regular ACT plugin that runs next to the always-used FFXIV_ACT_PLUGIN - just drop it into your ACT plugins folder, add it to ACT and you\\'re good to go! No configuration needed.": "Il s'agit d'un plugin ACT normal qui tourne à côté de l'éternel FFXIV_ACT_PLUGIN. Dépose-le simplement dans ton dossier de plugins ACT, ajoute-le dans ACT et c'est parti ! Aucune configuration n'est nécessaire."
+    },
+    "contribute_applicationkind_act_plugin": {
+        "ACT plugin": "Plugin ACT"
+    },
+    "contribute_applicationkind_teamcraft": {
+        "Collaborative crafting tool": "Outil d'artisanat collaboratif"
+    },
+    "contribute_description_teamcraft": {
+        "FFXIV Teamcraft is a tool for Final Fantasy XIV players that helps with crafting lists organization and crafting/gathering in general. It has a lot of features to make it a one stop shop, with things like integrated alarms, custom items, permissions system, realtime sharing, etc.": "FFXIV Teamcraft est un outil pour les joueurs de Final Fantasy XIV qui aide à organiser des listes d'artisanat, et l'artisanat/la récolte en général. Il contient plein de fonctionnalités qui en font un incontournable, avec par exemple des alarmes intégrées, des objets personnalisés, un système de permissions, du partage en temps réel, etc."
+    },
+    "contribute_invite_title": {
+        "Are you making your own application?": "Est-ce que tu fais ta propre application ?"
+    },
+    "contribute_invite_explanation": {
+        "If you wish to contribute to <strong>Universalis</strong> with your own application, please contact us on our <a href=\"%s\">Discord</a>. Let\\'s work together!": "Si tu veux contribuer à <strong>Universalis</strong> grâce à ta propre application, n'hésite pas à nous contacter sur notre <a href=\"%s\">Discord</a>. Allons-y ensemble !"
+    },
+    "generic_download": {
+        "Download": "Télécharger"
+    },
+    "generic_name": {
+        "Name": "Nom"
+    },
+    "generic_actions": {
+        "Actions": "Actions"
+    },
+    "generic_hq_question": {
+        "HQ?": "HQ ?"
+    },
+    "generic_hq": {
+        "HQ": "HQ"
+    },
+    "generic_nq": {
+        "NQ": "QN"
+    },
+    "generic_crossworld_question": {
+        "Cross-World?": "Inter-Monde ?"
+    },
+    "generic_notification": {
+        "Notification": "Notification"
+    },
+    "generic_email": {
+        "Email": "Email"
+    },
+    "generic_sent": {
+        "Sent": "Envoyé"
+    },
+    "generic_never": {
+        "Never": "Jamais"
+    },
+    "generic_edit": {
+        "Edit": "Éditer"
+    },
+    "generic_delete": {
+        "Delete": "Supprimer"
+    },
+    "alerts_table_no_alerts": {
+        "You have no alerts for this item.": "Tu n'as aucune alerte pour cet objet."
+    },
+    "alerts_whatis_title": {
+        "What\\'s an alert": "Qu'est-ce qu'une alerte"
+    },
+    "alerts_maxed_out": {
+        "You are currently maxed-out on alerts and will not be able to create any more.": "Tu as atteins le nombre maximal d'alertes et ne peux plus en créer d'autres."
+    },
+    "alerts_create_alert_title": {
+        "Create a new alert": "Créer une nouvelle alerte"
+    },
+    "alerts_create_alert_guide_1": {
+        "Give your alert a name (length: 4-100)": "Donne un nom à ton alerte"
+    },
+    "alerts_create_alert_guide_2": {
+        "Decide if the trigger should check NQ/HQ or both.": "Décide si le déclencheur doit surveiller QN, HQ ou les deux."
+    },
+    "generic_normal_quality": {
+        "Normal Quality": "Qualité normale"
+    },
+    "generic_high_quality": {
+        "High-Quality": "Haute-qualité"
+    },
+    "alerts_create_alert_guide_3": {
+        "Setup Triggers <strong>(Max: 15)</strong>": "Configure des déclencheurs <strong>(Max : 15)</strong>"
+    },
+    "alerts_create_alert_guide_4": {
+        "Select a Field": "Choisis un champ"
+    },
+    "alerts_create_alert_guide_5": {
+        "Select an Operator": "Choisis une opération"
+    },
+    "generic_add_to_list": {
+        "Add": "Ajouter"
+    },
+    "alerts_create_alert_guide_6": {
+        "<span class=\"text-red\">NOTE:</span> The filter: <code>Price_Added</code> is a timestamp, it is NOT a Gil value. You can convert a date to a timestamp <a href=\"%s\" target=\"_blank\">here</a>, work is being done to improve this UI.": "<span class=\"text-red\">NOTE :</span> Le filtre : <code>Price_Added</code> est un horodatage, ce n'est PAS un nombre de Gil. Tu peux convertir une date en horodatage <a href=\"%s\" target=\"_blank\">ici</a>, des améliorations sont en cours pour améliorer cette IU."
+    },
+    "alerts_create_alert_guide_7": {
+        "Trigger values are checked as a series of <strong>AND</strong> conditions.": "Les valeurs de déclenchement sont vérifiées sous la forme d'une série de conditions <strong>ET</strong>."
+    },
+    "alerts_create_alert_how_notify": {
+        "How do you want to be notified?": "Comment veux-tu être notifié ?"
+    },
+    "alerts_save_alert": {
+        "Save Alert": "Enregistrer l'alerte"
+    },
+    "alerts_currently_editing": {
+        "You are currently editing an alert": "Tu es en train de modifier une alerte"
+    },
+    "alerts_new_alert_tooltip": {
+        "Reset the form and start a new alert": "Réinitialiser le formulaire et créer une nouvelle alerte"
+    },
+    "alerts_new_alert": {
+        "New Alert": "Nouvelle alerte"
+    },
+    "alerts_current_alerts_for": {
+        "Current alerts for: %s": "Alertes en cours pour : %s"
+    },
+    "alerts_loading": {
+        "Loading alerts...": "Chargement des alertes..."
+    },
+    "generic_note_capitalized_colon": {
+        "NOTE:": "NOTE :"
+    },
+    "alerts_in_discord_notice": {
+        "You must be in <a href=\"%s\" target=\"_blank\">our Discord server</a> to receive alerts.": "Tu dois faire partie de <a href=\"%s\" target=\"_blank\">notre Discord</a> pour recevoir des alertes."
+    },
+    "alerts_only_updates_under_condition_notice": {
+        "Keep in mind that alerts will only be fired when the item is updated by someone.": "Note que les alertes ne seront déclenchées que lorsque l'objet est mis à jour par quelqu'un."
+    },
+    "alerts_must_be_logged_in": {
+        "You must be logged-in to create item alerts.": "Tu dois être connecté pour créer des alertes d'objet."
+    },
+    "alerts_deletion_confirmation": {
+        "Are you sure you wish to delete this alert?": "Es-tu sûr de vouloir supprimer cette alerte ?"
+    },
+    "generic_deletion_confirmation": {
+        "Yes I\\'m sure, delete it.": "Oui certain, supprime-la"
+    },
+    "alerts_whatisthis_guide_1": {
+        "What are alerts?": "Que sont les alertes ?"
+    },
+    "alerts_whatisthis_guide_2": {
+        "Alerts allow you to setup notification watchers that can track an item and send you information such as price changes or history events.": "Les alertes te permettent de configurer des observateurs qui vont suivre un objet et t'envoyer des informations comme les changements de prix ou des événements de l'historique."
+    },
+    "generic_alert_trigger": {
+        "Triggers": "Déclencheurs"
+    },
+    "alerts_whatisthis_guide_3": {
+        "<strong>Triggers</strong>, these are conditions you can set on the alert to be checked at interval times and if any market entry meets the criteria of the condition then your alert will be \"Triggered\" and you'll receive a notification either via Discord or Email.": "<strong>Déclencheurs</strong>, il s'agit de conditions que tu peux définir sur une alerte pour qu'elles soient régulièrement vérifiées et si un objet du marché répond aux critères de la condition, alors ton alerte va être \"déclenchée\" et tu recevras une notification soit dans Discord, soit par email."
+    },
+    "alerts_whatisthis_guide_4": {
+        "Trigger conditions can be set against any market field and future plans will allow you to manage these dynamically as well as setup automatic triggers based on your retainers current sales.": "Les conditions de déclenchement peuvent être configurées par rapport à n'importe quel champ du tableau des ventes, et devrait te permettre dans le futur de les gérer dynamiquement, ainsi que de définir des déclencheurs automatiques en fonction des ventes actuelles de tes servants."
+    },
+    "alerts_trigger_condition_info_title": {
+        "Trigger Condition Information": "Information sur les conditions de déclenchement"
+    },
+    "alerts_trigger_condition_info_guide_1": {
+        "<strong>Prices/History: Added</strong><br>\nThis is currently an Epoch Unix Timestamp. Work is being done to improve this.": "<strong>Prix/Historique : Ajouté</strong><br>\nIl s'agit pour l'instant d'un horodatage de type Epoch Unix. Des travaux sont en cours pour améliorer ceci."
+    },
+    "alerts_trigger_condition_info_guide_2": {
+        "<strong>Prices/History: \"IsXX\"</strong><br>\nThe Is condition triggers such as IsHQ are bools and the value must be either 1 or 0 for true / false.": "<strong>Prix/Historique: \"IsXX\"</strong><br>\nLa condition \"Is\" comme par exemple IsHQ sont des valeurs booléennes et leur valeur doit être soit 1 ou 0, respectivement pour vrai ou faux."
+    },
+    "alerts_trigger_condition_info_guide_3": {
+        "<strong>History:</strong><br>\nEvents for history will be based on entries added to the history after the event was created.": "<strong>Historique :</strong><br>\nLes événements de l'historique seront basés sur les entrées du marché ajoutées à l'historique après que l'événement soit créé."
+    },
+    "friends_guide_1": {
+        "If logged in and character verified, show if any friends have purchased this item.": "Si tu es connecté et que ton personnage est vérifié, indique si un de tes amis a acheté cet objet."
+    },
+    "generic_quantity_shorthand": {
+        "#": "#",
+        "QTY": "QTÉ"
+    },
+    "generic_item": {
+        "Item": "Objet"
+    },
+    "generic_server": {
+        "Server": "Serveur"
+    },
+    "generic_price": {
+        "Price": "Prix"
+    },
+    "generic_total": {
+        "Total": "Total"
+    },
+    "generic_percent_difference_shorthand": {
+        "%Diff": "%Diff"
+    },
+    "generic_buyer": {
+        "Buyer": "Acheteur"
+    },
+    "generic_date": {
+        "Date": "Date"
+    },
+    "market_board_really_rare": {
+        "Really rare!?": "Vraiment rare!?"
+    },
+    "market_board_no_recorded_history": {
+        "There is currently no recorded history for this item on Universalis.": "Il n'y a actuellement aucun historique connu pour cet objet dans Universalis."
+    },
+    "generic_stack_size_colon": {
+        "Stack:": "Pile :"
+    },
+    "generic_menu": {
+        "Menu": "Menu"
+    },
+    "generic_cross_world": {
+        "Cross-World": "Inter-Monde"
+    },
+    "generic_alerts": {
+        "Alerts": "Alertes"
+    },
+    "market_board_ppu": {
+        "(%s) Price Per Unit": "(%s) Prix Par Unité"
+    },
+    "market_board_ppu_quantity": {
+        "(%s) Price Per Unit QUANTITY": "(%s) Prix Par Unité QUANTITÉ"
+    },
+    "market_board_stack_size_histogram_title": {
+        "STACK SIZE HISTOGRAM <small>Last 20 Sales</small>": "TAILLE de la PILE HISTOGRAMME <small>20 dernières ventes</small>"
+    },
+    "market_board_cheapest_title": {
+        "Cheapest %s": "Moins cher %s"
+    },
+    "generic_server_colon": {
+        "Server:": "Serveur :"
+    },
+    "generic_total_colon": {
+        "Total:": "Total :"
+    },
+    "market_board_none_for_sale": {
+        "No %s for sale.": "Pas de %s à la vente."
+    },
+    "market_board_no_hq_variant": {
+        "Item has no HQ variant.": "Cet objet n'a pas de version HQ."
+    },
+    "market_board_purchase_history_title": {
+        "Cross-World Purchase history (500 sales)": "Historique des achats Inter-Monde (500 ventes)"
+    },
+    "generic_perunit": {
+        "(%s) PerUnit": "(%s) ParUnité"
+    },
+    "generic_perunit_quantity": {
+        "(%s) PerUnit QUANTITY": "(%s) ParUnité QUANTITÉ"
+    },
+    "generic_prices_2": {
+        "%s Prices": "%s Prix"
+    },
+    "generic_purchase_history": {
+        "%s Purchase History": "%s Historique d'achat"
+    },
+    "market_board_avg_perunit": {
+        "Avg. Per Unit": "Moy. Par Unité"
+    },
+    "market_board_avg_total": {
+        "Avg. Total": "Moy. Total"
+    },
+    "load_speed": {
+        "Load Speed: %f": "Vitesse de chargement : %f"
+    },
+    "item_shops_purchasable_npc_title": {
+        "Purchasable from NPC Vendors": "Peut être acheté auprès des vendeurs PNJ"
+    },
+    "item_shops_purchasable_npc_explanation": {
+        "As this item can be bought from NPCs for pure Gil, market information is not available.": "Comme cet objet peut être acheté auprès des PNJs pour des Gils, les informations du marché ne sont pas disponibles."
+    },
+    "generic_gil": {
+        "Gil": "Gil"
+    },
+    "item_shops_purchasable_npc_not_found": {
+        "Position unknown, go hunt for them!": "Position inconnue, chasse-les !"
+    },
+    "pos_x": {
+        "X: <span class=\"text-yellow\">%f</span>": "X: <span class=\"text-yellow\">%f</span>"
+    },
+    "pos_y": {
+        "Y: <span class=\"text-yellow\">%f</span>": "Y: <span class=\"text-yellow\">%f</span>"
+    },
+    "generic_items_colon": {
+        "Items:": "Objets :"
+    },
+    "lists_have_none": {
+        "You have no lists! <br> Create one by entering in a new name above.": "Tu n'as aucune liste ! <br> Crées-en une en indiquant un nouveau nom ci-dessus."
+    },
+    "lists_logged_out": {
+        "You are not logged in. Login using Discord to create item lists.": "Tu n'es pas connecté. Connecte-toi en utilisant Discord pour créer des listes d'objets."
+    },
+    "ext_garlandtools": {
+        "Show on GarlandTools": "Afficher sur GarlandTools"
+    },
+    "ext_teamcraft": {
+        "Show on Teamcraft": "Afficher sur Teamcraft"
+    },
+    "generic_faved": {
+        "Faved": "Préféré"
+    },
+    "generic_favourite": {
+        "Favourite": "Favoris"
+    },
+    "lists_add_to_list": {
+        "Add to list": "Ajouter à une liste"
+    },
+    "lists_loading_lists": {
+        "Loading your item lists": "Chargement de tes listes d'objets"
+    },
+    "lists_limit_reached": {
+        "You have reached the maximum of 12 lists. You cannot create any more.": "Tu as atteint le nombre maximal de 12 listes. Tu ne peux pas en créer d'autres."
+    },
+    "lists_option_1": {
+        "Option 1) Create a new list:": "Option 1) Créer une nouvelle liste :"
+    },
+    "lists_option_2": {
+        "Option 2) Use an existing list:": "Option 2) Utiliser une liste existante :"
+    },
+    "generic_remove_capitalized": {
+        "REMOVE": "RETIRER"
+    },
+    "no_market_data_title_1": {
+        "Sorry, no market data!": "Désolé, aucune information du marché !"
+    },
+    "no_market_data_explanation_1": {
+        "Universalis could not find any market data for this item on the server <strong>%s</strong>.": "Universalis n'a pas pu trouver de données du marché pour cet objet sur le serveur <strong>%s</strong>."
+    },
+    "no_market_data_title_2": {
+        "There can be a few reasons for this, here are some:": "Il peut y avoir plusieurs raisons à cela, en voici quelques-unes :"
+    },
+    "no_market_data_explanation_2": {
+        "%s is a brand new server": "%s est un tout nouveau serveur"
+    },
+    "no_market_data_explanation_3": {
+        "No one has contributed any information about this item yet": "Personne n'a encore fourni d'informations sur cet objet"
+    },
+    "no_market_data_explanation_4": {
+        "Something broke": "Quelque chose s'est mal passé"
+    },
+    "no_market_data_explanation_5": {
+        "If it is that last one, be sure to jump on <a href=\"%s\">Discord</a> and let us know!": "Si c'est cette dernière explication, n'hésite pas à venir sur <a href=\"%s\">Discord</a> pour nous le signaler."
+    },
+    "generic_prices_capitalized": {
+        "PRICES": "PRIX"
+    },
+    "generic_updated_colon": {
+        "Updated:": "Mis à jour :"
+    },
+    "generic_material_shorthand": {
+        "Mat": "Mat"
+    },
+    "generic_retainer": {
+        "Retainer": "Servant"
+    },
+    "generic_creator": {
+        "Creator": "Créateur"
+    },
+    "generic_no_listings": {
+        "No Listings": "Pas de listes"
+    },
+    "prices_no_listings": {
+        "There are no listings for this item, check back later!": "Il n'y a aucune liste pour cet objet, reviens voir plus tard !"
+    },
+    "special_shops_title": {
+        "Special Shops": ""
+    },
+    "special_shop_title_colon": {
+        "Special Shop:": ""
+    },
+    "generic_cost": {
+        "Cost": "Coût"
+    },
+    "generic_qty_received": {
+        "Qty Received": "Qté reçue"
+    },
+    "generic_quantity": {
+        "Quantity": "Quantité"
+    },
+    "generic_ppu": {
+        "Price Per Unit": "Prix Par Unité"
+    },
+    "generic_price_total": {
+        "Price Total": "Prix Total"
+    },
+    "generic_gil_per_token": {
+        "Gil Per Token": ""
+    },
+    "shop_no_listings": {
+        "None on the market board": "Rien sur le tableau des ventes"
+    },
+    "generic_cannot_be_sold_capitalized": {
+        "CANNOT BE SOLD": "NE PEUT PAS ÊTRE VENDU"
+    },
+    "generic_hq_colon": {
+        "HQ:": "HQ:"
+    },
+    "generic_account": {
+        "Account": "Compte"
+    },
+    "generic_data_center": {
+        "Data Center": "Data Center"
+    },
+    "alerts_none_sent": {
+        "Alert has not sent any notifications.": "L'alerte n'a envoyé aucune notification."
+    },
+    "alerts_useraccount_guide_1": {
+        "You can add alerts on item pages.": "Tu peux ajouter des alertes sur les pages des objets."
+    },
+    "generic_max_quantity": {
+        "Max: %d": "Max: %d"
+    },
+    "generic_events": {
+        "Events": "Événéments"
+    },
+    "generic_expires_colon": {
+        "Expires:": "Expire :"
+    },
+    "alerts_is_active": {
+        "Alert is active": "L'alerte est active"
+    },
+    "alerts_is_inactive": {
+        "Alert has been disabled.": "L'alerte a été désactivée."
+    },
+    "generic_information": {
+        "Information": "Information"
+    },
+    "generic_type": {
+        "Type": "Type"
+    },
+    "generic_sent_today": {
+        "Sent Today": "Envoyé aujourd'hui"
+    },
+    "generic_last_sent": {
+        "Last Sent": "Envoyé pour la dernière fois"
+    },
+    "generic_n_days": {
+        "%d days": "%d jours"
+    },
+    "generic_max_alerts": {
+        "Max Alerts": "Alertes Max"
+    },
+    "generic_alert_expiry_time": {
+        "Alert Expiry Time": "Durée d'expiration de l'alerte"
+    },
+    "generic_alert_item_update": {
+        "Alert Item Update": "Mise à jour de l'alerte pour l'objet"
+    },
+    "alerts_useraccount_guide_2": {
+        "Alerts allow you to track all kinds of information about items on the market and be informed either by Discord or email for any changes that meet your requirements. To get started with creating alerts, go search for any item and then click on the Alert tab on the left.": "Les alertes te permettent de suivre toute sorte d'information concernant les objets sur le marché et d'être informé soit sur Discord soit par email pour tout changement que tu aurais choisis de suivre. Pour créer des alertes, cherche un objet et clique sur l'onglet Alerte sur la gauche."
+    },
+    "alerts_useraccount_guide_3": {
+        "<strong>Alert Expiration:</strong> To keep the system clean, alerts will expire after a set amount of time from when they were created. To refresh a notification you must return to Universalis and be logged in.": "<strong>Expiration de l'alerte :</strong> Pour garder le système sain, les alertes expirent automatiquement un certain temps après leur création. Pour rafraîchir une notification, tu dois revenir consulter Universalis et être connecté."
+    },
+    "alerts_useraccount_quota": {
+        "You can create: <strong class=\"text-green\">%d</strong> alerts with an expiry time of: <strong class=\"text-green\">%d days</strong>.": "Tu peux créer: <strong class=\"text-green\">%d</strong> alertes avec une durée d'expiration  de : <strong class=\"text-green\">%d jours</strong>."
+    },
+    "generic_reports": {
+        "Reports": "Rapports"
+    },
+    "generic_characters": {
+        "Characters": "Personnages"
+    },
+    "characters_set_main": {
+        "Set character as MAIN.": "Définir ce personnage comme ton PRINCIPAL."
+    },
+    "characters_no_characters": {
+        "You have no characters, why not add one below!": "Tu n'as aucun personnage, pourquoi ne pas en ajouter un ci-dessous !"
+    },
+    "characters_add_new_title": {
+        "Add a new character": "Ajouter un nouveau personnage"
+    },
+    "characters_auth_code": {
+        "AUTH CODE: %s": "CODE D'AUTHENTIFICATION : %s"
+    },
+    "characters_guide_1": {
+        "To add a new character, you must first add your verification code. <strong>Please add your MAIN character first</strong>.": "Pour ajouter un nouveau personnage, tu dois d'abord entrer ton code de vérification. <strong>Merci d'ajouter ton personnage PRINCIPAL en premier</strong>."
+    },
+    "generic_selected": {
+        "selected": "sélectionné"
+    },
+    "generic_search": {
+        "Search": "Rechercher"
+    },
+    "generic_name_id_lodestone_url": {
+        "Name, ID, or Lodestone URL": "Nom, ID, ou URL Lodestone"
+    },
+    "characters_guide_2": {
+        "Go to Lodestone and Login with your character. Then <a href=\"%s\">click here to edit your profile</a>.": "Va sur Lodestone et connecte toi avec ton personnage. Ensuite <a href=\"%s\">clique ici pour éditer ton profil</a>."
+    },
+    "characters_guide_3": {
+        "In the text box, enter in your <strong>AUTH CODE</strong>, then click on Confirm (twice).": "Dans le champ de texte, entre ton <strong>CODE D'AUTHENTIFICATION</strong>, puis clique sur Confirmer (deux fois)."
+    },
+    "characters_guide_4": {
+        "Hop back to Universalis and fill in the form below. The site will search for your character and confirm your auth code.": "Reviens sur Universalis et remplis le formulaire ci-dessous. Le site va chercher ton personnage et confirmer ton code d'authentification."
+    },
+    "generic_logout": {
+        "Logout": "Se déconnecter"
+    },
+    "generic_oops": {
+        "Oops!": "Oups !"
+    },
+    "useraccount_index_logged_out_1": {
+        "You must be logged in to view this area.": "Tu dois être connecté pour voir cet espace."
+    },
+    "useraccount_index_logged_out_2": {
+        "You can <a href=\"%s\">login via Discord</a> to get that juicy access!": "Tu peux <a href=\"%s\">te connecter via Discord</a> pour obtenir cet accès incroyable !"
+    },
+    "generic_delete_list": {
+        "Delete List": "Supprimer la liste"
+    },
+    "useraccount_lists_no_lists": {
+        "You have no lists, visit some items and create some!": "Tu n'as aucune liste, consulte des objets et crées-en quelques-unes !"
+    },
+    "userlist_tab_title": {
+        "Custom Universalis list by %s": "List Universalis personnalisée par %s"
+    },
+    "generic_list": {
+        "List": "Liste"
+    },
+    "userlists_no_items": {
+        "You have no items in this list.": "Tu n'as aucun objet dans cette liste."
+    },
+    "generic_list_capitalized": {
+        "LIST": "LISTE"
+    },
+    "generic_show_cross_world": {
+        "Show Cross-World": "Afficher Inter-Monde"
+    },
+    "n_of_m_items": {
+        "%d / %d items": "%d / %d objets"
+    },
+    "generic_show_home_server_only": {
+        "Show Home Server Only": "Afficher seulement le Monde d'origine"
+    },
+    "userlists_remove_item_tooltip": {
+        "Remove item from list": "Retirer l'objet de la liste"
+    },
+    "userlists_top_5_sale": {
+        "Top 5 cheapest - Total for sale: %d": "Top 5 des moins chers - Total pour les ventes : %d"
+    },
+    "generic_last_5_sales": {
+        "Last 5 sales": "5 dernières ventes"
+    },
+    "generic_last_updated_colon": {
+        "Last updated:": "Dernière mise à jour :"
+    },
+    "userlists_fetch_failed_for_item": {
+        "Market info could not be fetched for: %s at this time.": "Les informations du marché n'ont pas pu être retrouvées pour : %s pour le moment."
+    },
+    "contribute_description_matcha": {
+        "If you are playing on chinese server(other servers are not supported), you can use Matcha plugin provided by FFCAFE which have built-in Universalis integration. Matcha also provides a overlay to show price information from Universalis.": "Si tu joues sur un serveur chinois (les autres serveurs ne sont pas supportés), tu peux utiliser le plugin Matcha fournis par FFCAFE qui s'intègre nativement avec Universalis. Matcha fournis aussi un overlay pour montrer les prix depuis Universalis."
+    },
+    "generic_no_data": {
+        "No data": "Pas de données"
+    },
+    "generic_not_sellable": {
+        "Not Sellable": "Non vendable"
+    },
+    "generic_cannot_be_sold": {
+        "Cannot be sold": "Ne peut pas être vendu"
+    }
+}
