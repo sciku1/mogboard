@@ -138,6 +138,7 @@ class GameDataCache
             
             $objects[$i] = $this->xivapi->content->ItemSearchCategory()->one($i);
             $this->console->writeln($keys[$i].': '.$objects[$i]->Name_en);
+            sleep(5);
         }
 
         $categories = [];
