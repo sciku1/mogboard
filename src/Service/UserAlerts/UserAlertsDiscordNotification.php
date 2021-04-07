@@ -18,6 +18,8 @@ class UserAlertsDiscordNotification
         'name' => 'Mogboard Alert!',
         'icon_url' => 'https://cdn.discordapp.com/emojis/474543539771015168.png?v=1',
     ];
+
+    const ALERTS_SERVICE_LOCATION = 'http://localhost:7584/discord/send';
     
     const COLOR_GREEN  = '#6de258';
     const COLOR_RED    = '#ed493d';
