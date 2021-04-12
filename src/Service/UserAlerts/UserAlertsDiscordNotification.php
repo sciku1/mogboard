@@ -53,13 +53,13 @@ class UserAlertsDiscordNotification
             "reasons"       => $reasons,
         ];
         
-        postResource(ALERTS_SERVICE_ENDPOINT, [
+        postJsonResource(ALERTS_SERVICE_ENDPOINT, [
             "targetUser"   => $alert->getUser()->getSsoDiscordId(),
             "notification" => $notificationInfo,
         ]);
     }
 
-    private function postResource(string $url, array $postData): string {
+    private function postJsonResource(string $url, array $postData): string {
         $postDataStr = json_encode($postData);
         $curl = curl_init();
         curl_setopt_array($curl, [
