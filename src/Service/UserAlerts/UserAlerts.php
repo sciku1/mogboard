@@ -28,6 +28,8 @@ class UserAlerts
     private $xivapi;
     /** @var UserAlertsDiscordNotification */
     private $discord;
+    /** @var UserAlertsEmailNotification */
+    private $email;
 
     public function __construct(
         EntityManagerInterface $em,
@@ -42,6 +44,7 @@ class UserAlerts
         $this->console      = new ConsoleOutput();
         $this->xivapi       = new XIVAPI();
         $this->discord      = $discord;
+        $this->$email       = new UserAlertsEmailNotification();
     }
 
     /**

@@ -10,10 +10,6 @@ class UserAlertsEmailNotification
 {
     const ALERTS_SERVICE_ENDPOINT = "http://localhost:7584/email/send";
     
-    public function __construct(Mail $mail, GameDataSource $game)
-    {
-    }
-    
     /**
      * Send a notification regarding triggers
      */
@@ -58,7 +54,7 @@ class UserAlertsEmailNotification
         ];
 
         postJsonResource(ALERTS_SERVICE_ENDPOINT, [
-            "targetUser"   => $alert->getUser()->getSsoDiscordId(),
+            "targetUser"   => "", // TODO
             "notification" => $notificationInfo,
         ]);
     }
