@@ -10,7 +10,7 @@ using Lumina;
 using Lumina.Data;
 using Lumina.Excel.GeneratedSheets;
 using Newtonsoft.Json;
-using Cyalume = Lumina.Lumina;
+using Cyalume = Lumina.GameData;
 
 namespace IconDownloader
 {
