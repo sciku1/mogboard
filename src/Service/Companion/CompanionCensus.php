@@ -350,8 +350,7 @@ class CompanionCensus
     
         foreach ($tableData as $row) {
             // calculate quantity radius
-            $radiusDenominator = $row["hq"] ? $bubbleScaleFactorHQ : $bubbleScaleFactorNQ;
-            $radiusFactor = $row["quantity"] / ($radiusDenominator == 0 ? $row["quantity"] : $radiusDenominator);
+            $radiusFactor = $row["quantity"] / ($row["hq"] ? $bubbleScaleFactorHQ : $bubbleScaleFactorNQ);
             $radius = $maxBubblePix * $radiusFactor;
             
             // limits
