@@ -39,7 +39,10 @@ class CompanionMarket
         $data = [];
         foreach ($servers as $server) {
             $serverId   = GameServers::getServerId($server);
-            $source     = $this->universalis->getItem($serverId, $itemId);
+            $source = null;
+            try {
+                $source = $this->universalis->getItem($serverId, $itemId);
+            } catch (Exception $e) { }
 
             if ($source == null) {
                 $data[$server] = [
