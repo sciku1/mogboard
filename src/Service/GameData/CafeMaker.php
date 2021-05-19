@@ -57,7 +57,7 @@ class CafeMaker {
         return json_decode($cachedMateria);
     }
 
-    private function getResource(string $url): String {
+    private function getResource(string $url): string {
         $curl = curl_init();
         curl_setopt_array($curl, [
             CURLOPT_URL => $url,

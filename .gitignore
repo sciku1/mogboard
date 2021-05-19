@@ -383,3 +383,6 @@ public/i/icon2x/
 # Environment variable files
 .env
 .env.local
+
+.vscode/
+.idea/

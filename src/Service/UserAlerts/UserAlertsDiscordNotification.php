@@ -4,28 +4,12 @@ namespace App\Service\UserAlerts;
 
 use App\Common\Entity\UserAlert;
 use App\Common\Service\Redis\Redis;
-use App\Common\ServicesThirdParty\Discord\Discord;
 use Carbon\Carbon;
 
 class UserAlertsDiscordNotification
 {
-    const FOOTER = [
-        'text'     => 'mogboard.com',
-        'icon_url' => 'https://mogboard.com/favicon.png',
-    ];
+    const ALERTS_SERVICE_ENDPOINT = "http://localhost:7584/discord/send";
     
-    const ALERT_AUTHOR = [
-        'name' => 'Mogboard Alert!',
-        'icon_url' => 'https://cdn.discordapp.com/emojis/474543539771015168.png?v=1',
-    ];
-    
-    const COLOR_GREEN  = '#6de258';
-    const COLOR_RED    = '#ed493d';
-    const COLOR_BLUE   = '#4fc7ff';
-    const COLOR_YELLOW = '#edd23c';
-    const COLOR_PURPLE = '#c588f7';
-    const TIME_FORMAT  = 'F j, Y, g:i a';
-
     /**
      * Send a notification regarding triggers
      */
@@ -33,55 +17,64 @@ class UserAlertsDiscordNotification
     {
         $item = Redis::Cache()->get("xiv_Item_{$alert->getItemId()}");
 
-        $fields = [];
+        $reasons = [];
         foreach($triggeredMarketRows as $i => $marketRow) {
             [$server, $row] = $marketRow;
-            
+
             $name = sprintf(
                 "%sx %s Gil - Total: %s",
                 number_format($row->Quantity),
                 number_format($row->PricePerUnit),
                 number_format($row->PriceTotal),
-                $row->IsHQ ? 'HQ' : 'NQ',
-                $alert->getTriggerType() == 'Prices' ? $row->RetainerName : $row->CharacterName
+                $row->IsHQ ? "HQ" : "NQ",
+                $alert->getTriggerType() == "Prices" ? $row->RetainerName : $row->CharacterName
             );
-            
+
             $purchaseDate = null;
-            if ($alert->getTriggerType() == 'History') {
+            if ($alert->getTriggerType() == "History") {
                 $carbon = Carbon::createFromTimestamp($row->PurchaseDate);
                 $purchaseDate = $carbon->fromNow();
             }
-    
+
             $value = sprintf(
                 "%s - %s - %s",
                 "({$server})",
-                $alert->getTriggerType() == 'Prices' ? "Retainer: {$row->RetainerName}" : "Buyer: {$row->CharacterName}",
-                $alert->getTriggerType() == 'Prices' ? "Signature: {$row->CreatorSignatureName}" : "Purchased: {$purchaseDate}"
+                $alert->getTriggerType() == "Prices" ? "Retainer: {$row->RetainerName}" : "Buyer: {$row->CharacterName}",
+                $alert->getTriggerType() == "Prices" ? "Signature: {$row->CreatorSignatureName}" : "Purchased: {$purchaseDate}"
             );
 
-            $fields[] = [
-                'name'  => $name,
-                'value' => $value,
-                'inline' => false,
-            ];
+            $reasons[$i] = $name . " " . $value;
         }
 
-        // modify footer
-        $footer = self::FOOTER;
-        $footer['text'] = "{$footer['text']} - Alert ID: {$alert->getUniq()} - {$hash}";
-        
-        // build embed
-        $embed = [
-            'author'        => self::ALERT_AUTHOR,
-            'title'         => $alert->getName(),
-            'description'   => "The item: **{$item->Name_en}** has triggered ". count($triggeredMarketRows) ." market alerts under the type: {$alert->getTriggerType()}.\n ",
-            'url'           => getenv('SITE_CONFIG_DOMAIN') . "/market/{$item->ID}",
-            'color'         => hexdec(self::COLOR_YELLOW),
-            'footer'        => $footer,
-            'thumbnail'     => [ 'url' => "https://xivapi.com{$item->Icon}" ],
-            'fields'        => $fields,
+        $notificationInfo = [
+            "itemName"      => $item->Name_en,
+            "itemIcon"      => "https://xivapi.com{$item->Icon}",
+            "pageUrl"       => getenv("SITE_CONFIG_DOMAIN") . "/market/{$item->ID}",
+            "reasons"       => $reasons,
         ];
         
-        Discord::mog()->sendDirectMessage($alert->getUser()->getSsoDiscordId(), null, $embed);
+        postJsonResource(ALERTS_SERVICE_ENDPOINT, [
+            "targetUser"   => $alert->getUser()->getSsoDiscordId(),
+            "notification" => $notificationInfo,
+        ]);
+    }
+
+    private function postJsonResource(string $url, array $postData): string {
+        $postDataStr = json_encode($postData);
+        $curl = curl_init();
+        curl_setopt_array($curl, [
+            CURLOPT_URL            => $url,
+            CURLOPT_RETURNTRANSFER => TRUE,
+            CURLINFO_HEADER_OUT    => TRUE,
+            CURLOPT_POST           => TRUE,
+            CURLOPT_POSTFIELDS     => $postDataStr,
+            CURLOPT_HTTPHEADER     => array(
+                "Content-Type: application/json",
+                "Content-Length: " . strlen($postDataStr),
+            ),
+        ]);
+        $res = curl_exec($curl);
+        curl_close($curl);
+        return $res;
     }
 }
