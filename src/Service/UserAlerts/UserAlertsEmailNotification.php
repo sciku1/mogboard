@@ -53,10 +53,10 @@ class UserAlertsEmailNotification
             "reasons"       => $reasons,
         ];
 
-        postJsonResource(ALERTS_SERVICE_ENDPOINT, [
+        /*postJsonResource(ALERTS_SERVICE_ENDPOINT, [
             "targetUser"   => "", // TODO
             "notification" => $notificationInfo,
-        ]);
+        ]);*/
     }
 
     private function postJsonResource(string $url, array $postData): string {
