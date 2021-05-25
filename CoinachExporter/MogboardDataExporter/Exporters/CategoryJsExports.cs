@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Lumina.Excel.GeneratedSheets;
 using MogboardDataExporter.Models;
-using Cyalume = Lumina.Lumina;
+using Cyalume = Lumina.GameData;
 
 namespace MogboardDataExporter.Exporters
 {

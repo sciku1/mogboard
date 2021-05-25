@@ -10,7 +10,7 @@ using Lumina.Data;
 using Lumina.Excel.GeneratedSheets;
 using MogboardDataExporter.Exporters;
 using MogboardDataExporter.Models;
-using Cyalume = Lumina.Lumina;
+using Cyalume = Lumina.GameData;
 
 namespace MogboardDataExporter
 {
