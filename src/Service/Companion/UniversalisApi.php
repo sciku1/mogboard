@@ -7,9 +7,8 @@ use GuzzleHttp\RequestOptions;
 
 class UniversalisApi
 {
-    const PROD    = 'https://universalis.app';
-    const STAGING = 'https://staging.universalis.app';
-    #const DEV     = 'http://xivapi.local';
+    const PROD    = 'http://localhost:4000';
+    const STAGING = 'http://localhost:4001';
 
     const TIMEOUT = 10.0;
     const VERIFY = false;
