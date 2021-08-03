@@ -135,10 +135,9 @@ class GameDataCache
         $objects = [];
         foreach (\json_decode(\file_get_contents('DataExports/ItemSearchCategory_Keys.json')) as $i => $id) {
             $keys[$i] = "xiv_ItemSearchCategory_{$id}";
-            
             $objects[$i] = $this->xivapi->content->ItemSearchCategory()->one($i);
             $this->console->writeln($keys[$i].': '.$objects[$i]->Name_en);
-            sleep(1);
+            sleep(5);
         }
 
         $categories = [];
