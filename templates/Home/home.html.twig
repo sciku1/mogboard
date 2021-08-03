@@ -10,233 +10,225 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="home">
-        <div class="home-nav">
-            {% if auth.online %}
-            <div>
-                <button type="button" data-tab="market_activity">
-                    <img src="/i/game/hammer.png"> {{ 'Market Activity'|translate('home_market_activity') }}
-                </button>
-            </div>
-            <h3><img src="/i/svg/bells-light.svg"> {{ 'Alerts'|translate('generic_alerts') }}</h3>
-            <div>
-                {% for itemId, alerts in auth.user.alertsPerItem %}
-                    {% if itemId %}
-                        {% set item = game().item(itemId) %}
-                        <button type="button" data-tab="alerts_{{ itemId }}" class="rarity-{{ item.Rarity }}">
-                            {{ item.Name }}
-                        </button>
-                    {% endif %}
-                {% else %}
-                    <button type="button" class="btn-disabled">
-                        <span class="text-gray">{{ 'You have no alerts set up.'|translate('home_noalerts') }}</span>
-                    </button>
-                {% endfor %}
-            </div>
-            <h3><img src="/i/svg/th-list-light.svg"> {{ 'Lists'|translate('generic_lists') }}</h3>
-            <div>
-                {% for list in auth.user.lists %}
-                    <button type="button" data-tab="lists_{{ list.id }}">
-                        {{ list.name }}
-                    </button>
-                {% else %}
-                    <button type="button" class="btn-disabled">
-                        <span class="text-gray">{{ 'You have no lists.'|translate('home_nolists') }}</span>
-                    </button>
-                {% endfor %}
-            </div>
-            <h3><img src="/i/svg/person-dolly-light.svg"> {{ 'Retainers'|translate('generic_retainers') }}</h3>
-            <div>
-                {% for retainer in auth.user.retainers %}
-                    <a href="{{ path('retainer_shop', { retainer: retainer.id }) }}">
-                        {{ retainer.name }}
-                    </a>
-                {% else %}
-                    <button type="button" class="btn-disabled">
-                        <span class="text-gray">{{ 'You have no retainers.'|translate('home_noretainers') }}</span>
-                    </button>
-                {% endfor %}
-            </div>
+	<div class="home">
+		<div class="home-nav">
+			{% if auth.online %}
+				<div>
+					<button type="button" data-tab="market_activity">
+						<img src="/i/game/hammer.png">
+						{{ 'Market Activity'|translate('home_market_activity') }}
+					</button>
+				</div>
+				<h3><img src="/i/svg/bells-light.svg">
+					{{ 'Alerts'|translate('generic_alerts') }}</h3>
+				<div>
+					{% for itemId, alerts in auth.user.alertsPerItem %}
+						{% if itemId %}
+							{% set item = game().item(itemId) %}
+							<button type="button" data-tab="alerts_{{ itemId }}" class="rarity-{{ item.Rarity }}">
+								{{ item.Name }}
+							</button>
+						{% endif %}
+					{% else %}
+						<button type="button" class="btn-disabled">
+							<span class="text-gray">{{ 'You have no alerts set up.'|translate('home_noalerts') }}</span>
+						</button>
+					{% endfor %}
+				</div>
+				<h3><img src="/i/svg/th-list-light.svg">
+					{{ 'Lists'|translate('generic_lists') }}</h3>
+				<div>
+					{% for list in auth.user.lists %}
+						<button type="button" data-tab="lists_{{ list.id }}">
+							{{ list.name }}
+						</button>
+					{% else %}
+						<button type="button" class="btn-disabled">
+							<span class="text-gray">{{ 'You have no lists.'|translate('home_nolists') }}</span>
+						</button>
+					{% endfor %}
+				</div>
+				<h3><img src="/i/svg/person-dolly-light.svg">
+					{{ 'Retainers'|translate('generic_retainers') }}</h3>
+				<div>
+					{% for retainer in auth.user.retainers %}
+						<a href="{{ path('retainer_shop', { retainer: retainer.id }) }}">
+							{{ retainer.name }}
+						</a>
+					{% else %}
+						<button type="button" class="btn-disabled">
+							<span class="text-gray">{{ 'You have no retainers.'|translate('home_noretainers') }}</span>
+						</button>
+					{% endfor %}
+				</div>
 
-            {% else %}
-                <section class="tac">
-                    <strong>{{ 'Logged-out'|translate('home_logged_out') }}</strong>
-                    <p class="text-gray">
-                        {% apply translate('home_logged_out_guide') %}
-                        Lists, Alerts, Market activity and retainer links will show here
-                        when you are logged into the site.
-                        {% endapply %}
-                    </p>
-                </section>
-            {% endif %}
-        </div>
-        <div>
-            {% include 'Home/news.html.twig' %}
+			{% else %}
+				<section class="tac">
+					<strong>{{ 'Logged-out'|translate('home_logged_out') }}</strong>
+					<p class="text-gray">
+						{% apply translate('home_logged_out_guide') %}
+						Lists, Alerts, Market activity and retainer links will show here
+																																																																																				                        when you are logged into the site.
+						{% endapply %}
+					</p>
+				</section>
+			{% endif %}
+		</div>
+		<div>
+			{% include 'Home/news.html.twig' %}
 
-            {% if auth.online %}
-                {# Alerts #}
-                {% for itemId, alerts in auth.user.alertsPerItem %}
-                    <div class="home-tab" id="alerts_{{ itemId }}">
-                        {% include 'Home/alert.html.twig' %}
-                    </div>
-                {% endfor %}
+			{% if auth.online %}
+				{# Alerts #}
+				{% for itemId, alerts in auth.user.alertsPerItem %}
+					<div class="home-tab" id="alerts_{{ itemId }}">
+						{% include 'Home/alert.html.twig' %}
+					</div>
+				{% endfor %}
 
-                {# Lists #}
-                {% for list in auth.user.lists %}
-                    <div class="home-tab" id="lists_{{ list.id }}">
-                        {% include 'Home/list.html.twig' with {
+				{# Lists #}
+				{% for list in auth.user.lists %}
+					<div class="home-tab" id="lists_{{ list.id }}">
+						{% include 'Home/list.html.twig' with {
                             server: server
                         } %}
-                    </div>
-                {% endfor %}
-            {% else %}
-                <div class="home-logged-out">
-                    <div>
-                        <img src="/i/brand/universalis/universalis_bodge.png" height="42">
-                    </div>
-                    <br>
-                    <strong>{{ 'Become a member!'|translate('home_become_member') }}</strong>
-                    <br>
-                    <p>{{ 'Create alerts, make lists, add your retainers and get a personalised home page feed!'|translate('home_become_member_guide') }}</p>
-                    <br><br>
-                    <a href="{{ path('account_login_discord') }}" class="btn-login">{{ 'Login via <strong>Discord</strong>'|translate('home_login_discord')|striptags('<strong>')|raw }}</a>
-                </div>
-            {% endif %}
-        </div>
-        <div>
-            <div class="home-box patreon-discord">
-                <a href="https://discord.gg/JcMvMxD" class="discord" target="_blank">
-                    <span><img src="/i/brand/discord/logo_white.png"> {{ 'DISCORD'|translate('discord_capitalized') }}</span>
-                </a>
-                <a href="{{ path('contribute') }}" class="patreon">
-                    <span><img src="/i/brand/contribute/logo_name.png"></span>
-                </a>
-            </div>
-{# NOT RIGHT NOW
-            <h4>Trending Today</h4>
-            <div class="home-box home-trending">
-                {% for itemId in popular_items %}
-                    {% set item = game().item(itemId) %}
-                    {% if item.ID is defined %}
-                        <div>
-                            <div>
-                                <a href="{{ path('item_page', { itemId: itemId }) }}">
-                                    <img src="{{ item.ID|icon2x }}">
-                                </a>
-                            </div>
-                            <div>
-                                <div>
-                                    {% if item.LevelItem > 1 %}<em class="ilv">{{ item.LevelItem }}</em>{% endif %}
-                                    <a href="{{ path('item_page', { itemId: itemId }) }}" class="rarity-{{ item.Rarity }}">{{ item.Name }}</a>
-                                </div>
-                                <small>{{ item.ItemSearchCategory.Name ?? '(%s)'|format('Cannot be sold'|translate('generic_cannot_be_sold')) }}</small>
-                            </div>
-                        </div>
-                    {% endif %}
-                {% endfor %}
-            </div>
-#}
-            <h4>{{ 'Recent Updates'|translate('home_recent_updates') }}</h4>
-            <div class="home-box home-trending">
-                {% for itemId in recent %}
-                    {% set item = game().item(itemId) %}
-                    {% if item.ID is defined %}
-                        <div>
-                            <div>
-                                <a href="{{ path('item_page', { itemId: itemId }) }}">
-                                    <img src="{{ item.ID|icon2x }}" onerror="if (this.src != '/i/universalis/error.png') this.src = '/i/universalis/error.png';">
-                                </a>
-                            </div>
-                            <div>
-                                <div>
-                                    {% if item.LevelItem > 1 %}<em class="ilv">{{ item.LevelItem }}</em>{% endif %}
-                                    <a href="{{ path('item_page', { itemId: itemId }) }}" class="rarity-{{ item.Rarity }}">{{ item.Name }}</a>
-                                </div>
-                                <small>{{ item.ItemSearchCategory.Name ?? '(%s)'|format('Cannot be sold'|translate('generic_cannot_be_sold')) }}</small>
-                            </div>
-                        </div>
-                    {% endif %}
-                {% endfor %}
-            </div>
+					</div>
+				{% endfor %}
+			{% else %}
+				<div class="home-logged-out">
+					<div>
+						<img src="/i/brand/universalis/universalis_bodge.png" height="42">
+					</div>
+					<br>
+					<strong>{{ 'Become a member!'|translate('home_become_member') }}</strong>
+					<br>
+					<p>{{ 'Create alerts, make lists, add your retainers and get a personalised home page feed!'|translate('home_become_member_guide') }}</p>
+					<br><br>
+					<a href="{{ path('account_login_discord') }}" class="btn-login">{{ 'Login via <strong>Discord</strong>'|translate('home_login_discord')|striptags('<strong>')|raw }}</a>
+				</div>
+			{% endif %}
+		</div>
+		<div>
+			<div class="home-box patreon-discord">
+				<a href="https://discord.gg/JcMvMxD" class="discord" target="_blank">
+					<span><img src="/i/brand/discord/logo_white.png">
+						{{ 'DISCORD'|translate('discord_capitalized') }}</span>
+				</a>
+				<a href="{{ path('contribute') }}" class="contrib">
+					<span><img src="/i/brand/contribute/logo_name.png"></span>
+				</a>
+				<a href="https://patreon.com/universalis" class="patreon">
+					<span><img src="/i/brand/patreon/logo_name.jpg"></span>
+				</a>
+			</div>
+			<h4>{{ 'Recent Updates'|translate('home_recent_updates') }}</h4>
+			<div class="home-box home-trending">
+				{% for itemId in recent %}
+					{% set item = game().item(itemId) %}
+					{% if item.ID is defined %}
+						<div>
+							<div>
+								<a href="{{ path('item_page', { itemId: itemId }) }}">
+									<img src="{{ item.ID|icon2x }}" onerror="if (this.src != '/i/universalis/error.png') this.src = '/i/universalis/error.png';">
+								</a>
+							</div>
+							<div>
+								<div>
+									{% if item.LevelItem > 1 %}
+										<em class="ilv">{{ item.LevelItem }}</em>
+									{% endif %}
+									<a href="{{ path('item_page', { itemId: itemId }) }}" class="rarity-{{ item.Rarity }}">{{ item.Name }}</a>
+								</div>
+								<small>{{ item.ItemSearchCategory.Name ?? '(%s)'|format('Cannot be sold'|translate('generic_cannot_be_sold')) }}</small>
+							</div>
+						</div>
+					{% endif %}
+				{% endfor %}
+			</div>
 
-            {# TAX RATES #}
+			{# TAX RATES #}
 
-            {% if tax_rates is defined %}
-            <div class="flex updates_box" style="margin-bottom: 20px">
-                <div>
-                    <h5>{{ 'Current Market Tax Rates on %s'|translate('home_current_tax_rates')|format(server|convert_if_chinese) }}</h5>
-                    <br>
-                    <div class="flex avg_prices">
-                        <div class="flex_50">
-                            <img src="{{ cityflags[1]|icon }}" class="price-city-flag"> {{ tax_rates["Limsa Lominsa"] }}%
-                        </div>
-                        <div class="flex_50">
-                            <img src="{{ cityflags[2]|icon }}" class="price-city-flag"> {{ tax_rates["Gridania"] }}%
-                        </div>
-                        <div class="flex_50">
-                            <img src="{{ cityflags[3]|icon }}" class="price-city-flag"> {{ tax_rates["Ul'dah"] }}%
-                        </div>
-                        <div class="flex_50">
-                            <img src="{{ cityflags[4]|icon }}" class="price-city-flag"> {{ tax_rates["Ishgard"] }}%
-                        </div>
-                        <div class="flex_50">
-                            <img src="{{ cityflags[7]|icon }}" class="price-city-flag"> {{ tax_rates["Kugane"] }}%
-                        </div>
-                        <div class="flex_50">
-                            <img src="{{ cityflags[10]|icon }}" class="price-city-flag"> {{ tax_rates["Crystarium"] }}%
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {% endif %}
+			{% if tax_rates is defined %}
+				<div class="flex updates_box" style="margin-bottom: 20px">
+					<div>
+						<h5>{{ 'Current Market Tax Rates on %s'|translate('home_current_tax_rates')|format(server|convert_if_chinese) }}</h5>
+						<br>
+						<div class="flex avg_prices">
+							<div class="flex_50">
+								<img src="{{ cityflags[1]|icon }}" class="price-city-flag">
+								{{ tax_rates["Limsa Lominsa"] }}%
+							</div>
+							<div class="flex_50">
+								<img src="{{ cityflags[2]|icon }}" class="price-city-flag">
+								{{ tax_rates["Gridania"] }}%
+							</div>
+							<div class="flex_50">
+								<img src="{{ cityflags[3]|icon }}" class="price-city-flag">
+								{{ tax_rates["Ul'dah"] }}%
+							</div>
+							<div class="flex_50">
+								<img src="{{ cityflags[4]|icon }}" class="price-city-flag">
+								{{ tax_rates["Ishgard"] }}%
+							</div>
+							<div class="flex_50">
+								<img src="{{ cityflags[7]|icon }}" class="price-city-flag">
+								{{ tax_rates["Kugane"] }}%
+							</div>
+							<div class="flex_50">
+								<img src="{{ cityflags[10]|icon }}" class="price-city-flag">
+								{{ tax_rates["Crystarium"] }}%
+							</div>
+						</div>
+					</div>
+				</div>
+			{% endif %}
 
-            {# UPLOAD COUNTS BY WORLD #}
+			{# UPLOAD COUNTS BY WORLD #}
 
-            <div class="flex updates_box" style="margin-bottom: 20px">
-                <div>
-                    <h5>{{ 'Upload Counts by World'|translate('home_upload_counts_world') }}</h5>
-                    <br>
-                    <div class="flex avg_prices">
-                        {% include 'Home/chart_hc.html.twig' with {
-                            chart: {
-                                id: 'world_pie',
-                                series: [{
-                                    name: 'Proportion',
-                                    colorByPoint: true,
-                                    data: uploads_world,
-                                }],
-                            },
-                            server: server,
-                        } %}
-                    </div>
-                </div>
-            </div>
+			<div class="flex updates_box" style="margin-bottom: 20px">
+				<div>
+					<h5>{{ 'Upload Counts by World'|translate('home_upload_counts_world') }}</h5>
+					<br>
+					<div class="flex avg_prices">
+						{% include 'Home/chart_hc.html.twig' with {
+                        chart: {
+                            id: 'world_pie',
+                            series: [{
+                                name: 'Proportion',
+                                colorByPoint: true,
+                                data: uploads_world,
+                            }],
+                        },
+                        server: server,
+                    } %}
+					</div>
+				</div>
+			</div>
 
-            {# AVERAGE PRICES AND HISTORY #}
-        <div>
-            <div>
-                <div class="flex updates_box">
-                    <div>
-                        <h5>{{ 'Uploads today'|translate('home_uploads_today') }}</h5>
-                        <br>
-                        <div class="flex avg_prices">
-                            <div class="flex_50">
-                                {{ uploads_today|number_format }}
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <h5>{{ 'Uploads this week'|translate('home_uploads_week') }}</h5>
-                        <br>
-                        <div class="flex avg_prices">
-                            <div class="flex_50">
-                                {{ uploads_week|number_format }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <p class="mog-honorable" style="text-align: center; margin-top: 5px;">{{ 'Thank you!'|translate('thank_you') }}</p>
-            </div>
-        </div>
-    </div>
-{% endblock %}
+			{# AVERAGE PRICES AND HISTORY #}
+			<div>
+				<div>
+					<div class="flex updates_box">
+						<div>
+							<h5>{{ 'Uploads today'|translate('home_uploads_today') }}</h5>
+							<br>
+							<div class="flex avg_prices">
+								<div class="flex_50">
+									{{ uploads_today|number_format }}
+								</div>
+							</div>
+						</div>
+						<div>
+							<h5>{{ 'Uploads this week'|translate('home_uploads_week') }}</h5>
+							<br>
+							<div class="flex avg_prices">
+								<div class="flex_50">
+									{{ uploads_week|number_format }}
+								</div>
+							</div>
+						</div>
+					</div>
+					<p class="mog-honorable" style="text-align: center; margin-top: 5px;">{{ 'Thank you!'|translate('thank_you') }}</p>
+				</div>
+			</div>
+		</div>
+	{% endblock %}
