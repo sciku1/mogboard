@@ -8,7 +8,7 @@ use GuzzleHttp\RequestOptions;
 class UniversalisApi
 {
     const PROD    = 'http://localhost:4000';
-    const STAGING = 'http://localhost:4001';
+    const STAGING = 'http://localhost:4000';
 
     const TIMEOUT = 10.0;
     const VERIFY = false;
