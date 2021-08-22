@@ -317,8 +317,8 @@ class CompanionCensus
     private function buildChartBubbleHandler($server, $tableData, $type)
     {
         // the max scale in pixels
-        $bubbleScaleFactorHQ = 1;
-        $bubbleScaleFactorNQ = 1;
+        $bubbleScaleFactorHQ = 0;
+        $bubbleScaleFactorNQ = 0;
         
         $variations = [];
         $chartDataHQ = [];
@@ -350,7 +350,7 @@ class CompanionCensus
     
         foreach ($tableData as $row) {
             // calculate quantity radius
-            $radiusFactor = $row["quantity"] / $row["hq"] ? $bubbleScaleFactorHQ : $bubbleScaleFactorNQ;
+            $radiusFactor = $row["quantity"] / max($row["hq"] ? $bubbleScaleFactorHQ : $bubbleScaleFactorNQ, 1);
             $radius = $maxBubblePix * $radiusFactor;
             
             // limits
