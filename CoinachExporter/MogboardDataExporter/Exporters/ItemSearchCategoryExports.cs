@@ -29,7 +29,7 @@ namespace MogboardDataExporter.Exporters
                 {
                     if (!mappings.TryGetValue(cat.RowId, out _))
                     {
-                        mappings[cat.RowId] = new LocalizedEntity();
+                        mappings[cat.RowId] = new LocalizedEntity { Id = cat.RowId };
                     }
 
                     // ReSharper disable once SwitchStatementHandlesSomeKnownEnumValuesWithDefault
