@@ -132,7 +132,7 @@ class GameDataCache
         $keys = [];
         $objects = [];
         $validated = FALSE;
-        foreach (\json_decode(\file_get_contents('DataExports/ItemSearchCategory_Mappings_Global.json'), TRUE) as $cat) {
+        foreach (\json_decode(\file_get_contents('DataExports/ItemSearchCategory_Mappings_Global.json')) as $cat) {
             $keys[$cat->ID] = "xiv_ItemSearchCategory_{$cat->ID}";
             $objects[$cat->ID] = $cat;
 
