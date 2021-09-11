@@ -6,11 +6,11 @@ namespace MogboardDataExporter.Models
     {
         [JsonProperty("ID")]
         public uint Id { get; set; }
-
-        [JsonProperty("Category")]
+        
         public byte Category { get; set; }
-
-        [JsonProperty("Icon")]
+        
+        public byte Order { get; set; }
+        
         public string Icon { get; set; }
 
         [JsonProperty("Name_en")]

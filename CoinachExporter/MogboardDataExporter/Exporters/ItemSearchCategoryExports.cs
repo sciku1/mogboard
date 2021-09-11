@@ -35,6 +35,7 @@ namespace MogboardDataExporter.Exporters
                         {
                             Id = cat.RowId,
                             Category = cat.Category,
+                            Order = cat.Order,
                             Icon = $"/i/{Util.GetIconFolder(cat.Icon)}/{cat.Icon:000000}.png",
                         };
                     }
