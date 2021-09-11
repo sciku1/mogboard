@@ -20,18 +20,21 @@ namespace MogboardDataExporter.Exporters
             IEnumerable<ItemSearchCategory> itemSearchCategoriesJa,
             string outputPath)
         {
-            var mappings = new Dictionary<uint, LocalizedIconEntity>();
+            var mappings = new Dictionary<uint, ItemSearchCategoryExport>();
 
             var langIsc = new[] { itemSearchCategories, itemSearchCategoriesDe, itemSearchCategoriesFr, itemSearchCategoriesJa };
             foreach (var lang in langIsc)
             {
                 foreach (var cat in lang)
                 {
+                    if (cat.Name == "") continue;
+
                     if (!mappings.TryGetValue(cat.RowId, out _))
                     {
-                        mappings[cat.RowId] = new LocalizedIconEntity
+                        mappings[cat.RowId] = new ItemSearchCategoryExport
                         {
                             Id = cat.RowId,
+                            Category = cat.Category,
                             Icon = $"/i/{Util.GetIconFolder(cat.Icon)}/{cat.Icon:000000}.png",
                         };
                     }

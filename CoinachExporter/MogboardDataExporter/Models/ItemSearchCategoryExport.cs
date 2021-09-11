@@ -2,10 +2,13 @@
 
 namespace MogboardDataExporter.Models
 {
-    public class LocalizedIconEntity
+    public class ItemSearchCategoryExport
     {
         [JsonProperty("ID")]
         public uint Id { get; set; }
+
+        [JsonProperty("Category")]
+        public byte Category { get; set; }
 
         [JsonProperty("Icon")]
         public string Icon { get; set; }
