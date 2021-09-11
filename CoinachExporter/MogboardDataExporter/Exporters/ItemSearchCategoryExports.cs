@@ -20,7 +20,7 @@ namespace MogboardDataExporter.Exporters
             IEnumerable<ItemSearchCategory> itemSearchCategoriesJa,
             string outputPath)
         {
-            var mappings = new Dictionary<uint, LocalizedEntity>();
+            var mappings = new Dictionary<uint, LocalizedIconEntity>();
 
             var langIsc = new[] { itemSearchCategories, itemSearchCategoriesDe, itemSearchCategoriesFr, itemSearchCategoriesJa };
             foreach (var lang in langIsc)
@@ -29,7 +29,11 @@ namespace MogboardDataExporter.Exporters
                 {
                     if (!mappings.TryGetValue(cat.RowId, out _))
                     {
-                        mappings[cat.RowId] = new LocalizedEntity { Id = cat.RowId };
+                        mappings[cat.RowId] = new LocalizedIconEntity
+                        {
+                            Id = cat.RowId,
+                            Icon = $"/i/{Util.GetIconFolder(cat.Icon)}/{cat.Icon:000000}.png",
+                        };
                     }
 
                     // ReSharper disable once SwitchStatementHandlesSomeKnownEnumValuesWithDefault
