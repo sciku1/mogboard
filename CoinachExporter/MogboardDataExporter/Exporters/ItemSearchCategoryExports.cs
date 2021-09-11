@@ -1,19 +1,59 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using Lumina.Data;
 using Lumina.Excel.GeneratedSheets;
+using MogboardDataExporter.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Cyalume = Lumina.GameData;
 
 namespace MogboardDataExporter.Exporters
 {
     public static class ItemSearchCategoryExports
     {
-        public static void GenerateJSON(Cyalume lumina, string outputPath)
+        public static void GenerateJSON(
+            IEnumerable<ItemSearchCategory> itemSearchCategories,
+            IEnumerable<ItemSearchCategory> itemSearchCategoriesDe,
+            IEnumerable<ItemSearchCategory> itemSearchCategoriesFr,
+            IEnumerable<ItemSearchCategory> itemSearchCategoriesJa,
+            string outputPath)
         {
-            File.WriteAllText(Path.Combine(outputPath, "ItemSearchCategory_Keys.json"), JsonConvert.SerializeObject(lumina.GetExcelSheet<ItemSearchCategory>().Select(isc => isc.RowId)));
+            var mappings = new Dictionary<uint, LocalizedEntity>();
+
+            var langIsc = new[] { itemSearchCategories, itemSearchCategoriesDe, itemSearchCategoriesFr, itemSearchCategoriesJa };
+            foreach (var lang in langIsc)
+            {
+                foreach (var cat in lang)
+                {
+                    if (!mappings.TryGetValue(cat.RowId, out _))
+                    {
+                        mappings[cat.RowId] = new LocalizedEntity();
+                    }
+
+                    // ReSharper disable once SwitchStatementHandlesSomeKnownEnumValuesWithDefault
+                    switch (cat.SheetLanguage)
+                    {
+                        case Language.Japanese:
+                            mappings[cat.RowId].NameJa = cat.Name;
+                            break;
+                        case Language.English:
+                            mappings[cat.RowId].NameEn = cat.Name;
+                            break;
+                        case Language.German:
+                            mappings[cat.RowId].NameDe = cat.Name;
+                            break;
+                        case Language.French:
+                            mappings[cat.RowId].NameFr = cat.Name;
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+                }
+            }
+
+            File.WriteAllText(Path.Combine(outputPath, "ItemSearchCategory_Mappings_Global.json"), JsonConvert.SerializeObject(mappings));
         }
 
         public static void GenerateChineseMappingsJSON(HttpClient http, string outputPath)

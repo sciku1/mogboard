@@ -5,12 +5,9 @@ namespace App\Service\GameData;
 use App\Common\Service\Redis\Redis;
 use App\Common\Utils\Arrays;
 use Symfony\Component\Console\Output\ConsoleOutput;
-use XIVAPI\XIVAPI;
 
 /**
- * Handle populating game data, MogBoard does not connect connect directly to XIVAPI for
- * every request as this would be very slow. Instead it will download everything it
- * needs over the command-line and then this is referenced during requests.
+ * Handle populating game data.
  */
 class GameDataCache
 {
@@ -30,15 +27,11 @@ class GameDataCache
 
     /** @var GameDataSource */
     private $gameDataSource;
-    
-    /** @var XIVAPI */
-    private $xivapi;
 
     public function __construct(GameDataSource $gameDataSource)
     {
         $this->console = new ConsoleOutput();
         $this->gameDataSource = $gameDataSource;
-        $this->xivapi = new XIVAPI();
     }
     
     public function populate()
@@ -133,11 +126,10 @@ class GameDataCache
         // build redis key list
         $keys = [];
         $objects = [];
-        foreach (\json_decode(\file_get_contents('DataExports/ItemSearchCategory_Keys.json')) as $i => $id) {
-            $keys[$i] = "xiv_ItemSearchCategory_{$id}";
-            $objects[$i] = $this->xivapi->content->ItemSearchCategory()->one($i);
-            $this->console->writeln($keys[$i].': '.$objects[$i]->Name_en);
-            sleep(5);
+        foreach (\json_decode(\file_get_contents('DataExports/ItemSearchCategory_Mappings_Global.json'), TRUE) as $cat) {
+            $keys[$cat->ID] = "xiv_ItemSearchCategory_{$cat->ID}";
+            $objects[$cat->ID] = $cat;
+            $this->console->writeln($keys[$cat->ID].': '.$objects[$cat->ID]->Name_en);
         }
 
         $categories = [];
