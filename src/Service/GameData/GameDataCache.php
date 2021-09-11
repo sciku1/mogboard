@@ -137,7 +137,7 @@ class GameDataCache
             $objects[$cat->ID] = $cat;
 
             if (!$validated) {
-                $test = $this->xivapi->content->ItemSearchCategory()->one($i);
+                $test = $this->xivapi->content->ItemSearchCategory()->one($cat->ID);
 
                 if ($test->ID !== $cat->ID
                 || $test->Icon !== $cat->Icon
