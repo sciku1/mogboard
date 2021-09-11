@@ -5,6 +5,7 @@ namespace App\Service\GameData;
 use App\Common\Service\Redis\Redis;
 use App\Common\Utils\Arrays;
 use Symfony\Component\Console\Output\ConsoleOutput;
+use XIVAPI\XIVAPI;
 
 /**
  * Handle populating game data.
@@ -28,10 +29,14 @@ class GameDataCache
     /** @var GameDataSource */
     private $gameDataSource;
 
+    /** @var XIVAPI */
+    private $xivapi;
+
     public function __construct(GameDataSource $gameDataSource)
     {
         $this->console = new ConsoleOutput();
         $this->gameDataSource = $gameDataSource;
+        $this->xivapi = new XIVAPI();
     }
     
     public function populate()
@@ -126,9 +131,26 @@ class GameDataCache
         // build redis key list
         $keys = [];
         $objects = [];
+        $validated = FALSE;
         foreach (\json_decode(\file_get_contents('DataExports/ItemSearchCategory_Mappings_Global.json'), TRUE) as $cat) {
             $keys[$cat->ID] = "xiv_ItemSearchCategory_{$cat->ID}";
             $objects[$cat->ID] = $cat;
+
+            if (!$validated) {
+                $test = $this->xivapi->content->ItemSearchCategory()->one($i);
+
+                if ($test->ID !== $cat->ID
+                || $test->Icon !== $cat->Icon
+                || $test->Name_en !== $cat->Name_en
+                || $test->Name_de !== $cat->Name_de
+                || $test->Name_fr !== $cat->Name_fr
+                || $test->Name_ja !== $cat->Name_ja) {
+                    throw new Exception("Item search category mapping JSON does not match XIVAPI response, is it formatted correctly?", 1);
+                }
+
+                $validated = TRUE;
+            }
+
             $this->console->writeln($keys[$cat->ID].': '.$objects[$cat->ID]->Name_en);
         }
 
