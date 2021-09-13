@@ -43,7 +43,7 @@ class UniversalisApi
         ]);
     }
 
-    public function getExtendedHistory(int $worldId, int $itemId, int $numEntries = 200)
+    public function getExtendedHistory(int $worldId, int $itemId, int $numEntries = 500)
     {
         return $this->query("GET", "api/history/{$worldId}/{$itemId}?entries={$numEntries}", [
             RequestOptions::QUERY => [
