@@ -45,7 +45,7 @@ class UniversalisApi
 
     public function getExtendedHistory(int $worldId, int $itemId, int $numEntries = 200)
     {
-        return $this->query("GET", "api/{$worldId}/{$itemId}", [
+        return $this->query("GET", "api/history/{$worldId}/{$itemId}?entries={$numEntries}", [
             RequestOptions::QUERY => [
                 'src'   => 'universalis_front'
             ]
