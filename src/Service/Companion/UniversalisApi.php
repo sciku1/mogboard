@@ -7,9 +7,8 @@ use GuzzleHttp\RequestOptions;
 
 class UniversalisApi
 {
-    const PROD    = 'https://universalis.app';
-    const STAGING = 'https://staging.universalis.app';
-    #const DEV     = 'http://xivapi.local';
+    const PROD    = 'http://localhost:4002';
+    const STAGING = 'http://localhost:4000';
 
     const TIMEOUT = 10.0;
     const VERIFY = false;
@@ -44,9 +43,9 @@ class UniversalisApi
         ]);
     }
 
-    public function getExtendedHistory(int $worldId, int $itemId, int $numEntries = 200)
+    public function getExtendedHistory(int $worldId, int $itemId, int $numEntries = 500)
     {
-        return $this->query("GET", "api/{$worldId}/{$itemId}", [
+        return $this->query("GET", "api/history/{$worldId}/{$itemId}?entries={$numEntries}", [
             RequestOptions::QUERY => [
                 'src'   => 'universalis_front'
             ]

@@ -96,6 +96,7 @@
     <Compile Include="Exporters\ItemExports.cs" />
     <Compile Include="Exporters\ItemSearchCategoryExports.cs" />
     <Compile Include="Exporters\TownExports.cs" />
+    <Compile Include="Models\ItemSearchCategoryExport.cs" />
     <Compile Include="Util.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

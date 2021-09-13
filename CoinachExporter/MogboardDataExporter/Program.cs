@@ -40,6 +40,9 @@ namespace MogboardDataExporter
             var itemsChs = GetChineseItems(lumina, http).ToList();
 
             var categories = lumina.GetExcelSheet<ItemSearchCategory>().ToList();
+            var categoriesDe = luminaDe.GetExcelSheet<ItemSearchCategory>().ToList();
+            var categoriesFr = luminaFr.GetExcelSheet<ItemSearchCategory>().ToList();
+            var categoriesJa = luminaJp.GetExcelSheet<ItemSearchCategory>().ToList();
 
             Console.WriteLine($"Global items: {items.Count}");
             Console.WriteLine($"CN items: {itemsChs.Count}");
@@ -64,7 +67,7 @@ namespace MogboardDataExporter
             itemsearchcategories:
             Console.WriteLine("== Item Search Category Export ==");
             Console.Write("...");
-            ItemSearchCategoryExports.GenerateJSON(lumina, outputPath);
+            ItemSearchCategoryExports.GenerateJSON(categories, categoriesDe, categoriesFr, categoriesJa, outputPath);
             Console.WriteLine("Done!");
 
             Console.WriteLine("== Chinese Item Search Category Mappings Export ==");

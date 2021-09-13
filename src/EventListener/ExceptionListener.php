@@ -69,7 +69,7 @@ class ExceptionListener implements EventSubscriberInterface
         $error = (Object)[
             'site'          => 'MOGBOARD',
             'message'       => $ex->getMessage() ?: '(no-exception-message)',
-            'code'          => $ex->getCode() ?: 200,
+            'code'          => $ex->getCode() ?: 500,
             'ex_class'      => get_class($ex),
             'ex_file'       => $ex->getFile(),
             'ex_line'       => $ex->getLine(),

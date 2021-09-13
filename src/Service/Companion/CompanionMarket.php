@@ -30,12 +30,6 @@ class CompanionMarket
      */
     public function get(array $servers, int $itemId)
     {
-        $key = "mb_file_market_{$itemId}_". md5(serialize($servers));
-        
-        if ($data = Redis::cache()->get($key)) {
-            return json_decode(json_encode($data), true);
-        }
-        
         $data = [];
         foreach ($servers as $server) {
             $serverId   = GameServers::getServerId($server);
@@ -61,8 +55,6 @@ class CompanionMarket
             $data[$server]['lastUploadTime'] = ceil($data[$server]['lastUploadTime'] / 1000);
         }
 
-        Redis::cache()->set($key, $data, 60);
-        
         return $data;
     }
 
