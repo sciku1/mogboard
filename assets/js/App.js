@@ -3,6 +3,7 @@ import Home from './Home';
 import Header from './Header';
 import HeaderUser from './HeaderUser';
 import HeaderCategories from './HeaderCategories';
+import HighchartsFormatter from './HighchartsFormatter';
 import Search from './Search';
 import Product from './Product';
 import ProductAlerts from './ProductAlerts';
@@ -10,6 +11,7 @@ import ProductLists from './ProductLists';
 import AccountCharacters from './AccountCharacters';
 import AccountRetainers from './AccountRetainers';
 import AccountPatreon from './AccountPatreon';
+import UniversalisApi from './UniversalisApi';
 
 /**
  * Basic stuff
@@ -49,5 +51,7 @@ if (typeof appEnableRetainers !== 'undefined' && appEnableRetainers === 1) {
  * Export
  */
 export default {
-    HeaderCategories: HeaderCategories
+    HeaderCategories,
+    HighchartsFormatter,
+    UniversalisApi,
 }
