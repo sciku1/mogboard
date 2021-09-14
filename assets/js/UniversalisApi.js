@@ -23,3 +23,5 @@ class UniversalisApi
         this.get(`/history/${worldDc}/${itemId}`, null, callback);
     }
 }
+
+export default new UniversalisApi;

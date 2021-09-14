@@ -99,3 +99,5 @@ class HighchartsFormatter
         };
     }
 }
+
+export default new HighchartsFormatter;
