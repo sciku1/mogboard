@@ -15,6 +15,9 @@ class UniversalisApi
             .then(callback)
     }
 
+    /**
+     * Returns extended history data for the provided world/DC and item.
+     */
     extendedHistory(worldDc, itemId, callback)
     {
         this.get(`/history/${worldDc}/${itemId}`, null, callback);
