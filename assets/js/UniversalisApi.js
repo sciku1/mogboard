@@ -10,8 +10,13 @@ class UniversalisApi
 
         endpoint = endpoint +'?'+ query;
 
-        fetch(`https://universalis.app${endpoint}`)
+        fetch(`https://universalis.app/api${endpoint}`)
             .then(response => response.json())
             .then(callback)
+    }
+
+    extendedHistory(worldDc, itemId, callback)
+    {
+        this.get(`/history/${worldDc}/${itemId}`, null, callback);
     }
 }
