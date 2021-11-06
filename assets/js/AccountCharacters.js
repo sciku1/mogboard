@@ -59,31 +59,17 @@ class AccountCharacters
             }
 
             // else search and find a lodestone id.
+            const name = character.string.split();
+            
             this.uiAddCharacterResponse.html('Searching lodestone for your character...');
-            xivapi.searchCharacter(character.string, character.server, response => {
-                // not foundz
-                if (response.Pagination.ResultsTotal === 0) {
-                    Popup.error('Not Found (code 32)', 'Could not find your character on lodestone, try entering the Lodestone URL for your character.');
-                    this.uiAddCharacterResponse.html('');
-                    ButtonLoading.finish($button);
-                    return;
-                }
-
-                // look through results
-                let found = false;
-                response.Results.forEach(row => {
-                    if (row.Name == character.string) {
-                        found = true;
-                        this.handleNewCharacterViaLodestoneId(row.ID);
-                    }
-                });
-
-                if (found === false) {
+            fetch(`/lodestone/search/character/${character.server}/${name[0]}/${name[1]}`)
+                .then(response => response.json())
+                .then(data => this.handleNewCharacterViaLodestoneId(data.ID))
+                .catch(err => {
                     Popup.error('Not Found (code 8)', 'Could not find your character on lodestone, try entering the Lodestone URL for your character.');
                     ButtonLoading.finish($button);
                     this.uiAddCharacterResponse.html('');
-                }
-            });
+                });
         });
     }
 
@@ -95,32 +81,22 @@ class AccountCharacters
         const $button = $('.character_add');
         this.uiAddCharacterResponse.html('Searching for your character...');
 
-        xivapi.getCharacter(lodestoneId, response => {
-            this.uiAddCharacterResponse.html('Character found, verifying auth code.');
-
-            // try verify the profile
-            //xivapi.characterVerification(lodestoneId, verify_code, response => {
-            fetch(`https://xivapi.com/character/${lodestoneId}`)
+        fetch(`/lodestone/character/${lodestoneId}`)
             .then(response => response.json())
-            .then(profile => {
-                console.log(profile.Character.Bio.search(verify_code));
-                if (JSON.stringify(profile.Character.Bio).search(verify_code) === -1) {
+            .then(data => {
+                this.uiAddCharacterResponse.html('Character found, verifying auth code.');
+            
+                const verifyCodeIdx = data.bio.search(verify_code);
+                console.log(verifyCodeIdx);
+                if (verifyCodeIdx === -1) {
                     Popup.error('Auth Code Not Found',  `Could not find your auth code (${verify_code}) on your characters profile, try again!`);
-                    this.uiAddCharacterResponse.html('');
-                       ButtonLoading.finish($button);
-                    return;
-                }
-                
-            /*const verifystring = JSON.parse(res);
-                if (bio !== verify_code) {
-                    Popup.error('Auth Code Not Found', `Could not find your auth code (${verify_code}) on your characters profile, try again!`);
                     this.uiAddCharacterResponse.html('');
                     ButtonLoading.finish($button);
                     return;
                 }
-            */
+            
                 this.uiAddCharacterResponse.html('Auth code found, adding character...');
-
+            
                 $.ajax({
                     url: mog.urls.characters.add.replace('-id-', lodestoneId),
                     success: response => {
@@ -145,12 +121,11 @@ class AccountCharacters
                         this.uiAddCharacterResponse.html('');
                         ButtonLoading.finish($button);
                     }
-                })
-            });
-
-            return;
+                });
             })
-
+            .catch(err => {
+                Popup.error('Character failed to add', `Error: ${err}`);
+            });
     }
 }
 
