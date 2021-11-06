@@ -61,12 +61,12 @@ class AccountCharacters
             // else search and find a lodestone id.
             const name = character.string.split(' ');
             
-            this.uiAddCharacterResponse.html('Searching lodestone for your character...');
+            this.uiAddCharacterResponse.html('Searching Lodestone for your character...');
             fetch(`/lodestone/search/character/${character.server}/${name[0]}/${name[1]}`)
                 .then(response => response.json())
                 .then(data => this.handleNewCharacterViaLodestoneId(data.id))
                 .catch(err => {
-                    Popup.error('Not Found (code 8)', 'Could not find your character on lodestone, try entering the Lodestone URL for your character.');
+                    Popup.error('Not Found (code 8)', 'Could not find your character on Lodestone, try entering the Lodestone URL for your character.');
                     ButtonLoading.finish($button);
                     this.uiAddCharacterResponse.html('');
                 });
@@ -79,7 +79,7 @@ class AccountCharacters
     handleNewCharacterViaLodestoneId(lodestoneId, reCalled)
     {
         const $button = $('.character_add');
-        this.uiAddCharacterResponse.html('Searching for your character...');
+        this.uiAddCharacterResponse.html('Searching Lodestone for your character...');
 
         fetch(`/lodestone/character/${lodestoneId}`)
             .then(response => response.json())
@@ -114,7 +114,7 @@ class AccountCharacters
                         /*document.getElementById(character_string).reset(); */
                     },
                     error: (a, b, c) => {
-                        Popup.error('Something Broke (code 145)', 'Could not add your character, please hop on discord and complain to Miu');
+                        Popup.error('Something Broke (code 145)', 'Could not add your character, please hop on Discord and complain to Kara');
                         console.error(a, b, c);
                     },
                     complete: () => {
