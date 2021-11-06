@@ -59,7 +59,7 @@ class AccountCharacters
             }
 
             // else search and find a lodestone id.
-            const name = character.string.split();
+            const name = character.string.split(' ');
             
             this.uiAddCharacterResponse.html('Searching lodestone for your character...');
             fetch(`/lodestone/search/character/${character.server}/${name[0]}/${name[1]}`)
