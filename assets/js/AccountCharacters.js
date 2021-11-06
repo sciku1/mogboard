@@ -64,7 +64,7 @@ class AccountCharacters
             this.uiAddCharacterResponse.html('Searching lodestone for your character...');
             fetch(`/lodestone/search/character/${character.server}/${name[0]}/${name[1]}`)
                 .then(response => response.json())
-                .then(data => this.handleNewCharacterViaLodestoneId(data.ID))
+                .then(data => this.handleNewCharacterViaLodestoneId(data.id))
                 .catch(err => {
                     Popup.error('Not Found (code 8)', 'Could not find your character on lodestone, try entering the Lodestone URL for your character.');
                     ButtonLoading.finish($button);
