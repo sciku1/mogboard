@@ -11,7 +11,8 @@ class LodestoneApi {
 
     public function getCharacter(int $lodestoneId)
     {
-        $res = $this->getResource("/character/{$lodestoneId}");
+        $url = self::URLBASE . "/character/{$lodestoneId}";
+        $res = $this->getResource($url);
         return json_decode($res);
     }
 
