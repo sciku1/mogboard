@@ -27,8 +27,8 @@ class UserCharacters
     private $repository;
     /** @var ConsoleOutput */
     private $console;
-    /** @var XIVAPI */
-    private $xivapi;
+    /** @var LodestoneApi */
+    private $lodestone;
 
     public function __construct(EntityManagerInterface $em, Users $users)
     {
@@ -36,7 +36,7 @@ class UserCharacters
         $this->users      = $users;
         $this->repository = $em->getRepository(UserCharacter::class);
         $this->console    = new ConsoleOutput();
-        $this->xivapi     = new XIVAPI();
+        $this->lodestone  = new LodestoneApi();
     }
 
     /**
@@ -58,28 +58,20 @@ class UserCharacters
         $user = $this->users->getUser(true);
 
         // run character verification
-        $verification = $this->xivapi->character->get($lodestoneId);
+        $characterData = $this->lodestone->getCharacter($lodestoneId);
         
-        if (isset($verification->Error)) {
-            throw new JsonException($verification->Message);
-        }
-
         // test if our Users pass phrase was found
-        if (stripos($verification->Character->Bio, $user->getCharacterPassPhrase()) === false) {
+        if (stripos($characterData->bio, $user->getCharacterPassPhrase()) === false) {
             throw new JsonException('Character auth code could not be found on the characters profile bio.', 200);
         }
-        
-        // grab character
-        /** @var \stdClass $character */
-        $json = $this->xivapi->character->get($lodestoneId);
 
         // confirm ownership and save
         $character = new UserCharacter();
         $character
             ->setLodestoneId($lodestoneId)
-            ->setName($json->Character->Name)
-            ->setServer($json->Character->Server)
-            ->setAvatar($json->Character->Avatar)
+            ->setName($characterData->name)
+            ->setServer($characterData->world)
+            ->setAvatar($characterData->avatar)
             ->setUpdated(time())
             ->setUser($user)
             ->setConfirmed(true)
@@ -166,20 +158,20 @@ class UserCharacters
         foreach ($characters as $character) {
             $console->writeln("- {$character->getName()}");
             
-            $data = $this->xivapi->character->get($character->getLodestoneId());
+            $characterData = $this->lodestone->getCharacter($character->getLodestoneId());
 
             // ensure we don't get stuck on a character
             $character->setUpdated(time());
             $this->save($character);
 
-            if (!$data) {
+            if (!$characterData) {
                 continue;
             }
 
             $character
-                ->setName($data->Character->Name)
-                ->setServer($data->Character->Server)
-                ->setAvatar($data->Character->Avatar);
+                ->setName($characterData->name)
+                ->setServer($characterData->world)
+                ->setAvatar($characterData->avatar);
 
             $this->save($character);
         }
