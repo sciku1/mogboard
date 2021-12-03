@@ -117,7 +117,7 @@ class Settings
     setLocalStorageSetting(key, value)
     {
         localStorage.setItem(key, value);
-        Cookie.set(key, value, { expires: 365, path: '/' });
+        Cookie.set(key, value, { expires: 365, path: '/', sameSite: 'none', secure: true });
     }
 
     setServer(server)
