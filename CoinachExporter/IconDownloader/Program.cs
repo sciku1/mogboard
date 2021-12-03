@@ -23,7 +23,7 @@ namespace IconDownloader
         {
             var mode = args[1];
 
-            var outputPath = Path.Combine("..", "..", "..", "..", "public", "i", "icon2x");
+            var outputPath = Path.Combine("..", "..", "..", "..", "..", "public", "i", "icon2x");
 
             Directory.CreateDirectory(outputPath);
 
