@@ -28,10 +28,10 @@ namespace MogboardDataExporter
 
             Directory.CreateDirectory(outputPath);
 
-            var lumina = new Cyalume(args[0]);
-            var luminaDe = new Cyalume(args[0], new LuminaOptions { DefaultExcelLanguage = Language.German });
-            var luminaFr = new Cyalume(args[0], new LuminaOptions { DefaultExcelLanguage = Language.French });
-            var luminaJp = new Cyalume(args[0], new LuminaOptions { DefaultExcelLanguage = Language.Japanese });
+            var lumina = new Cyalume(args[0], new LuminaOptions { PanicOnSheetChecksumMismatch = false });
+            var luminaDe = new Cyalume(args[0], new LuminaOptions { DefaultExcelLanguage = Language.German, PanicOnSheetChecksumMismatch = false });
+            var luminaFr = new Cyalume(args[0], new LuminaOptions { DefaultExcelLanguage = Language.French, PanicOnSheetChecksumMismatch = false });
+            var luminaJp = new Cyalume(args[0], new LuminaOptions { DefaultExcelLanguage = Language.Japanese, PanicOnSheetChecksumMismatch = false });
 
             var items = lumina.GetExcelSheet<Item>().ToList();
             var itemsDe = luminaDe.GetExcelSheet<Item>().ToList();

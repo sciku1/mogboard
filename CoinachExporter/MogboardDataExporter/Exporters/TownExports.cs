@@ -45,7 +45,9 @@ namespace MogboardDataExporter.Exporters
                 outputTown.Name_de = (string)townsDe.First(localItem => localItem.RowId == town.RowId).Name;
                 outputTown.Name_fr = (string)townsFr.First(localItem => localItem.RowId == town.RowId).Name;
                 outputTown.Name_jp = (string)townsJp.First(localItem => localItem.RowId == town.RowId).Name;
-                outputTown.Name_chs = (string)townsChs.First(localItem => localItem.ID == town.RowId).Name;
+
+                // This may be null when Global has a new expansion that CN does not yet have
+                outputTown.Name_chs = townsChs.FirstOrDefault(localItem => localItem.ID == town.RowId)?.Name;
 
                 outputTowns.Add(outputTown);
             }
