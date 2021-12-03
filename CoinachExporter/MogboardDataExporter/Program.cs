@@ -18,8 +18,8 @@ namespace MogboardDataExporter
     {
         public static void Main(string[] args)
         {
-            var outputPath = Path.Combine("..", "..", "..", "..", "DataExports");
-            var categoryJsOutputPath = Path.Combine("..", "..", "..", "..", "public", "data");
+            var outputPath = Path.Combine("..", "..", "..", "..", "..", "DataExports");
+            var categoryJsOutputPath = Path.Combine("..", "..", "..", "..", "..", "public", "data");
 
             var http = new HttpClient();
             
