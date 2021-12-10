@@ -96,9 +96,10 @@ class AppProductExtension extends AbstractExtension
             81 => 'ItemCategory_Gardening',
             82 => 'ItemCategory_Painting',
             
-            // new 5.0
             86 => 'class_job_037', // Gunbreaker's Arms
-            87 => 'class_job_038', // dancer arms
+            87 => 'class_job_038', // Dancer's Arms
+            88 => 'class_job_039', // Reaper's Arms
+            89 => 'class_job_040', // Sage's Arms
         ][$id];
     }
 }
