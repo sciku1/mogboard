@@ -2158,5 +2158,21 @@
         "term_plural": "",
         "reference": "",
         "comment": ""
+    },
+    {
+        "term": "Recently Viewed",
+        "definition": null,
+        "context": "user_list_recently_viewed",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Favourites",
+        "definition": null,
+        "context": "user_list_favourites",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
     }
 ]
