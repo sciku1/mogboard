@@ -1161,7 +1161,7 @@
     },
     {
         "term": "Total",
-        "definition": "\u603b\u6570",
+        "definition": "\u603b\u8ba1",
         "context": "generic_total",
         "term_plural": "",
         "reference": "",
@@ -2153,8 +2153,24 @@
     },
     {
         "term": "Cannot be sold",
-        "definition": "\u65e0\u6cd5\u88ab\u51fa\u552e",
+        "definition": "\u5f53\u524d\u7248\u672c\u65e0\u6cd5\u51fa\u552e",
         "context": "generic_cannot_be_sold",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Recently Viewed",
+        "definition": null,
+        "context": "user_list_recently_viewed",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Favourites",
+        "definition": null,
+        "context": "user_list_favourites",
         "term_plural": "",
         "reference": "",
         "comment": ""
