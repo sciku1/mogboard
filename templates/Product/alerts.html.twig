@@ -55,7 +55,7 @@
 
                     {# Triggers #}
                     <div class="form_row">
-                        <label>{{ 'Setup Triggers <strong>(Max: 15)</strong>'|translate('alerts_create_alert_guide_3') }}</label>
+                        <label>{{ 'Setup Triggers <strong>(Max: 15)</strong>'|translate('alerts_create_alert_guide_3')|striptags('<strong>')|raw }}</label>
                         <div class="alert_entries"></div>
 
                         <div class="alert_triggers_form form_row form_columns">
