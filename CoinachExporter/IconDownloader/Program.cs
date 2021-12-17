@@ -115,7 +115,7 @@ namespace IconDownloader
             var counter = 1;
             Parallel.For(0, dbEntries.Count, new ParallelOptions
             {
-                MaxDegreeOfParallelism = 4,
+                MaxDegreeOfParallelism = 16,
             }, index =>
             {
                 var dbEntry = dbEntries.ElementAt(index);
