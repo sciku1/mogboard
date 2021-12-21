@@ -39,7 +39,7 @@ namespace MogboardDataExporter.Exporters
                 outputTown.ID = town.RowId;
 
                 var iconObj = town.Icon;
-                outputTown.Icon = iconObj != 0 ? $"/i/{Util.GetIconFolder(iconObj)}/{iconObj}.png" : $"/i/{Util.GetIconFolder(060880)}/060880.png";
+                outputTown.Icon = iconObj != 0 ? $"/i/{Util.GetIconFolder(iconObj)}/{iconObj:000000}.png" : $"/i/{Util.GetIconFolder(060880)}/060880.png";
 
                 outputTown.Name_en = (string)town.Name;
                 outputTown.Name_de = (string)townsDe.First(localItem => localItem.RowId == town.RowId).Name;
