@@ -71,7 +71,7 @@
                     {% else %}
                         {{ row.retainerName }}
                     {% endif %}
-                    <img src="{{ cityflags[row.retainerCity]|icon }}" class="price-city-flag">
+                    <img src="{{ cityflags[row.retainerCity]|icon }}" class="price-city-flag" data-retainer-city="{{ row.retainerCity }}">
                 </td>
                 <td class="price-creator">
                     {% if env('APP_ENV') == 'devs' %}
