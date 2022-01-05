@@ -21,6 +21,7 @@ namespace MogboardDataExporter.Exporters
             string outputPath)
         {
             var mappings = new Dictionary<uint, ItemSearchCategoryExport>();
+            var validIds = new List<uint>();
 
             var langIsc = new[] { itemSearchCategories, itemSearchCategoriesDe, itemSearchCategoriesFr, itemSearchCategoriesJa };
             foreach (var lang in langIsc)
@@ -38,6 +39,8 @@ namespace MogboardDataExporter.Exporters
                             Order = cat.Order,
                             Icon = $"/i/{Util.GetIconFolder(cat.Icon)}/{cat.Icon:000000}.png",
                         };
+
+                        validIds.Add(cat.RowId);
                     }
 
                     // ReSharper disable once SwitchStatementHandlesSomeKnownEnumValuesWithDefault
@@ -62,6 +65,7 @@ namespace MogboardDataExporter.Exporters
             }
 
             File.WriteAllText(Path.Combine(outputPath, "ItemSearchCategory_Mappings_Global.json"), JsonConvert.SerializeObject(mappings));
+            File.WriteAllText(Path.Combine(outputPath, "ItemSearchCategory_Keys.json"), JsonConvert.SerializeObject(validIds));
         }
 
         public static void GenerateChineseMappingsJSON(HttpClient http, string outputPath)
