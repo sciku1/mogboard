@@ -35,6 +35,15 @@ class ChineseWorldDCConversionExtension extends AbstractExtension
         "HaiMaoChaWu" => "海猫茶屋",
         "RouFengHaiWan" => "柔风海湾",
         "HuPoYuan" => "琥珀原",
+        "DouDouChai" => "豆豆柴",
+        "ShuiJingTa" => "水晶塔",
+        "YinLeiHu" => "银泪湖",
+        "TaiYangHaiAn" => "太阳海岸",
+        "YiXiuJiaDe" => "伊修加德",
+        "HongChaChuan" => "红茶川",
+        "HuangJinGu" => "黄金谷",
+        "YueYaWan" => "月牙湾",
+        "XueSongYuan" => "雪松原",
     ];
 
     public function getFilters()
