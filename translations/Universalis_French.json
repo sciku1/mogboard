@@ -97,7 +97,7 @@
     },
     {
         "term": "FINAL FANTASY XIV \u00a9 2010 - 2020 SQUARE ENIX CO., LTD. All Rights Reserved.",
-        "definition": "FINAL FANTASY XIV \u00a9 2010 - 2020 SQUARE ENIX CO., LTD. All Rights Reserved.",
+        "definition": "FINAL FANTASY XIV \u00a9 2010 - 2020 SQUARE ENIX CO., LTD. Tous Droits R\u00e9serv\u00e9s.",
         "context": "footer_license",
         "term_plural": "",
         "reference": "",
@@ -265,7 +265,7 @@
     },
     {
         "term": "Upload Counts by World",
-        "definition": "Nombre de mises \u00e0 jour by Monde",
+        "definition": "Nombre de mises \u00e0 jour par Monde",
         "context": "home_upload_counts_world",
         "term_plural": "",
         "reference": "",
@@ -369,7 +369,7 @@
     },
     {
         "term": "Universalis is a market board data site with crowd sourced information, based on mogboard. It can aggregate market board information from multiple sources, so if you want to help out, please check out our contributing page.",
-        "definition": "Universalis est un site de donn\u00e9es participatives du tableau des ventes, bas\u00e9 sur Mogboard. Il est capable d'agr\u00e9ger les informations du tableau des ventes \u00e0 partir de plusieurs sources, donc n'h\u00e9site pas \u00e0 jeter un \u0153il \u00e0 notre page d\u00e9di\u00e9 \u00e0 la contribution si tu veux nous aider.",
+        "definition": "Universalis est un site de donn\u00e9es participatives du tableau des ventes, bas\u00e9 sur Mogboard. Il est capable d'agr\u00e9ger les informations du tableau des ventes \u00e0 partir de plusieurs sources, donc n'h\u00e9site pas \u00e0 jeter un \u0153il \u00e0 notre page d\u00e9di\u00e9e \u00e0 la contribution si tu veux nous aider.",
         "context": "news_product_blurb",
         "term_plural": "",
         "reference": "",
@@ -641,7 +641,7 @@
     },
     {
         "term": "There are multiple ways to contribute to <strong>Universalis<\/strong>. All of your contributions are anonymous - no one will be able to refer back to your character or account to know that you have uploaded any data. The applications below are tested by us to make sure that they don't endanger your account or your characters.",
-        "definition": "Il y a plusieurs mani\u00e8res de contribuer \u00e0 <strong>Universalis<\/strong>. Toutes les contributions sont anonymes (personne ne pourra remonter jusqu'\u00e0 ton personnage ou compte pour savoir que tu as envoy\u00e9 des donn\u00e9es). Les applications ci-dessous ont \u00e9t\u00e9 test\u00e9es par nos soins pour \u00eatre surs qu'elles ne mettent pas en danger ton compte ou tes personnages.",
+        "definition": "Il y a plusieurs mani\u00e8res de contribuer \u00e0 <strong>Universalis<\/strong>. Toutes les contributions sont anonymes (personne ne pourra remonter jusqu'\u00e0 ton personnage ou compte pour savoir que tu as envoy\u00e9 des donn\u00e9es). Les applications ci-dessous ont \u00e9t\u00e9 test\u00e9es par nos soins pour \u00eatre s\u00fbrs qu'elles ne mettent pas en danger ton compte ou tes personnages.",
         "context": "contribute_howto_explanation_1",
         "term_plural": "",
         "reference": "",
@@ -1689,7 +1689,7 @@
     },
     {
         "term": "Gil Per Token",
-        "definition": null,
+        "definition": "Gil par token",
         "context": "generic_gil_per_token",
         "term_plural": "",
         "reference": "",
@@ -2155,6 +2155,38 @@
         "term": "Cannot be sold",
         "definition": "Ne peut pas \u00eatre vendu",
         "context": "generic_cannot_be_sold",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Recently Viewed",
+        "definition": "Consult\u00e9s r\u00e9cemment",
+        "context": "user_list_recently_viewed",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Favourites",
+        "definition": "Favoris",
+        "context": "user_list_favourites",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Should the alert check the whole Data Center?",
+        "definition": "L'alerte doit surveiller le centre de donn\u00e9es ?",
+        "context": "alerts_create_alert_guide_6",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Check entire Data Center",
+        "definition": "Surveiller le centre de donn\u00e9es",
+        "context": "alerts_create_alert_guide_7",
         "term_plural": "",
         "reference": "",
         "comment": ""

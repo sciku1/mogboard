@@ -41,7 +41,7 @@
 				<div>
 					{% for list in auth.user.lists %}
 						<button type="button" data-tab="lists_{{ list.id }}">
-							{{ list.name }}
+							{{ list.name|translate('special_user_list_name') }}
 						</button>
 					{% else %}
 						<button type="button" class="btn-disabled">

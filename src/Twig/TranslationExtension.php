@@ -22,6 +22,15 @@ class TranslationExtension extends AbstractExtension {
     public function translate($text, $key): string
     {
         $lang = Language::current();
+        
+        if ($key == 'special_user_list_name') {
+            if ($text == 'Recently Viewed') {
+                $key = 'user_list_recently_viewed';
+            } else if ($text == 'Favourites') {
+                $key = 'user_list_favourites';
+            }
+        }
+        
         $result = Redis::Cache()->get('translation_'.$key.'_'.$lang);
         return $this->isNullOrEmpty($result) ? $text : $result;
     }

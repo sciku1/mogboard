@@ -1929,7 +1929,7 @@
     },
     {
         "term": "To add a new character, you must first add your verification code. <strong>Please add your MAIN character first<\/strong>.",
-        "definition": "Um einen neuen Charakter hinzuzuf\u00fcgen, musst du zuerst deinen Best\u00e4tigungscode hinzuf\u00fcgen. Bitte f\u00fcge zuerst deinen Hauptcharakter hinzu!",
+        "definition": "Um einen neuen Charakter hinzuzuf\u00fcgen, musst du zuerst deinen Best\u00e4tigungscode hinzuf\u00fcgen. <strong>Bitte f\u00fcge zuerst deinen Hauptcharakter hinzu!<\/strong>",
         "context": "characters_guide_1",
         "term_plural": "",
         "reference": "",
@@ -2155,6 +2155,38 @@
         "term": "Cannot be sold",
         "definition": "Kann nicht verkauft werden",
         "context": "generic_cannot_be_sold",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Recently Viewed",
+        "definition": null,
+        "context": "user_list_recently_viewed",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Favourites",
+        "definition": null,
+        "context": "user_list_favourites",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Should the alert check the whole Data Center?",
+        "definition": null,
+        "context": "alerts_create_alert_guide_6",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Check entire Data Center",
+        "definition": null,
+        "context": "alerts_create_alert_guide_7",
         "term_plural": "",
         "reference": "",
         "comment": ""

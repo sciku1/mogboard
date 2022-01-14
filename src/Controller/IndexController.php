@@ -77,7 +77,7 @@ class IndexController extends AbstractController
         $renderParameters = [
         //    'market_feed'   => $marketFeed,
             'popular_items' => $this->itemPopularity->get(),
-            'uploads_today' => $uploads['uploadCountByDay'][0],
+            'uploads_today' => sizeof($uploads['uploadCountByDay']) > 0 ? $uploads['uploadCountByDay'][0] : 0,
             'uploads_week'  => \array_sum($uploads['uploadCountByDay']),
             'uploads_world' => $pieData,
             'recent'        => \array_slice($recentUpdates['items'], 0, 6)

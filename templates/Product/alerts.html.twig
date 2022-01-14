@@ -44,10 +44,10 @@
                                 </div>
                             </div>
                             <div class="flex_50">
-                                <label>Should the alert check the whole Data Center?</label>
+                                <label>{{ 'Should the alert check the whole Data Center?'|translate('alerts_create_alert_guide_6')|striptags('<span>')|raw }}</label>
                                 <div class="checkbox">
                                     <input type="checkbox" id="alert_dc">
-                                    <label for="alert_dc">Check entire Data Center ({{ server.dc }})</label>
+                                    <label for="alert_dc">{{ 'Check entire Data Center'|translate('alerts_create_alert_guide_7')|striptags('<strong>')|raw }} ({{ server.dc }})</label>
                                 </div>
                             </div>
                         </div>
@@ -55,7 +55,7 @@
 
                     {# Triggers #}
                     <div class="form_row">
-                        <label>{{ 'Setup Triggers <strong>(Max: 15)</strong>'|translate('alerts_create_alert_guide_3') }}</label>
+                        <label>{{ 'Setup Triggers <strong>(Max: 15)</strong>'|translate('alerts_create_alert_guide_3')|striptags('<strong>')|raw }}</label>
                         <div class="alert_entries"></div>
 
                         <div class="alert_triggers_form form_row form_columns">
