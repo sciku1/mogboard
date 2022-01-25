@@ -13,7 +13,7 @@
                         <option disabled selected>{{ '- Please Choose a Server -'|translate('option_choose_server_guide') }}</option>
                         {% for dc, servers in getGameDataCenters() %}
                             {# Should probably translate the region names #}
-                            <optgroup label="{{ dc|convert_if_chinese }} - {{ dc in ['Chaos','Light'] ? 'Europe' : (dc in ['Elemental','Gaia','Mana'] ? 'Japan' : (dc in ['Crystal','Primal','Aether'] ? 'America' : '中国'))}}">
+                            <optgroup label="{{ dc|convert_if_chinese }} - {{ dc in ['Chaos','Light'] ? 'Europe' : (dc in ['Elemental','Gaia','Mana'] ? 'Japan' : (dc in ['Crystal','Primal','Aether'] ? 'America' : (dc in ['Materia'] ? 'Oceania' : '中国')))}}">
                                 {% for server in servers %}
                                     <option value="{{ server }}">{{ server|convert_if_chinese }}</option>
                                 {% endfor %}
