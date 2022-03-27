@@ -4,5 +4,6 @@ export default {
         couldNotCreateNewList: [ 1001, 'Could not create a new list.' ],
         couldNotAddItem: [ 1002, 'Could not add item to list.' ],
         couldNotRemoveItem: [ 1003, 'Could not remove item from list.' ],
+        couldNotRenameList: [1004, 'Could not update list.']
     }
 };
