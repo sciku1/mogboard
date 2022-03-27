@@ -8,6 +8,8 @@
         <h1>
             {{ list.name }}
             <span>
+                <a class="link_rename_list">Rename</a>
+                &nbsp;&nbsp;|&nbsp;&nbsp;
                 {{ '%d / %d items'|translate('n_of_m_items')|format(list.items|length, max_items) }}
                 &nbsp;&nbsp;|&nbsp;&nbsp;
                 {% if app.request.get('home') %}
@@ -86,5 +88,29 @@
                 {{ 'You have no items in this list.'|translate('userlists_no_items') }}
             </div>
         {% endfor %}
+    </div>
+
+    <div class="modal list_rename_modal">
+        <button type="button" class="modal_close_button"><i class="xiv-NavigationClose"></i></button>
+        <div class="modal_row">
+            <div class="modal_form_row_1">
+                <h1>{{ 'Rename List'|translate('lists_rename_list') }}</h1>
+            </div>
+
+            {# list form #}
+            <form method="post" class="modal_form rename_list_form"  data-id="{{ list.id }}">
+                {# Name #}
+                <div>
+                    <input name="list_name" id="list_name" type="text" placeholder="Name" class="full" value="{{ list.name }}">
+                </div>
+                <br><br>
+                {# done #}
+                <div class="modal_form_end">
+                    <button type="submit" class="btn-green btn_rename_list">{{ 'Rename List'|translate('lists_rename_list') }}</button>
+                </div>
+
+            </form>
+
+        </div>
     </div>
 {% endblock %}

@@ -12,7 +12,7 @@ import AccountCharacters from './AccountCharacters';
 import AccountRetainers from './AccountRetainers';
 import AccountPatreon from './AccountPatreon';
 import UniversalisApi from './UniversalisApi';
-
+import Lists from "./Lists";
 /**
  * Basic stuff
  */
@@ -24,6 +24,7 @@ HeaderCategories.watch();
 HeaderCategories.loadCategories();
 Search.watch();
 Home.watch();
+Lists.watch();
 
 /**
  * Item Pages
