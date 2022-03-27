@@ -2190,5 +2190,21 @@
         "term_plural": "",
         "reference": "",
         "comment": ""
+    },
+    {
+        "term": "Rename List",
+        "definition": null,
+        "context": "lists_rename_list",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
+    },
+    {
+        "term": "Rename",
+        "definition": null,
+        "context": "generic_rename",
+        "term_plural": "",
+        "reference": "",
+        "comment": ""
     }
 ]
