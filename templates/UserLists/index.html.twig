@@ -8,7 +8,7 @@
         <h1>
             {{ list.name }}
             <span>
-                <a class="link_rename_list">Rename</a>
+                <a class="link_rename_list">{{ 'Rename'|translate('generic_rename') }}</a>
                 &nbsp;&nbsp;|&nbsp;&nbsp;
                 {{ '%d / %d items'|translate('n_of_m_items')|format(list.items|length, max_items) }}
                 &nbsp;&nbsp;|&nbsp;&nbsp;
